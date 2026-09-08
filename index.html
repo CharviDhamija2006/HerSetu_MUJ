@@ -1,1765 +1,509 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>HerSetu — Bridge for Pregnant Women</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   HERSETU — Refactored Dark Theme Design Tokens
-   Soothing, non-stimulating color palette optimized for
-   reduced visual fatigue during extended use
+   HERSETU — Design tokens
+   Primary Teal #0A6E5C · Coral #E86A5A · Gold #F8C630
+   Warm White #F5F0EB · Ink #1A1A2E
    ============================================================ */
 :root{
-  /* Dark Theme Palette - Muted, calming colors */
-  --bg-primary: #0F141A;        /* Deep dark slate - main background */
-  --bg-secondary: #121A18;       /* Dark navy-green - secondary surfaces */
-  --bg-card: rgba(30, 45, 42, 0.55);  /* Glass-morphism card background */
-  --bg-card-hover: rgba(40, 58, 54, 0.65);
-  
-  /* Primary - Muted teal (less aggressive) */
-  --teal: #3D8B85;              /* Softer teal - primary actions */
-  --teal-dark: #2A6360;         /* Darker teal - hover states */
-  --teal-glow: rgba(61, 139, 133, 0.3);
-  
-  /* Secondary - Soft gold for highlights */
-  --gold: #D4A84B;              /* Muted gold - secondary accent */
-  --gold-soft: rgba(212, 168, 75, 0.15);
-  
-  /* Accent - Coral only for critical alerts */
-  --coral: #E07A68;             /* Coral - used sparingly */
-  --coral-soft: rgba(224, 122, 104, 0.15);
-  --coral-dark: #C46858;
-  
-  /* Danger/Status colors */
-  --danger: #D9534F;            /* Critical alerts only */
-  --danger-soft: rgba(217, 83, 79, 0.15);
-  --safe: #5BA88F;              /* Safe/positive states */
-  --safe-soft: rgba(91, 168, 143, 0.15);
-  
-  /* Text colors */
-  --text-primary: #E8E6E3;      /* Primary text - warm white */
-  --text-secondary: #9AA8A2;    /* Secondary text - muted gray */
-  --text-muted: #6B7B77;       /* Muted text */
-  
-  /* Borders and dividers */
-  --border-soft: rgba(255, 255, 255, 0.06);
-  --border-medium: rgba(255, 255, 255, 0.1);
-  
-  /* Shadows - subtle, not harsh */
-  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.4);
-  
-  /* Spacing and sizing */
-  --radius-sm: 12px;
-  --radius-md: 18px;
-  --radius-lg: 24px;
-  --radius-xl: 32px;
-  
-  /* Transitions - smooth easing */
-  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
-  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --duration-fast: 0.18s;
-  --duration-normal: 0.3s;
-  --duration-slow: 0.5s;
+  --teal:#0A6E5C;
+  --teal-dark:#064A3E;
+  --coral:#E86A5A;
+  --coral-dark:#C64F41;
+  --gold:#F8C630;
+  --bg:#F5F0EB;
+  --ink:#1A1A2E;
+  --ink-soft:#5B5B6E;
+  --card:rgba(255,255,255,0.62);
+  --card-border:rgba(255,255,255,0.9);
+  --danger:#D8483C;
+  --safe:#2E9E63;
+  --shadow-soft: 0 10px 30px rgba(10,110,92,0.12);
+  --shadow-lift: 0 16px 40px rgba(10,110,92,0.20);
+  --radius: 22px;
+  --ease: cubic-bezier(.22,1,.36,1);
 }
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Poppins','Noto Sans Devanagari',system-ui,-apple-system,'Segoe UI',sans-serif;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(248,198,48,0.18), transparent 45%),
+    radial-gradient(circle at 85% 90%, rgba(232,106,90,0.16), transparent 45%),
+    var(--bg);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--ink);
+  overflow-x:hidden;
+}
+.devanagari{ font-family:'Noto Sans Devanagari','Poppins',sans-serif; }
+
+/* ---------- Phone shell ---------- */
+.phone{
+  position:relative;
+  width:375px;
+  height:780px;
+  max-height:96vh;
+  background:var(--bg);
+  border-radius:44px;
+  box-shadow:0 30px 80px rgba(10,20,20,0.35), 0 0 0 10px #10201c, 0 0 0 11px #2c3b37;
+  overflow:hidden;
+  isolation:isolate;
+}
+.notch{
+  position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:150px; height:26px; background:#10201c; border-radius:0 0 18px 18px; z-index:50;
+}
+.statusbar{
+  position:absolute; top:0; left:0; right:0; height:26px; z-index:40;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 22px; font-size:11px; font-weight:600; color:var(--ink);
+}
+.statusbar .dot-time{opacity:.85}
+
+/* ---------- Screens & transitions ---------- */
+.screens{ position:relative; width:100%; height:100%; }
+.screen{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column;
+  opacity:0; pointer-events:none;
+  transform:translateX(30px) scale(.98);
+  transition:opacity .22s var(--ease), transform .22s var(--ease);
+  padding-top:26px;
+  overflow-y:auto;
+}
+.screen::-webkit-scrollbar{width:0;}
+.screen.active{
+  opacity:1; pointer-events:auto; transform:translateX(0) scale(1); z-index:10;
+}
+.screen.exit-left{ transform:translateX(-30px) scale(.98); opacity:0;}
+
+/* ---------- Shared UI ---------- */
+.px{ padding-left:22px; padding-right:22px; }
+.top-header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 22px 6px;
+}
+.greet-title{ font-size:22px; font-weight:700; }
+.greet-sub{ font-size:12.5px; color:var(--ink-soft); margin-top:2px;}
+.avatar-role{
+  width:44px; height:44px; border-radius:16px;
+  background:linear-gradient(135deg, var(--gold), var(--coral));
+  display:flex; align-items:center; justify-content:center; font-size:20px;
+  box-shadow:var(--shadow-soft);
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-soft);
+}
+.btn{
+  border:none; cursor:pointer; font-family:inherit;
+  border-radius:999px; font-weight:600; letter-spacing:.2px;
+  transition:transform .18s var(--ease), box-shadow .18s var(--ease), filter .18s;
+  position:relative; overflow:hidden;
+}
+.btn:active{ transform:scale(.96); }
+.btn-primary{
+  background:linear-gradient(135deg, var(--teal), var(--teal-dark));
+  color:#fff; padding:15px 20px; font-size:15px; box-shadow:0 10px 24px rgba(10,110,92,0.35);
+}
+.btn-coral{
+  background:linear-gradient(135deg, var(--coral), var(--coral-dark));
+  color:#fff; padding:15px 20px; font-size:15px; box-shadow:0 10px 24px rgba(232,106,90,0.35);
+}
+.btn-ghost{
+  background:rgba(10,110,92,0.08); color:var(--teal); padding:12px 18px; font-size:13.5px;
+}
+.ripple-el{ position:absolute; border-radius:50%; background:rgba(255,255,255,0.55); transform:scale(0); animation:rippleAnim .6s ease-out; pointer-events:none;}
+@keyframes rippleAnim{ to{ transform:scale(3); opacity:0;} }
+.pulse-ring{ position:relative; }
+.pulse-ring::before{
+  content:''; position:absolute; inset:-6px; border-radius:inherit;
+  border:2px solid currentColor; opacity:.55;
+  animation:pulseRing 1.8s var(--ease) infinite;
+}
+@keyframes pulseRing{0%{transform:scale(.92); opacity:.7}100%{transform:scale(1.35); opacity:0}}
+.badge{ display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:700; padding:4px 10px; border-radius:999px;}
+.badge-red{ background:rgba(216,72,60,0.13); color:var(--danger); }
+.badge-green{ background:rgba(46,158,99,0.13); color:var(--safe); }
+.badge-gold{ background:rgba(248,198,48,0.22); color:#8a6a00; }
+
+/* Bottom nav */
+.bottom-nav{
+  margin-top:auto; display:flex; justify-content:space-around; align-items:center;
+  padding:12px 10px calc(14px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,0.7);
+  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  border-top:1px solid rgba(255,255,255,0.8);
+}
+.nav-item{
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  font-size:10px; font-weight:600; color:var(--ink-soft); cursor:pointer;
+  padding:4px 10px; border-radius:12px; transition:all .25s var(--ease);
+}
+.nav-item .nav-ic{ font-size:18px; transition:transform .25s var(--ease); }
+.nav-item.active{ color:var(--teal); background:rgba(10,110,92,0.09); }
+.nav-item.active .nav-ic{ transform:translateY(-2px) scale(1.1); }
+
+/* FAB */
+.fab{
+  position:absolute; right:20px; bottom:88px; z-index:30;
+  width:58px; height:58px; border-radius:50%;
+  background:linear-gradient(135deg, var(--coral), var(--gold));
+  color:#fff; font-size:24px; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 14px 30px rgba(232,106,90,0.45); cursor:pointer; border:none;
+  animation:fabPulse 2.2s ease-in-out infinite;
+}
+@keyframes fabPulse{0%,100%{box-shadow:0 14px 30px rgba(232,106,90,0.45)}50%{box-shadow:0 14px 40px rgba(232,106,90,0.7), 0 0 0 10px rgba(232,106,90,0.08)}}
 
 /* ============================================================
-   Base Reset & Typography
+   TOP CONTROL BAR + ROLE SWITCH + OFFLINE UI
    ============================================================ */
-*, *::before, *::after {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-  margin: 0;
-  padding: 0;
-}
-
-html, body {
-  height: 100%;
-  overflow: hidden;
-}
-
-body {
-  font-family: 'Poppins', 'Noto Sans Devanagari', -apple-system, sans-serif;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.devanagari { font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif; }
-
-/* ============================================================
-   Phone Shell Container
-   Optimized for mobile-first with hardware acceleration
-   ============================================================ */
-.phone {
-  position: relative;
-  width: 375px;
-  height: 780px;
-  max-height: 96vh;
-  margin: 0 auto;
-  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
-  border-radius: 44px;
-  box-shadow: 
-    var(--shadow-lg),
-    0 0 0 1px var(--border-soft),
-    inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  overflow: hidden;
-  isolation: isolate;
-  will-change: transform;
-  transform: translateZ(0);
-}
-
-/* Notch styling */
-.notch {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 150px;
-  height: 26px;
-  background: var(--bg-secondary);
-  border-radius: 0 0 18px 18px;
-  z-index: 50;
-}
-
-/* Status bar */
-.statusbar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 26px;
-  z-index: 40;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 22px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-
-/* ============================================================
-   Screen Transitions
-   GPU-accelerated with will-change optimization
-   ============================================================ */
-.screens {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.screen {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateX(30px) scale(0.98);
-  will-change: opacity, transform;
-  transition: 
-    opacity var(--duration-normal) var(--ease-smooth),
-    transform var(--duration-normal) var(--ease-smooth);
-  padding-top: 26px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-}
-
-.screen::-webkit-scrollbar { width: 0; }
-
-.screen.active {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateX(0) scale(1);
-  z-index: 10;
-}
-
-.screen.exit-left {
-  transform: translateX(-30px) scale(0.98);
-  opacity: 0;
-}
-
-/* ============================================================
-   Shared Components
-   ============================================================ */
-
-/* Glass-morphism card base */
-.card {
-  background: var(--bg-card);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-  transition: 
-    background var(--duration-fast) var(--ease-smooth),
-    transform var(--duration-fast) var(--ease-smooth),
-    box-shadow var(--duration-fast) var(--ease-smooth);
-}
-
-.card:hover {
-  background: var(--bg-card-hover);
-}
-
-.card:active {
-  transform: scale(0.98);
-}
-
-/* Button base with ripple effect */
-.btn {
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  border-radius: 999px;
-  font-weight: 600;
-  letter-spacing: 0.2px;
-  transition: 
-    transform var(--duration-fast) var(--ease-smooth),
-    box-shadow var(--duration-fast) var(--ease-smooth),
-    filter var(--duration-fast) var(--ease-smooth);
-  position: relative;
-  overflow: hidden;
-  will-change: transform;
-}
-
-.btn:active { 
-  transform: scale(0.96) !important; 
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
-  color: #fff;
-  padding: 15px 20px;
-  font-size: 15px;
-  box-shadow: 0 8px 20px var(--teal-glow);
-}
-
-.btn-primary:hover {
-  filter: brightness(1.1);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px var(--teal-glow);
-}
-
-.btn-coral {
-  background: linear-gradient(135deg, var(--coral), var(--coral-dark));
-  color: #fff;
-  padding: 15px 20px;
-  font-size: 15px;
-  box-shadow: 0 8px 20px var(--coral-soft);
-}
-
-.btn-coral:hover {
-  transform: translateY(-2px);
-}
-
-.btn-ghost {
-  background: var(--teal-glow);
-  color: var(--teal);
-  padding: 12px 18px;
-  font-size: 13.5px;
-}
-
-/* Ripple effect element */
-.ripple-el {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35);
-  transform: scale(0);
-  animation: rippleAnim 0.6s ease-out forwards;
-  pointer-events: none;
-  will-change: transform, opacity;
-}
-
-@keyframes rippleAnim {
-  to {
-    transform: scale(3);
-    opacity: 0;
-  }
-}
-
-/* Badge component */
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 999px;
-}
-
-.badge-red {
-  background: var(--danger-soft);
-  color: var(--danger);
-}
-
-.badge-green {
-  background: var(--safe-soft);
-  color: var(--safe);
-}
-
-.badge-gold {
-  background: var(--gold-soft);
-  color: var(--gold);
-}
-
-/* Pulse ring animation */
-.pulse-ring {
-  position: relative;
-}
-
-.pulse-ring::before {
-  content: '';
-  position: absolute;
-  inset: -6px;
-  border-radius: inherit;
-  border: 2px solid currentColor;
-  opacity: 0.55;
-  animation: pulseRing 1.8s var(--ease-smooth) infinite;
-  will-change: transform, opacity;
-}
-
-@keyframes pulseRing {
-  0% { transform: scale(0.92); opacity: 0.7; }
-  100% { transform: scale(1.35); opacity: 0; }
-}
-
-/* ============================================================
-   Navigation Components
-   ============================================================ */
-
-/* Top header with greeting */
-.top-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 22px 6px;
-  flex-shrink: 0;
-}
-
-.greet-title {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.greet-sub {
-  font-size: 12.5px;
-  color: var(--text-secondary);
-  margin-top: 2px;
-}
-
-/* Avatar/Role indicator */
-.avatar-role {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--gold), var(--coral));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  box-shadow: var(--shadow-md);
-  flex-shrink: 0;
-}
-
-/* Bottom navigation */
-.bottom-nav {
-  margin-top: auto;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 10px 10px calc(14px + env(safe-area-inset-bottom));
-  background: rgba(18, 26, 24, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid var(--border-soft);
-  flex-shrink: 0;
-}
-
-.nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--text-muted);
-  cursor: pointer;
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  transition: 
-    color var(--duration-fast) var(--ease-smooth),
-    background var(--duration-fast) var(--ease-smooth),
-    transform var(--duration-fast) var(--ease-smooth);
-}
-
-.nav-item .nav-ic {
-  font-size: 18px;
-  transition: transform var(--duration-fast) var(--ease-smooth);
-}
-
-.nav-item.active {
-  color: var(--teal);
-  background: var(--teal-glow);
-}
-
-.nav-item.active .nav-ic {
-  transform: translateY(-2px) scale(1.1);
-}
-
-/* Floating Action Button */
-.fab {
-  position: absolute;
-  right: 20px;
-  bottom: 88px;
-  z-index: 30;
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--coral), var(--gold));
-  color: #fff;
-  font-size: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-md);
-  cursor: pointer;
-  border: none;
-  animation: fabPulse 2.2s ease-in-out infinite;
-  will-change: box-shadow;
-}
-
-@keyframes fabPulse {
-  0%, 100% { box-shadow: var(--shadow-md), 0 0 0 0 var(--coral-soft); }
-  50% { box-shadow: var(--shadow-lg), 0 0 0 12px transparent; }
-}
-
-/* Section labels */
-.section-label {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  padding: 18px 22px 8px;
-  flex-shrink: 0;
-}
-
-/* ============================================================
-   Splash Screen
-   Polished animation with branded feel
-   ============================================================ */
-#screen-splash {
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background: linear-gradient(160deg, var(--bg-secondary) 0%, var(--teal-dark) 40%, var(--teal) 100%);
-  gap: 18px;
-}
-
-.logo-mark {
-  width: 120px;
-  height: 120px;
-  position: relative;
-  animation: floatY 3.4s ease-in-out infinite;
-  will-change: transform;
-}
-
-@keyframes floatY {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-
-.logo-ripple {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  animation: rippleOut 2.4s var(--ease-smooth) infinite;
-}
-
-.logo-ripple.d2 { animation-delay: 0.8s; }
-
-@keyframes rippleOut {
-  0% { transform: scale(0.7); opacity: 0.9; }
-  100% { transform: scale(1.6); opacity: 0; }
-}
-
-.splash-title {
-  font-size: 30px;
-  font-weight: 800;
-  letter-spacing: 0.5px;
-  margin-top: 6px;
-  color: #fff;
-}
-
-.splash-tag {
-  font-size: 13.5px;
-  font-weight: 400;
-  opacity: 0.85;
-  letter-spacing: 0.3px;
-  color: var(--text-secondary);
-}
-
-.splash-loader {
-  margin-top: 26px;
-  width: 120px;
-  height: 4px;
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.15);
-  overflow: hidden;
-}
-
-.splash-loader::after {
-  content: '';
-  display: block;
-  height: 100%;
-  width: 40%;
-  border-radius: 4px;
-  background: linear-gradient(90deg, var(--teal), var(--gold));
-  animation: loaderslide 1.1s ease-in-out infinite;
-}
-
-@keyframes loaderslide {
-  0% { transform: translateX(-100%); }
-  50% { transform: translateX(150%); }
-  100% { transform: translateX(280%); }
-}
-
-/* ============================================================
-   Login Screen
-   Clean role-based entry with visual distinction
-   ============================================================ */
-#screen-login {
-  justify-content: center;
-  align-items: center;
-  gap: 26px;
-  text-align: center;
-}
-
-.login-mark {
-  font-size: 44px;
-}
-
-.role-card {
-  width: 280px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  cursor: pointer;
-  text-align: left;
-  border-radius: var(--radius-md);
-}
-
-.role-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-}
-
-.role-ic {
-  width: 48px;
-  height: 48px;
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  flex-shrink: 0;
-}
-
-.role-ic.asha {
-  background: var(--teal-glow);
-  color: var(--teal);
-}
-
-.role-ic.mother {
-  background: var(--coral-soft);
-  color: var(--coral);
-}
-
-.role-title {
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--text-primary);
-}
-
-.role-sub {
-  font-size: 11.5px;
-  color: var(--text-secondary);
-  margin-top: 1px;
-}
-
-/* ============================================================
-   ASHA Dashboard
-   Improved stat cards with visual hierarchy
-   ============================================================ */
-.stat-row {
-  display: flex;
-  gap: 10px;
-  padding: 14px 22px 4px;
-}
-
-.stat-card {
-  flex: 1;
-  padding: 14px 12px;
-  text-align: center;
-  border-radius: var(--radius-md);
-}
-
-.stat-num {
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--text-primary);
-}
-
-.stat-label {
-  font-size: 10.5px;
-  color: var(--text-muted);
-  font-weight: 600;
-  margin-top: 2px;
-}
-
-.stat-critical .stat-num {
-  color: var(--danger);
-  animation: critBlink 1.6s ease-in-out infinite;
-}
-
-@keyframes critBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.stat-high .stat-num { color: var(--coral); }
-.stat-done .stat-num { color: var(--safe); }
-
-/* Patient list with risk indicators */
-.patient-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 13px 16px;
-  margin: 0 22px 10px;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: transform var(--duration-fast) var(--ease-smooth);
-}
-
-.patient-row:hover {
-  transform: translateX(3px);
-}
-
-.patient-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.patient-dot.high { background: var(--coral); }
-.patient-dot.crit {
-  background: var(--danger);
-  box-shadow: 0 0 0 4px var(--danger-soft);
-  animation: critBlink 1.4s ease-in-out infinite;
-}
-.patient-dot.ok { background: var(--safe); }
-
-.patient-name {
-  font-weight: 600;
-  font-size: 13.5px;
-  color: var(--text-primary);
-  display: inline-block;
-}
-
-.patient-meta {
-  font-size: 11px;
-  color: var(--text-secondary);
-}
-
-/* ============================================================
-   Voice Input Screen
-   Responsive mic with clear visual feedback
-   ============================================================ */
-#screen-voice {
-  align-items: center;
-  text-align: center;
-  justify-content: flex-start;
-  padding-top: 44px;
-}
-
-.mic-wrap {
-  position: relative;
-  width: 180px;
-  height: 180px;
-  margin: 40px auto 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mic-ripple {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 2px solid var(--teal);
-  opacity: 0;
-}
-
-.mic-ripple.animate {
-  animation: micRipple 2s var(--ease-smooth) infinite;
-}
-
-@keyframes micRipple {
-  0% { transform: scale(0.6); opacity: 0.6; }
-  100% { transform: scale(1.5); opacity: 0; }
-}
-
-.mic-btn {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
-  color: #fff;
-  font-size: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-lg);
-  z-index: 2;
-  transition: transform var(--duration-fast) var(--ease-smooth);
-  will-change: transform;
-}
-
-.mic-btn.recording {
-  background: linear-gradient(135deg, var(--coral), var(--coral-dark));
-  transform: scale(1.05);
-}
-
-/* Wave animation bars */
-.wave-bars {
-  display: flex;
-  gap: 5px;
-  align-items: flex-end;
-  height: 36px;
-  margin: 14px auto 0;
-  justify-content: center;
-}
-
-.wave-bars span {
-  display: none;
-  width: 6px;
-  border-radius: 4px;
-  background: var(--coral);
-  will-change: height;
-}
-
-.wave-bars.animate span {
-  display: block;
-  animation: waveMove 0.9s ease-in-out infinite;
-}
-
-.wave-bars span:nth-child(1) { animation-delay: 0s; }
-.wave-bars span:nth-child(2) { animation-delay: 0.15s; }
-.wave-bars span:nth-child(3) { animation-delay: 0.3s; }
-.wave-bars span:nth-child(4) { animation-delay: 0.45s; }
-.wave-bars span:nth-child(5) { animation-delay: 0.6s; }
-
-@keyframes waveMove {
-  0%, 100% { height: 8px; }
-  50% { height: 34px; }
-}
-
-/* Vitals form with staggered reveal */
-.vitals-form {
-  width: 100%;
-  padding: 18px 22px 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.vital-field {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
-  border-radius: var(--radius-md);
-  opacity: 0;
-  transform: translateY(8px);
-  transition: 
-    opacity var(--duration-normal) var(--ease-smooth),
-    transform var(--duration-normal) var(--ease-smooth);
-  will-change: opacity, transform;
-}
-
-.vital-field.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.vital-key {
-  font-size: 12px;
-  color: var(--text-muted);
-  font-weight: 600;
-}
-
-.vital-val {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.vital-val.flag { color: var(--danger); }
-
-/* ============================================================
-   Risk Prediction Screen
-   Smooth gauge with sequential action reveal
-   ============================================================ */
-#screen-risk {
-  align-items: center;
-  text-align: center;
-  padding-top: 30px;
-}
-
-.gauge-wrap {
-  position: relative;
-  width: 210px;
-  height: 210px;
-  margin: 10px auto 6px;
-}
-
-.gauge-wrap svg { transform: rotate(-90deg); }
-
-.gauge-track {
-  fill: none;
-  stroke: var(--teal-glow);
-  stroke-width: 16;
-}
-
-.gauge-fill {
-  fill: none;
-  stroke: url(#gaugeGrad);
-  stroke-width: 16;
-  stroke-linecap: round;
-  stroke-dasharray: 565;
-  stroke-dashoffset: 565;
-  transition: stroke-dashoffset 1.6s var(--ease-smooth);
-  will-change: stroke-dashoffset;
-}
-
-.gauge-center {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.gauge-pct {
-  font-size: 38px;
-  font-weight: 800;
-  color: var(--danger);
-}
-
-.gauge-lbl {
-  font-size: 11px;
-  color: var(--text-muted);
-  font-weight: 600;
-  margin-top: -2px;
-}
-
-.status-pill {
-  margin-top: 8px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 20px;
-  border-radius: 999px;
-  background: var(--danger-soft);
-  color: var(--danger);
-  font-weight: 800;
-  font-size: 15px;
-  letter-spacing: 1px;
-  visibility: hidden;
-  transition: visibility var(--duration-normal);
-}
-
-.status-pill.visible {
-  visibility: visible;
-  animation: critBlink 1.4s ease-in-out infinite;
-}
-
-.status-pill .dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--danger);
-}
-
-/* Action list with sequential reveal */
-.action-list {
-  width: 100%;
-  padding: 16px 22px 6px;
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-}
-
-.action-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  border-radius: var(--radius-md);
-  opacity: 0.35;
-  transform: translateX(-8px);
-  transition: 
-    opacity var(--duration-normal) var(--ease-smooth),
-    transform var(--duration-normal) var(--ease-smooth);
-  will-change: opacity, transform;
-}
-
-.action-item.done {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.action-check {
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  border: 2px solid var(--teal-glow);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  color: #fff;
-  flex-shrink: 0;
-  transition: 
-    background var(--duration-normal) var(--ease-smooth),
-    border-color var(--duration-normal) var(--ease-smooth);
-}
-
-.action-item.done .action-check {
-  background: var(--safe);
-  border-color: var(--safe);
-}
-
-.action-text {
-  font-size: 13px;
-  font-weight: 600;
-  text-align: left;
-  color: var(--text-primary);
-}
-
-/* Confetti layer */
-.confetti-layer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 70;
-  overflow: hidden;
-}
-
-.confetti-piece {
-  position: absolute;
-  top: -10px;
-  width: 8px;
-  height: 14px;
-  opacity: 0;
-  border-radius: 2px;
-  will-change: transform, opacity;
-}
-
-.note-line {
-  font-size: 12px;
-  color: var(--text-muted);
-  padding: 10px 30px 2px;
-  line-height: 1.5;
-}
-
-/* ============================================================
-   AI Chat Assistant
-   Conversational UI with message bubbles
-   ============================================================ */
-#screen-chat {
-  padding-top: 26px;
-}
-
-.chat-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px 20px 10px;
-  flex-shrink: 0;
-}
-
-.chat-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.chat-lock {
-  font-size: 11px;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.chat-body {
-  flex: 1;
-  padding: 6px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  overflow-y: auto;
-  min-height: 0;
-}
-
-/* Message bubbles */
-.msg {
-  max-width: 78%;
-  padding: 11px 14px;
-  border-radius: 18px;
-  font-size: 13px;
-  line-height: 1.45;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: msgIn 0.45s var(--ease-smooth) forwards;
-  will-change: opacity, transform;
-}
-
-@keyframes msgIn {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.msg.her {
-  align-self: flex-start;
-  background: var(--bg-card);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border-soft);
-  border-bottom-left-radius: 6px;
-}
-
-.msg.ai {
-  align-self: flex-end;
-  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
-  color: #fff;
-  border-bottom-right-radius: 6px;
-}
-
-/* Typing indicator */
-.msg-typing {
-  align-self: flex-start;
-  background: var(--bg-card);
-  padding: 14px 18px;
-  border-radius: 18px;
-  border-bottom-left-radius: 6px;
-}
-
-.typing-dots {
-  display: flex;
-  gap: 4px;
-}
-
-.typing-dots span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--text-muted);
-  animation: typingBounce 1.4s ease-in-out infinite;
-}
-
-.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
-.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes typingBounce {
-  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
-  30% { transform: translateY(-6px); opacity: 1; }
-}
-
-/* Chat input row */
-.chat-input-row {
-  display: flex;
-  gap: 8px;
-  padding: 10px 16px calc(14px + env(safe-area-inset-bottom));
-  background: rgba(18, 26, 24, 0.85);
-  backdrop-filter: blur(20px);
-  border-top: 1px solid var(--border-soft);
-  flex-shrink: 0;
-}
-
-.chat-input {
-  flex: 1;
-  border: none;
-  border-radius: 999px;
-  padding: 12px 16px;
-  font-size: 12.5px;
-  background: var(--bg-card);
-  color: var(--text-primary);
-  box-shadow: inset 0 0 0 1px var(--border-medium);
-  font-family: inherit;
-  outline: none;
-  transition: box-shadow var(--duration-fast);
-}
-
-.chat-input::placeholder {
-  color: var(--text-muted);
-}
-
-.chat-input:focus {
-  box-shadow: inset 0 0 0 2px var(--teal);
-}
-
-.chat-send {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: none;
-  background: var(--coral);
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform var(--duration-fast);
-}
-
-.chat-send:active {
-  transform: scale(0.9);
-}
-
-/* ============================================================
-   Mother Dashboard
-   Warm, supportive feel with progress tracking
-   ============================================================ */
-.preg-card {
-  margin: 14px 22px;
-  padding: 20px;
-}
-
-.preg-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 10px;
-}
-
-.preg-weeks {
-  font-size: 19px;
-  font-weight: 800;
-  color: var(--text-primary);
-}
-
-.preg-bar-track {
-  height: 10px;
-  border-radius: 6px;
-  background: var(--teal-glow);
-  overflow: hidden;
-}
-
-.preg-bar-fill {
-  height: 100%;
-  border-radius: 6px;
-  background: linear-gradient(90deg, var(--gold), var(--coral));
-  width: 0%;
-  transition: width 1.4s var(--ease-smooth);
-  will-change: width;
-}
-
-.preg-sub {
-  font-size: 11px;
-  color: var(--text-secondary);
-  margin-top: 8px;
-}
-
-/* Quick action cards */
-.quick-actions {
-  display: flex;
-  gap: 10px;
-  padding: 4px 22px 6px;
-}
-
-.qa-card {
-  flex: 1;
-  padding: 16px 8px;
-  text-align: center;
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  transition: transform var(--duration-fast) var(--ease-smooth);
-}
-
-.qa-card:hover {
-  transform: translateY(-3px);
-}
-
-.qa-ic {
-  font-size: 22px;
-  margin-bottom: 6px;
-  display: block;
-}
-
-.qa-label {
-  font-size: 10.5px;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-/* Safe word button */
-.safeword-btn {
-  margin: 14px auto 8px;
-  display: block;
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  font-size: 11px;
-  text-decoration: underline;
-  cursor: pointer;
-  opacity: 0.7;
-  transition: opacity var(--duration-fast);
-}
-
-.safeword-btn:hover {
-  opacity: 1;
-}
-
-/* ============================================================
-   Emergency Contacts Screen
-   ============================================================ */
-.contact-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  margin: 0 22px 10px;
-  border-radius: var(--radius-md);
-}
-
-.contact-ic {
-  width: 42px;
-  height: 42px;
-  border-radius: var(--radius-sm);
-  flex-shrink: 0;
-  background: var(--coral-soft);
-  color: var(--coral);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 19px;
-}
-
-.contact-name {
-  font-weight: 700;
-  font-size: 13.5px;
-  color: var(--text-primary);
-}
-
-.contact-meta {
-  font-size: 11px;
-  color: var(--text-secondary);
-  margin-top: 1px;
-}
-
-.contact-actions {
-  display: flex;
-  gap: 6px;
-}
-
-.icon-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-sm);
-  border: none;
-  cursor: pointer;
-  background: var(--teal-glow);
-  color: var(--teal);
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform var(--duration-fast);
-}
-
-.icon-btn.danger {
-  background: var(--danger-soft);
-  color: var(--danger);
-}
-
-.icon-btn:active {
-  transform: scale(0.9);
-}
-
-/* Contact form */
-.contact-form {
-  margin: 0 22px 14px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.contact-form input {
-  width: 100%;
-  border: none;
-  border-radius: var(--radius-sm);
-  padding: 11px 13px;
-  font-size: 13px;
-  background: var(--bg-card);
-  color: var(--text-primary);
-  box-shadow: inset 0 0 0 1px var(--border-medium);
-  font-family: inherit;
-  outline: none;
-}
-
-.contact-form input::placeholder {
-  color: var(--text-muted);
-}
-
-.contact-form input:focus {
-  box-shadow: inset 0 0 0 2px var(--teal);
-}
-
-.contact-form-row {
-  display: flex;
-  gap: 8px;
-}
-
-.contact-form-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 2px;
-}
-
-.contact-form-actions .btn {
-  flex: 1;
-  padding: 11px;
-  font-size: 13px;
-}
-
-.add-contact-btn {
-  margin: 6px 22px 18px;
-  width: calc(100% - 44px);
-}
-
-/* ============================================================
-   Medical History Screen
-   Clean timeline view with high-risk flags
-   ============================================================ */
-.history-patient-card {
-  margin: 14px 22px;
-  padding: 18px;
-  text-align: center;
-}
-
-.history-patient-name {
-  font-size: 17px;
-  font-weight: 800;
-  color: var(--text-primary);
-}
-
-.history-patient-meta {
-  font-size: 11.5px;
-  color: var(--text-secondary);
-  margin-top: 3px;
-}
-
-/* Timeline component */
-.timeline {
-  padding: 6px 22px 10px;
-  position: relative;
-}
-
-.timeline-item {
-  position: relative;
-  padding: 0 0 20px 26px;
-  border-left: 2px solid var(--teal-glow);
-  margin-left: 6px;
-}
-
-.timeline-item:last-child {
-  border-color: transparent;
-  padding-bottom: 2px;
-}
-
-.timeline-dot {
-  position: absolute;
-  left: -7px;
-  top: 2px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--teal);
-  box-shadow: 0 0 0 4px var(--teal-glow);
-}
-
-.timeline-item.flag .timeline-dot {
-  background: var(--danger);
-  box-shadow: 0 0 0 4px var(--danger-soft);
-}
-
-.timeline-date {
-  font-size: 10.5px;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-}
-
-.timeline-note {
-  font-size: 13px;
-  font-weight: 500;
-  margin-top: 2px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius-sm);
-  padding: 10px 12px;
-  backdrop-filter: blur(10px);
-}
-
-/* Add entry form */
-.add-entry-form {
-  margin: 4px 22px 16px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.add-entry-form input,
-.add-entry-form textarea {
-  width: 100%;
-  border: none;
-  border-radius: var(--radius-sm);
-  padding: 11px 13px;
-  font-size: 13px;
-  background: var(--bg-card);
-  color: var(--text-primary);
-  box-shadow: inset 0 0 0 1px var(--border-medium);
-  font-family: inherit;
-  resize: none;
-  outline: none;
-}
-
-.add-entry-form input::placeholder,
-.add-entry-form textarea::placeholder {
-  color: var(--text-muted);
-}
-
-.add-entry-form input:focus,
-.add-entry-form textarea:focus {
-  box-shadow: inset 0 0 0 2px var(--teal);
-}
-
-.add-entry-form textarea {
-  min-height: 60px;
-}
-
-/* ============================================================
-   Control Bar & Overlays
-   ============================================================ */
-.control-bar {
-  position: absolute;
-  top: 30px;
-  right: 14px;
-  z-index: 56;
-  display: flex;
-  gap: 6px;
-}
-
-.ctrl-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: var(--radius-sm);
-  border: none;
-  cursor: pointer;
-  background: rgba(30, 45, 42, 0.8);
-  backdrop-filter: blur(8px);
-  font-size: 13px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-sm);
-  transition: 
-    background var(--duration-fast),
-    color var(--duration-fast);
-  color: var(--text-secondary);
-}
-
-.ctrl-btn.on {
-  background: var(--teal);
-  color: #fff;
-}
+.control-bar{
+  position:absolute; top:30px; right:14px; z-index:56; display:flex; gap:6px;
+}
+.ctrl-btn{
+  width:30px; height:30px; border-radius:10px; border:none; cursor:pointer;
+  background:rgba(255,255,255,0.75);
+  backdrop-filter:blur(8px);
+  font-size:13px;
+  display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  transition:all .2s var(--ease); color:var(--ink);
+}
+.ctrl-btn.on{ background:var(--teal); color:#fff; }
+#roleToggle{ position:relative; }
+#roleToggle::after{
+  content:''; position:absolute; bottom:-7px; left:50%; transform:translateX(-50%);
+  font-size:6px; font-weight:800; background:#fff; padding:1px 3px; border-radius:4px; line-height:1;
+}
+#roleToggle.role-asha::after{ content:'ASHA'; }
+#roleToggle.role-mother::after{ content:'MOM'; }
+.ctrl-btn.off-on{ background:var(--coral); color:#fff; box-shadow:0 4px 14px rgba(232,106,90,0.45); }
 
 /* Offline badge */
-.offline-badge {
-  position: absolute;
-  top: 28px;
-  left: 50%;
-  transform: translateX(-50%) translateY(-60px);
-  z-index: 55;
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  font-size: 11px;
-  font-weight: 600;
-  padding: 8px 16px;
-  border-radius: 999px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  box-shadow: var(--shadow-md);
-  transition: 
-    transform var(--duration-normal) var(--ease-smooth),
-    opacity var(--duration-normal);
-  opacity: 0;
-  pointer-events: none;
+.offline-badge{
+  position:absolute; top:66px; left:50%; transform:translateX(-50%) translateY(-60px);
+  z-index:55; background:var(--ink); color:#fff; font-size:11px; font-weight:600;
+  padding:9px 16px; border-radius:999px; display:flex; align-items:center; justify-content:center;
+  gap:7px; flex-wrap:wrap; text-align:center; max-width:86%;
+  box-shadow:0 10px 24px rgba(0,0,0,0.25); transition:transform .4s var(--ease), opacity .4s;
+  opacity:0; pointer-events:none;
 }
+.offline-badge.show{ transform:translateX(-50%) translateY(0); opacity:1; }
+.offline-badge .blip{ width:7px; height:7px; border-radius:50%; background:var(--gold); animation:critBlink 1.2s ease-in-out infinite; }
+.offline-badge .mesh-dots{ display:flex; align-items:flex-end; gap:3px; }
+.offline-badge .mesh-dots i{ width:4px; height:4px; border-radius:50%; background:var(--gold); animation:meshPulse 1.2s ease-in-out infinite; }
+.offline-badge .mesh-dots i:nth-child(2){ animation-delay:.2s; }
+.offline-badge .mesh-dots i:nth-child(3){ animation-delay:.4s; }
+.offline-badge .last-sync{ font-size:9.5px; opacity:.75; width:100%; }
+@keyframes meshPulse{0%,100%{opacity:.35; transform:scale(.7)}50%{opacity:1; transform:scale(1.3)}}
 
-.offline-badge.show {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
+/* SOS button */
+.sos-btn{
+  border:none; cursor:pointer; padding:8px 12px; border-radius:999px;
+  background:linear-gradient(135deg, var(--danger), #B33B32);
+  color:#fff; font-size:11px; font-weight:800; letter-spacing:.5px;
+  box-shadow:0 6px 16px rgba(216,72,60,0.4);
+  animation:sosPulse 1.8s ease-in-out infinite;
 }
+@keyframes sosPulse{0%,100%{box-shadow:0 6px 16px rgba(216,72,60,0.4)}50%{box-shadow:0 6px 26px rgba(216,72,60,0.75)}}
 
-.offline-badge .blip {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--gold);
-  animation: critBlink 1.2s ease-in-out infinite;
+/* Smart suggestions */
+.section-label{ font-size:12px; font-weight:700; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.6px; padding:18px 22px 8px; }
+.suggestion-card{ margin:0 22px 10px; padding:12px 14px; display:flex; gap:10px; align-items:center; border-radius:16px; font-size:12px; }
+.suggestion-ic{ width:32px; height:32px; border-radius:10px; background:rgba(248,198,48,0.2); display:flex; align-items:center; justify-content:center; font-size:15px; flex-shrink:0; }
+
+/* Patient search & list */
+.search-wrap{ padding:8px 22px 4px; }
+.search-input{
+  width:100%; border:none; border-radius:12px; padding:11px 14px; font-size:13px;
+  background:#fff; box-shadow:inset 0 0 0 1px rgba(0,0,0,0.06); font-family:inherit;
 }
-
-/* Demo overlay */
-.demo-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 80;
-  pointer-events: none;
+.filter-chips{ display:flex; gap:6px; margin-top:8px; flex-wrap:wrap; }
+.filter-chip{
+  border:none; padding:7px 12px; border-radius:999px; background:rgba(10,110,92,0.08);
+  color:var(--teal); font-size:11px; font-weight:700; cursor:pointer; transition:all .2s;
 }
-
-.demo-tooltip {
-  position: absolute;
-  bottom: 100px;
-  left: 22px;
-  right: 22px;
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  border-radius: var(--radius-lg);
-  padding: 14px 16px;
-  box-shadow: var(--shadow-lg);
-  pointer-events: auto;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: 
-    opacity var(--duration-normal) var(--ease-smooth),
-    transform var(--duration-normal) var(--ease-smooth);
-  border: 1px solid var(--border-soft);
+.filter-chip.active{ background:var(--teal); color:#fff; }
+.patient-row{
+  display:flex; align-items:center; gap:12px; padding:13px 16px; margin:0 22px 10px; border-radius:18px;
+  cursor:pointer; transition:transform .2s var(--ease);
 }
+.patient-row:hover{ transform:translateX(3px); }
+.patient-dot{ width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.patient-dot.high{ background:var(--coral); }
+.patient-dot.crit{ background:var(--danger); box-shadow:0 0 0 4px rgba(216,72,60,0.18); }
+.patient-dot.ok{ background:var(--safe); }
+.patient-name{ font-weight:600; font-size:13.5px; }
+.patient-meta{ font-size:11px; color:var(--ink-soft); }
 
-.demo-tooltip.show {
-  opacity: 1;
-  transform: translateY(0);
+/* Visits */
+.visit-row{
+  display:flex; align-items:center; gap:12px; padding:14px 16px; margin:0 22px 10px; border-radius:18px; cursor:pointer;
 }
+.visit-time{ font-size:12px; font-weight:800; color:var(--teal); min-width:52px; }
+.status-pending{ background:rgba(248,198,48,0.2); color:#8a6a00; }
+.status-done{ background:rgba(46,158,99,0.13); color:var(--safe); }
+.status-missed{ background:rgba(216,72,60,0.13); color:var(--danger); }
 
-.demo-step {
-  font-size: 10px;
-  color: var(--gold);
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 4px;
+/* Alerts */
+.alert-row{
+  display:flex; align-items:center; gap:12px; padding:14px 16px; margin:0 22px 10px; border-radius:18px; cursor:pointer;
+  border-left:5px solid transparent;
 }
+.priority-critical{ border-left-color:var(--danger); }
+.priority-high{ border-left-color:var(--coral); }
+.priority-normal{ border-left-color:var(--teal); }
+.alert-symptom{ font-size:12px; color:var(--ink-soft); margin-top:2px; }
 
-.demo-text {
-  font-size: 12.5px;
-  line-height: 1.4;
+/* ============================================================
+   SYMPTOM TRACKER
+   ============================================================ */
+.tracker-cat{ margin:14px 22px 8px; font-size:13px; font-weight:700; display:flex; gap:6px; }
+.sym-grid{ display:flex; flex-wrap:wrap; gap:8px; padding:0 22px; }
+.sym-chip{
+  border-radius:999px; padding:8px 14px; border:1px solid rgba(10,110,92,0.15);
+  background:#fff; font-size:12px; font-weight:600; cursor:pointer; transition:all .2s;
 }
-
-.demo-close {
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  background: none;
-  border: none;
-  color: var(--text-muted);
-  font-size: 14px;
-  cursor: pointer;
+.sym-chip.selected{ background:var(--teal); color:#fff; border-color:var(--teal); }
+.bp-card{ margin:10px 22px; padding:14px; display:flex; gap:10px; align-items:center; }
+.bp-input{ width:70px; border:1px solid rgba(0,0,0,0.08); border-radius:10px; padding:9px; font-size:13px; font-family:inherit; }
+.bp-category{ font-size:11px; font-weight:700; padding:4px 10px; border-radius:999px; }
+.bp-cat-normal{ background:rgba(46,158,99,0.14); color:var(--safe); }
+.bp-cat-elevated{ background:rgba(248,198,48,0.2); color:#8a6a00; }
+.bp-cat-high{ background:rgba(232,106,90,0.15); color:var(--coral-dark); }
+.bp-cat-crisis{ background:rgba(216,72,60,0.15); color:var(--danger); }
+.custom-row{ display:flex; gap:8px; padding:0 22px; margin-top:10px; }
+.custom-row input{
+  flex:1; border:1px solid rgba(0,0,0,0.08); border-radius:999px; padding:10px 14px; font-size:12px; font-family:inherit; background:#fff;
 }
+.risk-result{ margin:12px 22px; padding:16px; text-align:center; }
+.risk-bar-track{ height:14px; border-radius:8px; background:rgba(10,110,92,0.12); overflow:hidden; margin:10px 0 6px; }
+.risk-bar-fill{ height:100%; background:linear-gradient(90deg, var(--gold), var(--coral)); border-radius:8px; transition:width .8s var(--ease); }
+.risk-bar-fill.critical{ background:linear-gradient(90deg, var(--coral), var(--danger)); }
+.selected-chips{ display:flex; flex-wrap:wrap; gap:6px; padding:0 22px; }
+.selected-chip{ background:var(--teal); color:#fff; padding:6px 10px; border-radius:999px; font-size:11px; font-weight:600; display:inline-flex; align-items:center; gap:5px; }
+.selected-chip button{ background:none; border:none; color:#fff; cursor:pointer; font-size:13px; }
+.sym-history-item{ display:flex; justify-content:space-between; padding:10px 14px; margin:0 22px 8px; border-radius:14px; font-size:12px; }
+.sym-history-item .level-low{ color:var(--safe); }
+.sym-history-item .level-medium{ color:#b8860b; }
+.sym-history-item .level-high{ color:var(--coral-dark); }
+.sym-history-item .level-critical{ color:var(--danger); }
 
-/* Toast notification */
-.toast {
-  position: absolute;
-  bottom: 100px;
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background: var(--bg-secondary);
-  color: var(--text-primary);
-  padding: 12px 20px;
-  border-radius: var(--radius-md);
-  font-size: 12px;
-  font-weight: 600;
-  opacity: 0;
-  transition: 
-    opacity var(--duration-normal) var(--ease-smooth),
-    transform var(--duration-normal) var(--ease-smooth);
-  z-index: 90;
-  pointer-events: none;
-  text-align: center;
-  max-width: 85%;
-  box-shadow: var(--shadow-md);
-  border: 1px solid var(--border-soft);
+/* ============================================================
+   CHAT ENHANCEMENTS
+   ============================================================ */
+.lang-switch{ display:flex; gap:4px; margin:0 16px 6px; }
+.lang-btn{
+  border:none; padding:6px 10px; border-radius:999px; font-size:10px; font-weight:700;
+  background:rgba(10,110,92,0.08); color:var(--teal); cursor:pointer; transition:all .2s;
 }
-
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
+.lang-btn.active{ background:var(--teal); color:#fff; }
+.quick-replies{ display:flex; gap:6px; padding:4px 16px 6px; overflow-x:auto; }
+.quick-chip{
+  flex-shrink:0; border:none; padding:8px 12px; border-radius:999px; background:rgba(232,106,90,0.12);
+  color:var(--coral-dark); font-size:11px; font-weight:700; cursor:pointer;
 }
+.msg-lang{ display:block; font-size:8.5px; opacity:.75; margin-top:4px; letter-spacing:.4px; text-align:right; }
 
-/* Safe word emergency modal */
-.sw-modal-veil {
-  position: absolute;
-  inset: 0;
-  z-index: 95;
-  background: rgba(10, 15, 18, 0.75);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--duration-normal) var(--ease-smooth);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-}
+/* Visit complete summary */
+.visit-summary{ margin:10px 22px 0; padding:14px; text-align:left; display:none; }
+.visit-summary .vs-line{ font-size:12px; color:var(--ink-soft); margin-top:6px; }
 
-.sw-modal-veil.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.sw-modal {
-  width: 100%;
-  max-width: 300px;
-  background: var(--bg-secondary);
-  border-radius: var(--radius-lg);
-  padding: 22px 20px 20px;
-  box-shadow: var(--shadow-lg);
-  text-align: center;
-  transform: translateY(16px) scale(0.96);
-  opacity: 0;
-  transition: 
-    transform var(--duration-normal) var(--ease-smooth),
-    opacity var(--duration-normal) var(--ease-smooth);
-  border: 1px solid var(--border-soft);
-}
-
-.sw-modal-veil.show .sw-modal {
-  transform: translateY(0) scale(1);
-  opacity: 1;
-}
-
-.sw-modal-title {
-  font-size: 16px;
-  font-weight: 800;
-  color: var(--danger);
-  letter-spacing: 0.3px;
-  animation: critBlink 1.4s ease-in-out infinite;
-}
-
-.sw-modal-sub {
-  font-size: 11.5px;
-  color: var(--text-secondary);
-  margin-top: 4px;
-  margin-bottom: 14px;
-}
-
-.sw-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-  text-align: left;
-}
-
-.sw-close-btn {
-  margin-top: 16px;
-  width: 100%;
-  background: var(--teal-glow);
-  color: var(--teal);
-  border: none;
-  padding: 12px;
-  border-radius: var(--radius-sm);
-  font-weight: 700;
-  font-size: 13px;
-  cursor: pointer;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: 
-    opacity var(--duration-normal) var(--ease-smooth),
-    transform var(--duration-normal) var(--ease-smooth);
-}
-
-.sw-close-btn.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.sw-success {
-  margin-top: 12px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--safe);
-  opacity: 0;
-  transform: translateY(6px);
-  transition: 
-    opacity var(--duration-normal) var(--ease-smooth),
-    transform var(--duration-normal) var(--ease-smooth);
-}
-
-.sw-success.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Footer credit */
-footer.credit {
-  position: fixed;
-  bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 10px;
-  color: var(--text-muted);
-  opacity: 0.5;
-  letter-spacing: 0.3px;
+/* Emergency countdown */
+.sw-countdown{
+  font-size:15px; font-weight:800; color:var(--danger); margin:10px 0 14px;
+  animation:critBlink 1s ease-in-out infinite;
 }
 
 /* ============================================================
-   Responsive Adjustments
+   LOGIN / SPLASH / EXISTING
    ============================================================ */
-@media (max-width: 400px) {
-  .phone {
-    width: 100vw;
-    height: 100vh;
-    max-height: 100vh;
-    border-radius: 0;
-    box-shadow: none;
-  }
-  
-  footer.credit {
-    display: none;
-  }
+#screen-splash{
+  align-items:center; justify-content:center; text-align:center;
+  background:linear-gradient(160deg, var(--teal-dark) 0%, var(--teal) 42%, var(--coral) 130%);
+  color:#fff; gap:18px;
+}
+.logo-mark{ width:120px; height:120px; position:relative; animation:floatY 3.4s ease-in-out infinite; }
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.logo-ripple{ position:absolute; inset:0; border-radius:50%; border:2px solid rgba(255,255,255,0.55); animation:ripple 2.4s var(--ease) infinite; }
+.logo-ripple.d2{ animation-delay:.8s }
+@keyframes ripple{0%{transform:scale(.7); opacity:.9}100%{transform:scale(1.6); opacity:0}}
+.splash-title{ font-size:30px; font-weight:800; letter-spacing:.5px; margin-top:6px;}
+.splash-tag{ font-size:13.5px; font-weight:400; opacity:.92; letter-spacing:.3px;}
+.splash-loader{ margin-top:26px; width:120px; height:4px; border-radius:4px; background:rgba(255,255,255,0.25); overflow:hidden;}
+.splash-loader::after{ content:''; display:block; height:100%; width:40%; border-radius:4px; background:#fff; animation:loaderslide 1.1s ease-in-out infinite;}
+@keyframes loaderslide{0%{transform:translateX(-100%)}50%{transform:translateX(150%)}100%{transform:translateX(280%)}}
+#screen-login{ justify-content:center; align-items:center; gap:26px; text-align:center;}
+.login-mark{ font-size:44px; }
+.role-card{ width:280px; padding:20px; display:flex; align-items:center; gap:14px; cursor:pointer; text-align:left; border-radius:20px; }
+.role-ic{ width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0;}
+.role-ic.asha{ background:rgba(10,110,92,0.15); color:var(--teal); }
+.role-ic.mother{ background:rgba(232,106,90,0.15); color:var(--coral); }
+.role-title{ font-weight:700; font-size:15px; }
+.role-sub{ font-size:11.5px; color:var(--ink-soft); margin-top:1px;}
+
+/* Voice screen */
+.mic-wrap{ position:relative; width:180px; height:180px; margin:40px auto 8px; display:flex; align-items:center; justify-content:center; }
+.mic-ripple{ position:absolute; inset:0; border-radius:50%; border:2px solid var(--teal); opacity:0; }
+.mic-ripple.animate{ animation:micRipple 2s var(--ease) infinite; }
+@keyframes micRipple{0%{transform:scale(.6); opacity:.6}100%{transform:scale(1.5); opacity:0}}
+.mic-btn{
+  width:120px; height:120px; border-radius:50%; border:none; cursor:pointer;
+  background:linear-gradient(135deg, var(--teal), var(--teal-dark));
+  color:#fff; font-size:44px; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 16px 40px rgba(10,110,92,0.4); z-index:2;
+}
+.mic-btn.recording{ background:linear-gradient(135deg, var(--coral), var(--coral-dark)); transform:scale(1.05); }
+.wave-bars{ display:flex; gap:5px; align-items:flex-end; height:36px; margin:14px auto 0; justify-content:center; }
+.wave-bars span{ display:none; width:6px; border-radius:4px; background:var(--coral); }
+.wave-bars.animate span{ display:block; animation:waveMove .9s ease-in-out infinite; }
+@keyframes waveMove{0%,100%{height:8px}50%{height:34px}}
+.vitals-form{ width:100%; padding:18px 22px 10px; display:flex; flex-direction:column; gap:10px; }
+.vital-field{ display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-radius:16px; opacity:0; transform:translateY(8px); transition:all .4s var(--ease);}
+.vital-field.show{ opacity:1; transform:translateY(0); }
+.vital-key{ font-size:12px; color:var(--ink-soft); font-weight:600; }
+.vital-val{ font-size:14px; font-weight:700; }
+.vital-val.flag{ color:var(--danger); }
+
+/* Risk screen */
+#screen-risk{ align-items:center; text-align:center; padding-top:30px; }
+.gauge-wrap{ position:relative; width:210px; height:210px; margin:10px auto 6px; }
+.gauge-wrap svg{ transform:rotate(-90deg); }
+.gauge-track{ fill:none; stroke:rgba(10,110,92,0.12); stroke-width:16; }
+.gauge-fill{ fill:none; stroke:url(#gaugeGrad); stroke-width:16; stroke-linecap:round; stroke-dasharray:565; stroke-dashoffset:565; transition:stroke-dashoffset 1.6s var(--ease);}
+.gauge-center{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.gauge-pct{ font-size:38px; font-weight:800; color:var(--danger); }
+.gauge-lbl{ font-size:11px; color:var(--ink-soft); font-weight:600; margin-top:-2px;}
+.status-pill{ margin-top:8px; display:inline-flex; align-items:center; gap:8px; padding:8px 20px; border-radius:999px; background:rgba(216,72,60,0.14); color:var(--danger); font-weight:800; font-size:15px; letter-spacing:1px; animation:critBlink 1.4s ease-in-out infinite;}
+.status-pill .dot{ width:8px; height:8px; border-radius:50%; background:var(--danger); }
+.action-list{ width:100%; padding:16px 22px 6px; display:flex; flex-direction:column; gap:9px; }
+.action-item{ display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:16px; opacity:.35; transform:translateX(-8px); transition:all .45s var(--ease);}
+.action-item.done{ opacity:1; transform:translateX(0); }
+.action-check{ width:26px; height:26px; border-radius:50%; border:2px solid rgba(10,110,92,0.25); display:flex; align-items:center; justify-content:center; font-size:13px; color:#fff; flex-shrink:0; transition:all .35s var(--ease);}
+.action-item.done .action-check{ background:var(--safe); border-color:var(--safe); }
+.action-text{ font-size:13px; font-weight:600; text-align:left; }
+.confetti-layer{ position:absolute; inset:0; pointer-events:none; z-index:70; overflow:hidden; }
+.confetti-piece{ position:absolute; top:-10px; width:8px; height:14px; opacity:0; border-radius:2px; }
+.note-line{ font-size:12px; color:var(--ink-soft); padding:10px 30px 2px; line-height:1.5; }
+
+/* Chat */
+.chat-header{ display:flex; align-items:center; justify-content:space-between; padding:14px 20px 6px; }
+.chat-title{ display:flex; align-items:center; gap:10px; }
+.chat-body{ flex:1; padding:6px 16px; display:flex; flex-direction:column; gap:10px; overflow-y:auto; }
+.msg{ max-width:78%; padding:11px 14px; border-radius:18px; font-size:13px; line-height:1.45; opacity:0; transform:translateY(10px); animation:msgIn .45s var(--ease) forwards; }
+@keyframes msgIn{ to{opacity:1; transform:translateY(0);} }
+.msg.her{ align-self:flex-start; background:#fff; border-bottom-left-radius:6px; box-shadow:0 4px 14px rgba(0,0,0,0.06); }
+.msg.ai{ align-self:flex-end; background:linear-gradient(135deg, var(--teal), var(--teal-dark)); color:#fff; border-bottom-right-radius:6px; }
+.chat-input-row{ display:flex; gap:8px; padding:10px 16px calc(14px + env(safe-area-inset-bottom)); background:rgba(255,255,255,.7); backdrop-filter:blur(14px); }
+.chat-input{ flex:1; border:none; border-radius:999px; padding:12px 16px; font-size:12.5px; background:#fff; box-shadow:inset 0 0 0 1px rgba(0,0,0,0.05); font-family:inherit; }
+.chat-send{ width:42px; height:42px; border-radius:50%; border:none; background:var(--coral); color:#fff; font-size:16px; cursor:pointer; }
+
+/* Mother dashboard */
+.preg-card{ margin:14px 22px; padding:20px; }
+.preg-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;}
+.preg-weeks{ font-size:19px; font-weight:800; }
+.preg-bar-track{ height:10px; border-radius:6px; background:rgba(10,110,92,0.12); overflow:hidden; }
+.preg-bar-fill{ height:100%; border-radius:6px; background:linear-gradient(90deg, var(--gold), var(--coral)); width:0%; transition:width 1.4s var(--ease); }
+.preg-sub{ font-size:11px; color:var(--ink-soft); margin-top:8px; }
+.quick-actions{ display:flex; gap:10px; padding:4px 22px 6px; }
+.qa-card{ flex:1; padding:16px 8px; text-align:center; border-radius:18px; cursor:pointer; transition:transform .2s var(--ease); }
+.qa-ic{ font-size:22px; margin-bottom:6px; display:block; }
+.qa-label{ font-size:10.5px; font-weight:600; color:var(--ink-soft); }
+.feeling-fab{
+  position:absolute; left:20px; bottom:92px; z-index:30;
+  border:none; cursor:pointer; padding:12px 16px; border-radius:999px;
+  background:var(--teal); color:#fff; font-size:12px; font-weight:700; font-family:inherit;
+  box-shadow:0 10px 24px rgba(10,110,92,0.4);
+}
+
+/* Contacts / History */
+.contact-row{ display:flex; align-items:center; gap:12px; padding:14px 16px; margin:0 22px 10px; border-radius:18px; }
+.contact-ic{ width:42px; height:42px; border-radius:14px; background:rgba(232,106,90,0.15); color:var(--coral); display:flex; align-items:center; justify-content:center; font-size:19px; }
+.contact-name{ font-weight:700; font-size:13.5px; }
+.contact-meta{ font-size:11px; color:var(--ink-soft); margin-top:1px; }
+.icon-btn{ width:32px; height:32px; border-radius:10px; border:none; cursor:pointer; background:rgba(10,110,92,0.08); color:var(--teal); font-size:13px; display:flex; align-items:center; justify-content:center; }
+.icon-btn.danger{ background:rgba(216,72,60,0.1); color:var(--danger); }
+.contact-form{ margin:0 22px 14px; padding:16px; display:flex; flex-direction:column; gap:10px; }
+.contact-form input, .add-entry-form input, .add-entry-form textarea{
+  width:100%; border:none; border-radius:12px; padding:11px 13px; font-size:13px; background:#fff; box-shadow:inset 0 0 0 1px rgba(0,0,0,0.06); font-family:inherit; resize:none;
+}
+.contact-form-row{ display:flex; gap:8px; }
+.contact-form-actions{ display:flex; gap:8px; margin-top:2px; }
+.contact-form-actions .btn{ flex:1; padding:11px; font-size:13px; }
+.add-contact-btn{ margin:6px 22px 18px; width:calc(100% - 44px); }
+.history-patient-card{ margin:14px 22px; padding:18px; text-align:center; }
+.history-patient-name{ font-size:17px; font-weight:800; }
+.history-patient-meta{ font-size:11.5px; color:var(--ink-soft); margin-top:3px; }
+.timeline{ padding:6px 22px 10px; position:relative; }
+.timeline-item{ position:relative; padding:0 0 20px 26px; border-left:2px solid rgba(10,110,92,0.18); margin-left:6px; }
+.timeline-item:last-child{ border-color:transparent; padding-bottom:2px; }
+.timeline-dot{ position:absolute; left:-7px; top:2px; width:12px; height:12px; border-radius:50%; background:var(--teal); box-shadow:0 0 0 4px rgba(10,110,92,0.14);}
+.timeline-item.flag .timeline-dot{ background:var(--danger); box-shadow:0 0 0 4px rgba(216,72,60,0.16); }
+.timeline-date{ font-size:10.5px; font-weight:700; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.4px; }
+.timeline-note{ font-size:13px; font-weight:500; margin-top:2px; background:var(--card); border:1px solid var(--card-border); border-radius:14px; padding:10px 12px; backdrop-filter:blur(10px); }
+.add-entry-form{ margin:4px 22px 16px; padding:16px; display:flex; flex-direction:column; gap:10px; }
+
+/* Modal / Toast */
+.sw-modal-veil{
+  position:absolute; inset:0; z-index:95; background:rgba(10,20,18,0.55);
+  display:flex; align-items:center; justify-content:center; padding:24px;
+  opacity:0; pointer-events:none; transition:opacity .3s var(--ease);
+  backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
+}
+.sw-modal-veil.show{ opacity:1; pointer-events:auto; }
+.sw-modal{ width:100%; max-width:300px; background:var(--bg); border-radius:24px; padding:22px 20px 20px; box-shadow:0 30px 70px rgba(0,0,0,0.4); text-align:center; transform:translateY(16px) scale(.96); opacity:0; transition:all .35s var(--ease); }
+.sw-modal-veil.show .sw-modal{ transform:translateY(0) scale(1); opacity:1; }
+.sw-modal-title{ font-size:16px; font-weight:800; color:var(--danger); letter-spacing:.3px; animation:critBlink 1.4s ease-in-out infinite; }
+.sw-modal-sub{ font-size:11.5px; color:var(--ink-soft); margin-top:4px; margin-bottom:14px; }
+.sw-actions{ display:flex; flex-direction:column; gap:9px; text-align:left; }
+.sw-close-btn{ margin-top:16px; width:100%; background:rgba(10,110,92,0.08); color:var(--teal); border:none; padding:12px; border-radius:14px; font-weight:700; font-size:13px; cursor:pointer; opacity:0; transform:translateY(6px); transition:all .35s var(--ease);}
+.sw-close-btn.show{ opacity:1; transform:translateY(0); }
+.sw-success{ margin-top:12px; font-size:12px; font-weight:700; color:var(--safe); opacity:0; transform:translateY(6px); transition:all .4s var(--ease);}
+.sw-success.show{ opacity:1; transform:translateY(0); }
+.toast{
+  position:absolute; bottom:100px; left:50%; transform:translateX(-50%) translateY(20px);
+  background:var(--ink); color:#fff; padding:12px 20px; border-radius:14px; font-size:12px; font-weight:600;
+  opacity:0; transition:all .35s var(--ease); z-index:90; pointer-events:none; text-align:center; max-width:80%;
+}
+.toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* Demo */
+.demo-overlay{ position:absolute; inset:0; z-index:80; pointer-events:none; }
+.demo-tooltip{ position:absolute; bottom:100px; left:22px; right:22px; background:var(--ink); color:#fff; border-radius:18px; padding:14px 16px; box-shadow:0 20px 40px rgba(0,0,0,0.35); pointer-events:auto; opacity:0; transform:translateY(10px); transition:all .35s var(--ease);}
+.demo-tooltip.show{ opacity:1; transform:translateY(0); }
+.demo-step{ font-size:10px; color:var(--gold); font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;}
+.demo-text{ font-size:12.5px; line-height:1.4; }
+.demo-close{ position:absolute; top:8px; right:10px; background:none; border:none; color:rgba(255,255,255,0.6); font-size:14px; cursor:pointer; }
+
+/* Dark overrides */
+body.dark{ background:#0d1512; }
+body.dark .phone{ background:#12201c; }
+body.dark .card{ background:rgba(30,45,40,0.55); border-color:rgba(255,255,255,0.08); }
+body.dark .screen{ color:#EDEAE2; }
+body.dark .greet-sub, body.dark .stat-label, body.dark .vital-key, body.dark .patient-meta, body.dark .qa-label{ color:#9AA8A2; }
+body.dark .bottom-nav, body.dark .chat-input-row{ background:rgba(20,32,28,0.75); border-color:rgba(255,255,255,0.06); }
+body.dark .chat-input, body.dark .search-input, body.dark .sym-chip, body.dark .bp-input, body.dark .custom-row input{ background:#1c2b26; color:#EDEAE2; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08); }
+body.dark .msg.her{ background:#1c2b26; }
+body.dark .contact-form input, body.dark .add-entry-form input, body.dark .add-entry-form textarea{ background:#1c2b26; color:#EDEAE2; box-shadow:inset 0 0 0 1px rgba(255,255,255,0.08); }
+body.dark .icon-btn{ background:rgba(255,255,255,0.08); color:var(--teal); }
+
+footer.credit{ position:fixed; bottom:8px; font-size:10px; color:var(--ink-soft); opacity:.5; letter-spacing:.3px; }
+@media (max-width:400px){
+  .phone{ width:100vw; height:100vh; max-height:100vh; border-radius:0; box-shadow:none; }
+  footer.credit{ display:none; }
 }
 </style>
 </head>
@@ -1769,71 +513,63 @@ footer.credit {
   <div class="notch"></div>
   <div class="statusbar">
     <span>9:41</span>
-    <span>●●● HerSetu</span>
+    <span class="dot-time">●●● HerSetu</span>
     <span>🔋 82%</span>
   </div>
 
-  <!-- Control bar for demo features -->
+  <!-- TOP CONTROL BAR: role switch, airplane mode, dark mode, demo -->
   <div class="control-bar">
-    <button class="ctrl-btn" id="offlineToggle" title="Toggle offline mode" aria-label="Toggle offline mode">📶</button>
-    <button class="ctrl-btn" id="darkToggle" title="Light mode" aria-label="Toggle light mode">☀️</button>
-    <button class="ctrl-btn" id="demoToggle" title="Demo walkthrough" aria-label="Toggle demo mode">✨</button>
+    <button class="ctrl-btn" id="roleToggle" title="Switch role" onclick="toggleRole()">👩🏽‍⚕️</button>
+    <button class="ctrl-btn" id="offlineToggle" title="Airplane mode / offline sync" onclick="toggleOffline()">📶</button>
+    <button class="ctrl-btn" id="darkToggle" title="Dark mode" onclick="toggleDark()">🌙</button>
+    <button class="ctrl-btn" id="demoToggle" title="Demo walkthrough" onclick="toggleDemo()">✨</button>
   </div>
 
-  <div class="offline-badge" id="offlineBadge" role="alert">
-    <span class="blip" aria-hidden="true"></span>
-    Data saved locally · Synced via mesh · <span id="meshCount">3</span> ASHAs nearby
+  <!-- OFFLINE / MESH SYNC STATUS BADGE -->
+  <div class="offline-badge" id="offlineBadge">
+    <span class="blip"></span>
+    <div class="mesh-dots"><i></i><i></i><i></i></div>
+    <span id="offlineStatusText">Working offline. Data will sync when network is available.</span>
+    <span class="last-sync" id="offlineLastSync">Last synced: 2 mins ago</span>
   </div>
 
   <div class="screens" id="screens">
 
-    <!-- ============================================================
-         SCREEN 1: SPLASH
-         Polished branded intro with smooth animation
-         ============================================================ -->
-    <section class="screen active" id="screen-splash" aria-label="Splash screen">
-      <div class="logo-mark" aria-hidden="true">
+    <!-- SPLASH -->
+    <section class="screen active" id="screen-splash">
+      <div class="logo-mark">
         <div class="logo-ripple"></div>
         <div class="logo-ripple d2"></div>
-        <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
-          <defs>
-            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#3D8B85"/>
-              <stop offset="100%" stop-color="#D4A84B"/>
-            </linearGradient>
-          </defs>
-          <circle cx="60" cy="60" r="46" fill="rgba(255,255,255,0.08)"/>
-          <path d="M30 66 Q60 40 90 66" stroke="#D4A84B" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <circle cx="60" cy="46" r="12" fill="rgba(255,255,255,0.9)"/>
-          <path d="M42 84 Q60 62 78 84 Q60 96 42 84 Z" fill="rgba(255,255,255,0.9)"/>
-          <circle cx="52" cy="45" r="2.4" fill="#3D8B85"/>
-          <circle cx="68" cy="45" r="2.4" fill="#3D8B85"/>
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="46" fill="rgba(255,255,255,0.14)"/>
+          <path d="M30 66 Q60 40 90 66" stroke="#F8C630" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <circle cx="60" cy="46" r="12" fill="#fff"/>
+          <path d="M42 84 Q60 62 78 84 Q60 96 42 84 Z" fill="#fff"/>
+          <circle cx="52" cy="45" r="2.4" fill="#0A6E5C"/>
+          <circle cx="68" cy="45" r="2.4" fill="#0A6E5C"/>
         </svg>
       </div>
-      <h1 class="splash-title">HerSetu <span class="devanagari">हेरसेतु</span></h1>
-      <p class="splash-tag">Bridge for Pregnant Women</p>
-      <div class="splash-loader" aria-hidden="true"></div>
+      <div class="splash-title">HerSetu <span class="devanagari">हेरसेतु</span></div>
+      <div class="splash-tag">Bridge for Pregnant Women</div>
+      <div class="splash-loader"></div>
     </section>
 
-    <!-- ============================================================
-         SCREEN 2: LOGIN
-         Clean role-based entry with visual distinction
-         ============================================================ -->
-    <section class="screen" id="screen-login" aria-label="Login">
-      <div class="login-mark" aria-hidden="true">🌉</div>
+    <!-- LOGIN -->
+    <section class="screen" id="screen-login">
+      <div class="login-mark">🌉</div>
       <div>
-        <h2 style="font-size:20px;font-weight:800;">Welcome to HerSetu</h2>
-        <p style="font-size:12.5px;color:var(--text-muted);margin-top:4px;" class="devanagari">आप कौन हैं?</p>
+        <div style="font-size:20px;font-weight:800;">Welcome to HerSetu</div>
+        <div style="font-size:12.5px;color:var(--ink-soft);margin-top:4px;" class="devanagari">आप कौन हैं?</div>
       </div>
-      <div class="role-card card" role="button" tabindex="0" onclick="goTo('screen-asha')" aria-label="Login as ASHA Worker">
-        <div class="role-ic asha" aria-hidden="true">🩺</div>
+      <div class="role-card card" onclick="setRole('asha')">
+        <div class="role-ic asha">🩺</div>
         <div>
           <div class="role-title">ASHA Worker</div>
           <div class="role-sub">Frontline health worker</div>
         </div>
       </div>
-      <div class="role-card card" role="button" tabindex="0" onclick="goTo('screen-mother')" aria-label="Login as Mother">
-        <div class="role-ic mother" aria-hidden="true">💗</div>
+      <div class="role-card card" onclick="setRole('mother')">
+        <div class="role-ic mother">💗</div>
         <div>
           <div class="role-title">Mother</div>
           <div class="role-sub">Pregnant / new mother</div>
@@ -1841,154 +577,150 @@ footer.credit {
       </div>
     </section>
 
-    <!-- ============================================================
-         SCREEN 3: ASHA DASHBOARD
-         Improved stat cards, patient list with visual hierarchy
-         ============================================================ -->
-    <section class="screen" id="screen-asha" aria-label="ASHA Dashboard">
-      <header class="top-header">
+    <!-- ASHA DASHBOARD -->
+    <section class="screen" id="screen-asha">
+      <div class="top-header">
         <div>
-          <h1 class="greet-title devanagari">Namaste, Sunita! 🙏</h1>
-          <p class="greet-sub">8 patients to visit today</p>
+          <div class="greet-title devanagari">Namaste, Sunita! 🙏</div>
+          <div class="greet-sub">8 patients to visit today</div>
         </div>
-        <div class="avatar-role" aria-hidden="true">👩🏽‍⚕️</div>
-      </header>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <button class="sos-btn" onclick="showEmergency(false)">🆘 SOS</button>
+          <div class="avatar-role">👩🏽‍⚕️</div>
+        </div>
+      </div>
 
       <div class="stat-row">
-        <div class="card stat-card stat-high">
-          <div class="stat-num">2</div>
-          <div class="stat-label">HIGH RISK</div>
-        </div>
-        <div class="card stat-card stat-critical">
-          <div class="stat-num">1</div>
-          <div class="stat-label">CRITICAL</div>
-        </div>
-        <div class="card stat-card stat-done">
-          <div class="stat-num">3/8</div>
-          <div class="stat-label">VISITS DONE</div>
-        </div>
+        <div class="card stat-card stat-high"><div class="stat-num">2</div><div class="stat-label">HIGH RISK</div></div>
+        <div class="card stat-card stat-critical"><div class="stat-num">1</div><div class="stat-label">CRITICAL</div></div>
+        <div class="card stat-card stat-done"><div class="stat-num">3/8</div><div class="stat-label">VISITS DONE</div></div>
       </div>
 
-      <h2 class="section-label">Today's Patients</h2>
-      
-      <div class="patient-row card" role="button" tabindex="0" onclick="goTo('screen-voice')">
-        <div class="patient-dot crit" aria-hidden="true"></div>
-        <div style="flex:1">
-          <span class="patient-name" onclick="openPatientHistory(event,'Sushila Devi','8 months · Critical risk')">Sushila Devi</span>
-          <p class="patient-meta">8 months · Last visit 3 days ago</p>
-        </div>
+      <div class="section-label">Smart Suggestions</div>
+      <div class="card suggestion-card"><span class="suggestion-ic">👩🏽</span>Sushila Devi is due for visit today</div>
+      <div class="card suggestion-card"><span class="suggestion-ic">📅</span>Radha Kumari hasn't been visited in 5 days</div>
+      <div class="card suggestion-card"><span class="suggestion-ic">⚠️</span>Meena Yadav reported mild swelling yesterday</div>
+
+      <div class="section-label">Today's Patients</div>
+      <div class="patient-row card" onclick="openPatientHistory(event,'Sushila Devi','8 months · Critical risk')">
+        <div class="patient-dot crit"></div>
+        <div style="flex:1"><div class="patient-name">Sushila Devi</div><div class="patient-meta">8 months · Last visit 3 days ago</div></div>
         <span class="badge badge-red">Critical</span>
       </div>
-      
-      <div class="patient-row card" role="button" tabindex="0">
-        <div class="patient-dot high" aria-hidden="true"></div>
-        <div style="flex:1">
-          <span class="patient-name" onclick="openPatientHistory(event,'Radha Kumari','6 months · High risk')">Radha Kumari</span>
-          <p class="patient-meta">6 months · BP elevated</p>
-        </div>
+      <div class="patient-row card" onclick="openPatientHistory(event,'Radha Kumari','6 months · High risk')">
+        <div class="patient-dot high"></div>
+        <div style="flex:1"><div class="patient-name">Radha Kumari</div><div class="patient-meta">6 months · BP elevated</div></div>
         <span class="badge badge-gold">High</span>
       </div>
-      
-      <div class="patient-row card" role="button" tabindex="0">
-        <div class="patient-dot ok" aria-hidden="true"></div>
-        <div style="flex:1">
-          <span class="patient-name" onclick="openPatientHistory(event,'Meena Yadav','4 months · Stable')">Meena Yadav</span>
-          <p class="patient-meta">4 months · Routine</p>
-        </div>
+      <div class="patient-row card" onclick="openPatientHistory(event,'Meena Yadav','4 months · Stable')">
+        <div class="patient-dot ok"></div>
+        <div style="flex:1"><div class="patient-name">Meena Yadav</div><div class="patient-meta">4 months · Routine</div></div>
         <span class="badge badge-green">Stable</span>
       </div>
 
-      <button class="fab pulse-ring" style="color:#fff" onclick="goTo('screen-voice')" title="Start Visit" aria-label="Start voice visit">
-        🎙️
-      </button>
+      <button class="fab pulse-ring" style="color:#fff" onclick="goTo('screen-voice')" title="Start Visit">🎙️</button>
 
-      <nav class="bottom-nav" aria-label="Main navigation">
-        <div class="nav-item active" role="button" tabindex="0">
-          <span class="nav-ic" aria-hidden="true">🏠</span>
-          <span>Home</span>
-        </div>
-        <div class="nav-item" role="button" tabindex="0">
-          <span class="nav-ic" aria-hidden="true">👥</span>
-          <span>Patients</span>
-        </div>
-        <div class="nav-item" onclick="goTo('screen-voice')" role="button" tabindex="0">
-          <span class="nav-ic" aria-hidden="true">🎙️</span>
-          <span>Voice</span>
-        </div>
-        <div class="nav-item" role="button" tabindex="0">
-          <span class="nav-ic" aria-hidden="true">🔔</span>
-          <span>Alerts</span>
-        </div>
-      </nav>
+      <div class="bottom-nav">
+        <div class="nav-item" data-screen="screen-asha" onclick="navTo('screen-asha', this)"><span class="nav-ic">🏠</span>Home</div>
+        <div class="nav-item" data-screen="screen-patients" onclick="navTo('screen-patients', this)"><span class="nav-ic">👥</span>Patients</div>
+        <div class="nav-item" data-screen="screen-voice" onclick="navTo('screen-voice', this)"><span class="nav-ic">🎙️</span>Voice</div>
+        <div class="nav-item" data-screen="screen-alerts" onclick="navTo('screen-alerts', this)"><span class="nav-ic">🔔</span>Alerts</div>
+      </div>
     </section>
 
-    <!-- ============================================================
-         SCREEN 4: VOICE INPUT
-         Responsive mic with clear visual feedback
-         ============================================================ -->
-    <section class="screen" id="screen-voice" aria-label="Voice Input">
-      <header class="top-header" style="justify-content:flex-start;gap:10px;">
-        <button onclick="goTo('screen-asha')" style="background:none;border:none;color:var(--text-primary);font-size:18px;cursor:pointer;" aria-label="Go back">←</button>
-        <h1 class="greet-title" style="font-size:16px;">Patient Vitals</h1>
-      </header>
-      
-      <p style="font-size:13px;color:var(--text-muted);margin-top:14px;" class="devanagari">अपनी भाषा में बोलें</p>
-      <p style="font-size:13px;color:var(--text-muted);">Speak vitals in your language</p>
+    <!-- PATIENTS LIST -->
+    <section class="screen" id="screen-patients">
+      <div class="top-header" style="justify-content:flex-start;gap:10px;">
+        <span onclick="goTo('screen-asha')" style="cursor:pointer;font-size:18px;">←</span>
+        <div class="greet-title" style="font-size:16px;">All Patients</div>
+      </div>
+      <div class="search-wrap">
+        <input class="search-input" id="patientSearch" placeholder="Search patients…" oninput="renderPatients()">
+        <div class="filter-chips">
+          <button class="filter-chip active" data-filter="all" onclick="setPatientFilter('all', this)">All</button>
+          <button class="filter-chip" data-filter="High" onclick="setPatientFilter('High', this)">High</button>
+          <button class="filter-chip" data-filter="Critical" onclick="setPatientFilter('Critical', this)">Critical</button>
+          <button class="filter-chip" data-filter="Stable" onclick="setPatientFilter('Stable', this)">Stable</button>
+        </div>
+      </div>
+      <div id="patientsList" style="padding-top:12px;"></div>
+      <div class="bottom-nav">
+        <div class="nav-item" data-screen="screen-asha" onclick="navTo('screen-asha', this)"><span class="nav-ic">🏠</span>Home</div>
+        <div class="nav-item" data-screen="screen-patients" onclick="navTo('screen-patients', this)"><span class="nav-ic">👥</span>Patients</div>
+        <div class="nav-item" data-screen="screen-voice" onclick="navTo('screen-voice', this)"><span class="nav-ic">🎙️</span>Voice</div>
+        <div class="nav-item" data-screen="screen-alerts" onclick="navTo('screen-alerts', this)"><span class="nav-ic">🔔</span>Alerts</div>
+      </div>
+    </section>
+
+    <!-- VISITS SCREEN -->
+    <section class="screen" id="screen-visits">
+      <div class="top-header" style="justify-content:flex-start;gap:10px;">
+        <span onclick="goTo('screen-mother')" style="cursor:pointer;font-size:18px;">←</span>
+        <div class="greet-title" style="font-size:16px;">Scheduled Visits</div>
+      </div>
+      <div style="font-size:12px;color:var(--ink-soft);padding:2px 22px 10px;" class="devanagari">आज की यात्राएँ · Today's visits</div>
+      <div id="visitsList"></div>
+      <div class="bottom-nav">
+        <div class="nav-item" data-screen="screen-mother" onclick="navTo('screen-mother', this)"><span class="nav-ic">🏠</span>Home</div>
+        <div class="nav-item" data-screen="screen-chat" onclick="navTo('screen-chat', this)"><span class="nav-ic">💬</span>Assistant</div>
+        <div class="nav-item" data-screen="screen-visits" onclick="navTo('screen-visits', this)"><span class="nav-ic">📅</span>Visits</div>
+        <div class="nav-item" data-screen="screen-login" onclick="navTo('screen-login', this)"><span class="nav-ic">👤</span>Profile</div>
+      </div>
+    </section>
+
+    <!-- ALERTS SCREEN -->
+    <section class="screen" id="screen-alerts">
+      <div class="top-header" style="justify-content:flex-start;gap:10px;">
+        <span onclick="goTo('screen-asha')" style="cursor:pointer;font-size:18px;">←</span>
+        <div class="greet-title" style="font-size:16px;">Incoming Alerts</div>
+      </div>
+      <div style="font-size:12px;color:var(--ink-soft);padding:2px 22px 10px;">Tap an alert to open patient voice input.</div>
+      <div id="alertsList"></div>
+      <div class="bottom-nav">
+        <div class="nav-item" data-screen="screen-asha" onclick="navTo('screen-asha', this)"><span class="nav-ic">🏠</span>Home</div>
+        <div class="nav-item" data-screen="screen-patients" onclick="navTo('screen-patients', this)"><span class="nav-ic">👥</span>Patients</div>
+        <div class="nav-item" data-screen="screen-voice" onclick="navTo('screen-voice', this)"><span class="nav-ic">🎙️</span>Voice</div>
+        <div class="nav-item" data-screen="screen-alerts" onclick="navTo('screen-alerts', this)"><span class="nav-ic">🔔</span>Alerts</div>
+      </div>
+    </section>
+
+    <!-- VOICE INPUT -->
+    <section class="screen" id="screen-voice">
+      <div class="top-header" style="justify-content:flex-start;gap:10px;">
+        <span onclick="goTo('screen-asha')" style="cursor:pointer;font-size:18px;">←</span>
+        <div class="greet-title" style="font-size:16px;">Patient Vitals</div>
+      </div>
+      <div style="font-size:13px;color:var(--ink-soft);margin-top:14px;" class="devanagari">अपनी भाषा में बोलें</div>
+      <div style="font-size:13px;color:var(--ink-soft);">Speak vitals in your language</div>
+      <div id="voicePrefillNote" style="display:none;margin:8px 22px 0;padding:10px 14px;border-radius:14px;background:rgba(248,198,48,0.18);color:#8a6a00;font-size:12px;font-weight:600;"></div>
 
       <div class="mic-wrap">
-        <div class="mic-ripple" id="micRipple" aria-hidden="true"></div>
-        <button class="mic-btn" id="micBtn" onclick="startRecording()" aria-label="Start recording">
-          🎤
-        </button>
+        <div class="mic-ripple" id="micRipple"></div>
+        <button class="mic-btn" id="micBtn" onclick="startRecording()">🎤</button>
       </div>
-      
-      <div class="wave-bars" id="waveBars" aria-hidden="true">
-        <span></span><span></span><span></span><span></span><span></span>
-      </div>
-      
-      <p style="font-size:12px;color:var(--text-muted);margin-top:10px;" id="micStatus" aria-live="polite">Tap mic to begin</p>
+      <div class="wave-bars" id="waveBars"><span></span><span></span><span></span><span></span><span></span></div>
+      <div style="font-size:12px;color:var(--ink-soft);margin-top:10px;" id="micStatus">Tap mic to begin</div>
 
       <div class="vitals-form" id="vitalsForm">
-        <div class="card vital-field" data-idx="0">
-          <span class="vital-key">Patient Name</span>
-          <span class="vital-val">Sushila Devi</span>
-        </div>
-        <div class="card vital-field" data-idx="1">
-          <span class="vital-key">Blood Pressure</span>
-          <span class="vital-val flag">160/100</span>
-        </div>
-        <div class="card vital-field" data-idx="2">
-          <span class="vital-key">Weight</span>
-          <span class="vital-val">55 kg</span>
-        </div>
-        <div class="card vital-field" data-idx="3">
-          <span class="vital-key">Gestational Age</span>
-          <span class="vital-val">8 months</span>
-        </div>
-        <div class="card vital-field" data-idx="4">
-          <span class="vital-key">Last Visit</span>
-          <span class="vital-val">3 days ago</span>
-        </div>
+        <div class="card vital-field" data-idx="0"><span class="vital-key">Patient Name</span><span class="vital-val" id="vitalPatientName">Sushila Devi</span></div>
+        <div class="card vital-field" data-idx="1"><span class="vital-key">Blood Pressure</span><span class="vital-val flag">160/100</span></div>
+        <div class="card vital-field" data-idx="2"><span class="vital-key">Weight</span><span class="vital-val">55 kg</span></div>
+        <div class="card vital-field" data-idx="3"><span class="vital-key">Gestational Age</span><span class="vital-val">8 months</span></div>
+        <div class="card vital-field" data-idx="4"><span class="vital-key">Last Visit</span><span class="vital-val">3 days ago</span></div>
       </div>
-      
       <div style="padding:14px 22px 22px;" id="confirmWrap"></div>
     </section>
 
-    <!-- ============================================================
-         SCREEN 5: RISK PREDICTION
-         Smooth gauge with sequential action reveal
-         ============================================================ -->
-    <section class="screen" id="screen-risk" aria-label="Risk Prediction">
-      <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
-      
-      <p style="font-size:13px;color:var(--text-muted);margin-top:14px;font-weight:600;">AI RISK PREDICTION</p>
-      
+    <!-- RISK PREDICTION -->
+    <section class="screen" id="screen-risk">
+      <div class="confetti-layer" id="confettiLayer"></div>
+      <div style="font-size:13px;color:var(--ink-soft);margin-top:14px;font-weight:600;">AI RISK PREDICTION</div>
       <div class="gauge-wrap">
-        <svg width="210" height="210" viewBox="0 0 210 210" aria-hidden="true">
+        <svg width="210" height="210" viewBox="0 0 210 210">
           <defs>
             <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#D4A84B"/>
-              <stop offset="100%" stop-color="#D9534F"/>
+              <stop offset="0%" stop-color="#F8C630"/>
+              <stop offset="100%" stop-color="#D8483C"/>
             </linearGradient>
           </defs>
           <circle class="gauge-track" cx="105" cy="105" r="90"/>
@@ -1999,251 +731,244 @@ footer.credit {
           <div class="gauge-lbl">RISK SCORE</div>
         </div>
       </div>
-      
-      <div class="status-pill" id="statusPill">
-        <span class="dot" aria-hidden="true"></span>
-        <span>CRITICAL</span>
+      <div class="status-pill" id="statusPill" style="visibility:hidden;"><span class="dot"></span> CRITICAL</div>
+
+      <div class="action-list" id="actionList">
+        <div class="action-item card"><div class="action-check">✓</div><div class="action-text">Ambulance Booked (108)</div></div>
+        <div class="action-item card"><div class="action-check">✓</div><div class="action-text">Bed Reserved — EmOC Hospital</div></div>
+        <div class="action-item card"><div class="action-check">✓</div><div class="action-text">₹500 Credited via UPI</div></div>
+        <div class="action-item card"><div class="action-check">✓</div><div class="action-text">Husband Alerted (Voice Call)</div></div>
       </div>
 
-      <div class="action-list" id="actionList" role="list">
-        <div class="action-item card" role="listitem">
-          <div class="action-check" aria-hidden="true">✓</div>
-          <div class="action-text">Ambulance Booked (108)</div>
-        </div>
-        <div class="action-item card" role="listitem">
-          <div class="action-check" aria-hidden="true">✓</div>
-          <div class="action-text">Bed Reserved — EmOC Hospital</div>
-        </div>
-        <div class="action-item card" role="listitem">
-          <div class="action-check" aria-hidden="true">✓</div>
-          <div class="action-text">₹500 Credited via UPI</div>
-        </div>
-        <div class="action-item card" role="listitem">
-          <div class="action-check" aria-hidden="true">✓</div>
-          <div class="action-text">Husband Alerted (Voice Call)</div>
-        </div>
+      <!-- Visit Complete Summary -->
+      <div class="card visit-summary" id="visitSummary">
+        <div style="font-weight:800;font-size:14px;">✅ Visit Complete</div>
+        <div class="vs-line">Patient: <span id="vsPatient">Sushila Devi</span></div>
+        <div class="vs-line">Vitals: BP 160/100 · 55 kg · 8 months</div>
+        <div class="vs-line">Risk Score: <span id="vsRisk">89%</span></div>
+        <div class="vs-line">Next visit: <span id="vsNext">Tue, Jul 28</span></div>
       </div>
 
-      <p class="note-line">✅ Visit logged automatically. No paperwork needed.</p>
-      
+      <div class="note-line">✅ Visit logged automatically. No paperwork needed.</div>
       <div style="padding:16px 22px 26px;">
-        <button class="btn btn-primary" style="width:100%;" onclick="goTo('screen-chat')">
-          View Follow-up →
-        </button>
+        <button class="btn btn-primary" style="width:100%;" onclick="goTo('screen-chat')">View Follow-up →</button>
       </div>
     </section>
 
-    <!-- ============================================================
-         SCREEN 6: AI ASSISTANT CHAT
-         Conversational AI with keyword-based branching logic
-         ============================================================ -->
-    <section class="screen" id="screen-chat" aria-label="AI Assistant">
-      <header class="chat-header">
+    <!-- AI ASSISTANT CHAT -->
+    <section class="screen" id="screen-chat" style="padding-top:26px;">
+      <div class="chat-header">
         <div class="chat-title">
-          <div class="avatar-role" style="width:38px;height:38px;font-size:16px;" aria-hidden="true">💗</div>
+          <div class="avatar-role" style="width:38px;height:38px;font-size:16px;">💗</div>
           <div>
-            <h2 style="font-weight:700;font-size:14px;">AI Assistant</h2>
-            <div class="chat-lock">
-              <span aria-hidden="true">🔒</span>
-              <span>Private &amp; encrypted</span>
-            </div>
+            <div style="font-weight:700;font-size:14px;">AI Assistant</div>
+            <div class="chat-lock">🔒 Private &amp; encrypted</div>
           </div>
         </div>
-        <button class="badge badge-gold" onclick="triggerSafeWord()" style="cursor:pointer;border:none;" aria-label="Trigger safe word emergency">
-          🛟 Safe Word
-        </button>
-      </header>
-      
-      <div class="chat-body" id="chatBody" role="log" aria-live="polite" aria-label="Chat messages"></div>
-      
+        <span class="badge badge-gold" onclick="showEmergency(false)" style="cursor:pointer;">🛟 Safe Word</span>
+      </div>
+
+      <!-- Multi-language toggle -->
+      <div class="lang-switch">
+        <button class="lang-btn" data-lang="english" onclick="setChatLang('english')">🇬🇧 EN</button>
+        <button class="lang-btn" data-lang="hindi" onclick="setChatLang('hindi')">🇮🇳 Hindi</button>
+        <button class="lang-btn active" data-lang="hinglish" onclick="setChatLang('hinglish')">🔀 Hinglish</button>
+      </div>
+
+      <div class="chat-body" id="chatBody"></div>
+
+      <!-- Quick reply buttons -->
+      <div class="quick-replies">
+        <button class="quick-chip" onclick="sendQuick('I am bleeding')">🩸 I'm bleeding</button>
+        <button class="quick-chip" onclick="sendQuick('I have pain')">🤕 I have pain</button>
+        <button class="quick-chip" onclick="sendQuick('I feel dizzy')">😵 I feel dizzy</button>
+        <button class="quick-chip" onclick="sendQuick('मुझे चक्कर आ रहे हैं')">🇮🇳 चक्कर</button>
+      </div>
+
       <div class="chat-input-row">
-        <input 
-          type="text" 
-          class="chat-input" 
-          id="chatInput"
-          placeholder="Type or speak a message…" 
-          aria-label="Chat message input"
-          onkeydown="handleChatKeydown(event)"
-        />
-        <button class="chat-send" onclick="sendChatMessage()" aria-label="Send message">
-          ➤
-        </button>
+        <input class="chat-input" id="chatInput" placeholder="Type or speak a message…" onkeydown="if(event.key==='Enter') sendChat()">
+        <button class="chat-send" id="chatSendBtn" onclick="sendChat()">➤</button>
       </div>
     </section>
 
-    <!-- ============================================================
-         SCREEN 7: MOTHER DASHBOARD
-         Warm, supportive feel with progress tracking
-         ============================================================ -->
-    <section class="screen" id="screen-mother" aria-label="Mother Dashboard">
-      <header class="top-header">
+    <!-- MOTHER DASHBOARD -->
+    <section class="screen" id="screen-mother">
+      <div class="top-header">
         <div>
-          <h1 class="greet-title devanagari">Namaste, Sushila</h1>
-          <p class="greet-sub">Take care of yourself today 💐</p>
+          <div class="greet-title devanagari">Namaste, Sushila</div>
+          <div class="greet-sub">Take care of yourself today 💐</div>
         </div>
-        <div class="avatar-role" aria-hidden="true">💗</div>
-      </header>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <button class="sos-btn" onclick="showEmergency(false)">🆘 SOS</button>
+          <div class="avatar-role">💗</div>
+        </div>
+      </div>
 
       <div class="card preg-card">
         <div class="preg-top">
           <div class="preg-weeks">8 months, 2 weeks</div>
           <span class="badge badge-gold">Trimester 3</span>
         </div>
-        <div class="preg-bar-track" role="progressbar" aria-valuenow="83" aria-valuemin="0" aria-valuemax="100">
-          <div class="preg-bar-fill" id="pregBar"></div>
-        </div>
-        <p class="preg-sub">🍼 Estimated due date in 3–4 weeks</p>
+        <div class="preg-bar-track"><div class="preg-bar-fill" id="pregBar"></div></div>
+        <div class="preg-sub">🍼 Estimated due date in 3–4 weeks</div>
       </div>
 
-      <h2 class="section-label">Quick Actions</h2>
+      <div class="section-label">Quick Actions</div>
       <div class="quick-actions">
-        <div class="card qa-card" role="button" tabindex="0">
-          <span class="qa-ic" aria-hidden="true">📝</span>
-          <span class="qa-label">Track Symptoms</span>
-        </div>
-        <div class="card qa-card" onclick="goTo('screen-contacts')" role="button" tabindex="0">
-          <span class="qa-ic" aria-hidden="true">📞</span>
-          <span class="qa-label">Emergency Contact</span>
-        </div>
-        <div class="card qa-card" role="button" tabindex="0">
-          <span class="qa-ic" aria-hidden="true">🏥</span>
-          <span class="qa-label">Hospital Info</span>
-        </div>
+        <div class="card qa-card" onclick="goTo('screen-track')"><span class="qa-ic">📝</span><span class="qa-label">Track Symptoms</span></div>
+        <div class="card qa-card" onclick="goTo('screen-contacts')"><span class="qa-ic">📞</span><span class="qa-label">Emergency Contact</span></div>
+        <div class="card qa-card" onclick="goTo('screen-visits')"><span class="qa-ic">📅</span><span class="qa-label">My Visits</span></div>
       </div>
 
-      <button class="fab pulse-ring" style="color:#fff;font-size:22px;" onclick="goTo('screen-chat')" title="Talk to AI Assistant" aria-label="Open AI Assistant">
-        💬
-      </button>
+      <button class="feeling-fab" onclick="goTo('screen-track')">🤰 How are you feeling?</button>
+      <button class="fab pulse-ring" style="color:#fff;font-size:22px;" onclick="goTo('screen-chat')" title="Talk to AI Assistant">💬</button>
 
-      <button class="safeword-btn" onclick="triggerSafeWord()" aria-label="Trigger safe word emergency">
-        🛟 Safe Word
-      </button>
+      <button class="safeword-btn" onclick="showEmergency(false)">🛟 Safe Word</button>
 
-      <nav class="bottom-nav" aria-label="Main navigation">
-        <div class="nav-item active" role="button" tabindex="0">
-          <span class="nav-ic" aria-hidden="true">🏠</span>
-          <span>Home</span>
-        </div>
-        <div class="nav-item" onclick="goTo('screen-chat')" role="button" tabindex="0">
-          <span class="nav-ic" aria-hidden="true">💬</span>
-          <span>Assistant</span>
-        </div>
-        <div class="nav-item" role="button" tabindex="0">
-          <span class="nav-ic" aria-hidden="true">📅</span>
-          <span>Visits</span>
-        </div>
-        <div class="nav-item" onclick="goTo('screen-login')" role="button" tabindex="0">
-          <span class="nav-ic" aria-hidden="true">👤</span>
-          <span>Profile</span>
-        </div>
-      </nav>
+      <div class="bottom-nav">
+        <div class="nav-item" data-screen="screen-mother" onclick="navTo('screen-mother', this)"><span class="nav-ic">🏠</span>Home</div>
+        <div class="nav-item" data-screen="screen-chat" onclick="navTo('screen-chat', this)"><span class="nav-ic">💬</span>Assistant</div>
+        <div class="nav-item" data-screen="screen-visits" onclick="navTo('screen-visits', this)"><span class="nav-ic">📅</span>Visits</div>
+        <div class="nav-item" data-screen="screen-login" onclick="navTo('screen-login', this)"><span class="nav-ic">👤</span>Profile</div>
+      </div>
     </section>
 
-    <!-- ============================================================
-         SCREEN 8: EMERGENCY CONTACTS
-         CRUD functionality with improved UI
-         ============================================================ -->
-    <section class="screen" id="screen-contacts" aria-label="Emergency Contacts">
-      <header class="top-header" style="justify-content:flex-start;gap:10px;">
-        <button onclick="goTo('screen-mother')" style="background:none;border:none;color:var(--text-primary);font-size:18px;cursor:pointer;" aria-label="Go back">←</button>
-        <h1 class="greet-title" style="font-size:16px;">Emergency Contacts</h1>
-      </header>
-      
-      <p style="font-size:12px;color:var(--text-muted);padding:2px 22px 10px;">
-        These contacts are alerted when you use your Safe Word.
-      </p>
+    <!-- SYMPTOM TRACKER -->
+    <section class="screen" id="screen-track">
+      <div class="top-header" style="justify-content:flex-start;gap:10px;">
+        <span onclick="goTo('screen-mother')" style="cursor:pointer;font-size:18px;">←</span>
+        <div class="greet-title" style="font-size:16px;">Symptom Tracker</div>
+      </div>
+      <div style="font-size:12px;color:var(--ink-soft);padding:2px 22px 8px;">Tap what you feel. Your risk score is calculated instantly.</div>
 
-      <div id="contactsList" role="list" aria-label="Emergency contacts list"></div>
-
-      <div class="card contact-form" id="contactForm" style="display:none;" aria-label="Add/Edit contact form">
-        <div class="contact-form-row">
-          <input type="text" id="cfName" placeholder="Name" aria-label="Contact name">
-          <input type="text" id="cfRelation" placeholder="Relationship" aria-label="Relationship">
+      <div class="card bp-card">
+        <div>
+          <div style="font-size:11px;color:var(--ink-soft);font-weight:600;">BP Systolic</div>
+          <input class="bp-input" id="bpSystolic" type="number" placeholder="120" min="60" max="250" oninput="updateBpCategory()">
         </div>
-        <input type="tel" id="cfPhone" placeholder="Phone Number" aria-label="Phone number">
+        <div>
+          <div style="font-size:11px;color:var(--ink-soft);font-weight:600;">BP Diastolic</div>
+          <input class="bp-input" id="bpDiastolic" type="number" placeholder="80" min="40" max="160" oninput="updateBpCategory()">
+        </div>
+        <div style="flex:1; text-align:center;">
+          <div style="font-size:11px;color:var(--ink-soft);font-weight:600;">Category</div>
+          <div class="bp-category" id="bpCategory">—</div>
+        </div>
+      </div>
+
+      <div class="tracker-cat">🤰 Physical</div>
+      <div class="sym-grid" id="symPhysical"></div>
+      <div class="tracker-cat">😰 Mental</div>
+      <div class="sym-grid" id="symMental"></div>
+      <div class="tracker-cat">🩸 Bleeding</div>
+      <div class="sym-grid" id="symBleeding"></div>
+      <div class="tracker-cat">🩺 General</div>
+      <div class="sym-grid" id="symGeneral"></div>
+
+      <div class="section-label">Today's Symptoms</div>
+      <div class="selected-chips" id="selectedSymptoms"></div>
+
+      <div class="custom-row">
+        <input id="customSymptom" placeholder="Add custom symptom…">
+        <button class="btn btn-ghost" style="padding:10px 14px;" onclick="addCustomSymptom()">Add</button>
+      </div>
+
+      <div style="padding:18px 22px;">
+        <button class="btn btn-primary" style="width:100%;" onclick="calculateRisk()">Calculate Risk</button>
+      </div>
+
+      <div class="card risk-result">
+        <div style="font-size:12px;font-weight:700;color:var(--ink-soft);">YOUR RISK SCORE TODAY</div>
+        <div class="risk-bar-track"><div class="risk-bar-fill" id="trackRiskBar" style="width:0%"></div></div>
+        <div id="trackRiskLabel" style="font-weight:800;font-size:18px;margin-top:4px;">—</div>
+        <div id="trackRiskMessage" style="font-size:12px;color:var(--ink-soft);margin-top:4px;">Select symptoms and enter BP to calculate risk.</div>
+      </div>
+
+      <div class="section-label">Last 7 Days</div>
+      <div id="symptomHistory"></div>
+      <div style="height:20px;"></div>
+    </section>
+
+    <!-- EMERGENCY CONTACTS -->
+    <section class="screen" id="screen-contacts">
+      <div class="top-header" style="justify-content:flex-start;gap:10px;">
+        <span onclick="goTo('screen-mother')" style="cursor:pointer;font-size:18px;">←</span>
+        <div class="greet-title" style="font-size:16px;">Emergency Contacts</div>
+      </div>
+      <div style="font-size:12px;color:var(--ink-soft);padding:2px 22px 10px;">These contacts are alerted when you use your Safe Word.</div>
+      <div id="contactsList"></div>
+
+      <div class="card contact-form" id="contactForm" style="display:none;">
+        <div class="contact-form-row">
+          <input type="text" id="cfName" placeholder="Name">
+          <input type="text" id="cfRelation" placeholder="Relationship">
+        </div>
+        <input type="tel" id="cfPhone" placeholder="Phone Number">
         <div class="contact-form-actions">
-          <button class="btn btn-ghost" onclick="hideContactForm()">Cancel</button>
+          <button class="btn btn-ghost" style="background:rgba(0,0,0,0.06);color:var(--ink-soft);" onclick="hideContactForm()">Cancel</button>
           <button class="btn btn-primary" onclick="saveContactForm()">Save Contact</button>
         </div>
       </div>
 
-      <button class="btn btn-coral add-contact-btn" onclick="showContactForm()" aria-label="Add new contact">
-        ➕ Add Contact
-      </button>
+      <button class="btn btn-coral add-contact-btn" onclick="showContactForm()">➕ Add Contact</button>
     </section>
 
-    <!-- ============================================================
-         SCREEN 9: PATIENT MEDICAL HISTORY
-         Clean timeline view with high-risk flags
-         ============================================================ -->
-    <section class="screen" id="screen-history" aria-label="Medical History">
-      <header class="top-header" style="justify-content:flex-start;gap:10px;">
-        <button onclick="goTo('screen-asha')" style="background:none;border:none;color:var(--text-primary);font-size:18px;cursor:pointer;" aria-label="Go back">←</button>
-        <h1 class="greet-title" style="font-size:16px;">Medical History</h1>
-      </header>
-
-      <div class="card history-patient-card">
-        <h2 class="history-patient-name" id="histPatientName">Sushila Devi</h2>
-        <p class="history-patient-meta" id="histPatientMeta">8 months · Critical risk</p>
+    <!-- PATIENT MEDICAL HISTORY -->
+    <section class="screen" id="screen-history">
+      <div class="top-header" style="justify-content:flex-start;gap:10px;">
+        <span onclick="goTo('screen-asha')" style="cursor:pointer;font-size:18px;">←</span>
+        <div class="greet-title" style="font-size:16px;">Medical History</div>
       </div>
 
-      <h2 class="section-label" style="padding-top:4px;">Last 2–3 Months</h2>
-      <div class="timeline" id="historyTimeline" role="list" aria-label="Medical history timeline"></div>
+      <div class="card history-patient-card">
+        <div class="history-patient-name" id="histPatientName">Sushila Devi</div>
+        <div class="history-patient-meta" id="histPatientMeta">8 months · Critical risk</div>
+      </div>
 
-      <div class="card add-entry-form" id="historyForm" style="display:none;" aria-label="Add medical entry form">
-        <input type="text" id="hfDate" placeholder="Date (e.g. July 20, 2026)" aria-label="Entry date">
-        <textarea id="hfNote" rows="2" placeholder="Note (e.g. Follow-up visit, BP normal)" aria-label="Medical note"></textarea>
-        <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted);cursor:pointer;">
-          <input type="checkbox" id="hfFlag" style="width:auto;box-shadow:none;" aria-label="Flag as high-risk">
-          Flag as high-risk entry
+      <div class="section-label" style="padding-top:4px;">Last 2–3 Months</div>
+      <div class="timeline" id="historyTimeline"></div>
+
+      <div class="card add-entry-form" id="historyForm" style="display:none;">
+        <input type="text" id="hfDate" placeholder="Date (e.g. July 20, 2026)">
+        <textarea id="hfNote" rows="2" placeholder="Note (e.g. Follow-up visit, BP normal)"></textarea>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-soft);">
+          <input type="checkbox" id="hfFlag" style="width:auto;box-shadow:none;"> Flag as high-risk entry
         </label>
         <div class="contact-form-actions">
-          <button class="btn btn-ghost" onclick="hideHistoryForm()">Cancel</button>
+          <button class="btn btn-ghost" style="background:rgba(0,0,0,0.06);color:var(--ink-soft);" onclick="hideHistoryForm()">Cancel</button>
           <button class="btn btn-primary" onclick="saveHistoryEntry()">Save Entry</button>
         </div>
       </div>
 
-      <button class="btn btn-coral add-contact-btn" onclick="showHistoryForm()" aria-label="Add medical entry">
-        ➕ Add Entry
-      </button>
+      <button class="btn btn-coral add-contact-btn" onclick="showHistoryForm()">➕ Add Entry</button>
     </section>
 
   </div>
 
-  <!-- Demo Mode Overlay -->
+  <!-- DEMO MODE OVERLAY -->
   <div class="demo-overlay" id="demoOverlay">
-    <div class="demo-tooltip" id="demoTooltip" role="dialog" aria-label="Demo walkthrough">
-      <button class="demo-close" onclick="toggleDemo()" aria-label="Close demo">✕</button>
+    <div class="demo-tooltip" id="demoTooltip">
+      <button class="demo-close" onclick="toggleDemo()">✕</button>
       <div class="demo-step" id="demoStepLbl">STEP 1/8</div>
       <div class="demo-text" id="demoText">Welcome to HerSetu — watch the splash screen bridge into the app.</div>
     </div>
   </div>
 
-  <!-- Toast Notification -->
-  <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
 
-  <!-- Safe Word Emergency Modal -->
-  <div class="sw-modal-veil" id="swVeil" role="dialog" aria-modal="true" aria-labelledby="swModalTitle">
+  <!-- EMERGENCY MODAL -->
+  <div class="sw-modal-veil" id="swVeil">
     <div class="sw-modal">
-      <h2 class="sw-modal-title" id="swModalTitle">🚨 EMERGENCY TRIGGERED</h2>
-      <p class="sw-modal-sub">Silent alert activated. Help is being arranged now.</p>
-      <div class="sw-actions" id="swActions" role="list">
-        <div class="action-item card" role="listitem">
-          <div class="action-check" aria-hidden="true">✓</div>
-          <div class="action-text">108 Ambulance Dispatched</div>
-        </div>
-        <div class="action-item card" role="listitem">
-          <div class="action-check" aria-hidden="true">✓</div>
-          <div class="action-text">Husband Alerted</div>
-        </div>
-        <div class="action-item card" role="listitem">
-          <div class="action-check" aria-hidden="true">✓</div>
-          <div class="action-text">₹500 Emergency Funds Released</div>
-        </div>
+      <div class="sw-modal-title">🚨 EMERGENCY TRIGGERED</div>
+      <div class="sw-modal-sub">Silent alert activated. Help is being arranged now.</div>
+      <div class="sw-countdown" id="swCountdown" style="display:none;"></div>
+      <div class="sw-actions" id="swActions">
+        <div class="action-item card"><div class="action-check">✓</div><div class="action-text">108 Ambulance Dispatched</div></div>
+        <div class="action-item card"><div class="action-check">✓</div><div class="action-text">Husband Alerted</div></div>
+        <div class="action-item card"><div class="action-check">✓</div><div class="action-text">₹500 Emergency Funds Released</div></div>
       </div>
-      <p class="sw-success" id="swSuccess">
-        ✅ You are safe. Your ASHA worker &amp; emergency contacts have been notified.
-      </p>
+      <div class="sw-success" id="swSuccess">✅ You are safe. Your ASHA worker &amp; emergency contacts have been notified.</div>
       <button class="sw-close-btn" id="swCloseBtn" onclick="closeSafeWordModal()">Close</button>
     </div>
   </div>
@@ -2253,846 +978,685 @@ footer.credit {
 
 <script>
 /* ============================================================
-   HERSETU - Refactored JavaScript
-   Optimized for performance with efficient DOM manipulation,
-   requestAnimationFrame usage, and cached selectors
-   ============================================================ */
-
-/* ============================================================
-   State Management
+   GLOBAL STATE & CORE
    ============================================================ */
 let currentScreen = 'screen-splash';
-let demoMode = false;
-let demoStep = 0;
-let demoIdleTimer = null;
-let offline = false;
-let isLightMode = true; // Default is dark, so this tracks if we're in light mode
+let currentRole = 'asha';
+let currentVoicePatient = 'Sushila Devi';
+let voicePrefill = null;
+let demoMode = false, demoStep = 0, demoIdleTimer = null;
+let offline = false, dark = false;
+let syncTimer = null, syncTimer2 = null;
+let emergencyInterval = null;
+let chatLang = 'hinglish';
 
-// AI Chat state machine
-const chatState = {
-  conversationHistory: [],
-  isTyping: false,
-  lastIntent: null
-};
-
-// Demo walkthrough script
 const demoScript = [
-  { screen: 'screen-splash', text: 'Welcome to HerSetu — a voice-first platform bridging ASHA workers and pregnant mothers.' },
-  { screen: 'screen-login', text: 'Choose a role: ASHA Worker for field staff, or Mother for the patient-facing app.' },
-  { screen: 'screen-asha', text: "The ASHA dashboard surfaces today's workload — critical cases are flagged instantly." },
-  { screen: 'screen-voice', text: 'Tap the mic — ASHA workers speak vitals aloud, no typing needed in the field.' },
-  { screen: 'screen-risk', text: 'The AI predicts risk in real time and auto-triggers emergency response — ambulance, bed, funds, family.' },
-  { screen: 'screen-chat', text: 'Mothers can privately confide in the AI Assistant — try typing about bleeding, pain, or dizziness.' },
-  { screen: 'screen-mother', text: "The Mother's home view tracks pregnancy progress and puts help one tap away." },
-  { screen: 'screen-asha', text: 'Even offline, data syncs later via mesh network between nearby ASHA phones. Demo complete!' }
+  {screen:'screen-splash', text:'Welcome to HerSetu — a voice-first platform bridging ASHA workers and pregnant mothers.'},
+  {screen:'screen-login', text:'Choose a role: ASHA Worker for field staff, or Mother for the patient-facing app.'},
+  {screen:'screen-asha', text:"The ASHA dashboard surfaces today's workload — critical cases are flagged instantly."},
+  {screen:'screen-voice', text:'Tap the mic — ASHA workers speak vitals aloud, no typing needed in the field.'},
+  {screen:'screen-risk', text:'The AI predicts risk in real time and auto-triggers emergency response — ambulance, bed, funds, family.'},
+  {screen:'screen-chat', text:'Mothers can privately confide in the AI Assistant — fully encrypted, with a silent Safe Word for emergencies.'},
+  {screen:'screen-mother', text:"The Mother's home view tracks pregnancy progress and puts help one tap away."},
+  {screen:'screen-asha', text:'Even offline, data syncs later via mesh network between nearby ASHA phones. Demo complete!'}
 ];
 
 /* ============================================================
-   Cached DOM Selectors
-   Performance optimization - cache frequently accessed elements
+   NAVIGATION
    ============================================================ */
-const DOM = {
-  screens: document.getElementById('screens'),
-  chatBody: document.getElementById('chatBody'),
-  chatInput: document.getElementById('chatInput'),
-  micBtn: document.getElementById('micBtn'),
-  micRipple: document.getElementById('micRipple'),
-  waveBars: document.getElementById('waveBars'),
-  micStatus: document.getElementById('micStatus'),
-  vitalsForm: document.getElementById('vitalsForm'),
-  confirmWrap: document.getElementById('confirmWrap'),
-  gaugeFill: document.getElementById('gaugeFill'),
-  gaugePct: document.getElementById('gaugePct'),
-  statusPill: document.getElementById('statusPill'),
-  actionList: document.getElementById('actionList'),
-  confettiLayer: document.getElementById('confettiLayer'),
-  pregBar: document.getElementById('pregBar'),
-  contactsList: document.getElementById('contactsList'),
-  historyTimeline: document.getElementById('historyTimeline'),
-  toast: document.getElementById('toast'),
-  offlineBadge: document.getElementById('offlineBadge'),
-  meshCount: document.getElementById('meshCount'),
-  demoTooltip: document.getElementById('demoTooltip'),
-  demoStepLbl: document.getElementById('demoStepLbl'),
-  demoText: document.getElementById('demoText'),
-  swVeil: document.getElementById('swVeil'),
-  swActions: document.getElementById('swActions'),
-  swSuccess: document.getElementById('swSuccess'),
-  swCloseBtn: document.getElementById('swCloseBtn')
-};
+function goTo(id){
+  if(id === currentScreen) return;
 
-/* ============================================================
-   Navigation System
-   GPU-accelerated transitions with requestAnimationFrame
-   ============================================================ */
-function goTo(id) {
-  if (id === currentScreen || !id) return;
+  if(currentScreen === 'screen-voice' && id !== 'screen-voice') voicePrefill = null;
 
   const prev = document.getElementById(currentScreen);
   const next = document.getElementById(id);
 
-  if (!prev || !next) return;
+  prev.classList.remove('active');
+  prev.classList.add('exit-left');
+  next.classList.add('active');
+  currentScreen = id;
+  updateNav(id);
+  onScreenEnter(id);
 
-  // Use requestAnimationFrame for smooth transitions
-  requestAnimationFrame(() => {
-    prev.classList.remove('active');
-    prev.classList.add('exit-left');
-    next.classList.add('active');
-    
-    // Update current screen
-    currentScreen = id;
-    
-    // Update navigation active states
-    updateNav(id);
-    
-    // Handle screen-specific logic
-    onScreenEnter(id);
-
-    // Clean up exit animation class after transition
-    setTimeout(() => {
-      prev.classList.remove('exit-left');
-    }, 300);
-  });
-
+  setTimeout(()=>{ prev.classList.remove('exit-left'); }, 220);
   resetIdleTimer();
 }
 
-function updateNav(id) {
-  // Find bottom nav within current screen and update active states
-  const screen = document.getElementById(id);
-  if (!screen) return;
-  
-  const navItems = screen.querySelectorAll('.nav-item');
-  navItems.forEach((n, i) => {
-    n.classList.toggle('active', i === 0);
+function navTo(id, el){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(el) el.classList.add('active');
+  goTo(id);
+}
+
+function updateNav(id){
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    n.classList.toggle('active', n.dataset.screen === id);
   });
 }
 
-function onScreenEnter(id) {
-  switch(id) {
-    case 'screen-voice':
-      resetVoiceScreen();
-      break;
-    case 'screen-risk':
-      runRiskSequence();
-      break;
-    case 'screen-chat':
-      initChat();
-      break;
-    case 'screen-mother':
-      animatePregBar();
-      break;
-    case 'screen-contacts':
-      renderContacts();
-      break;
+function onScreenEnter(id){
+  if(id === 'screen-voice') resetVoiceScreen();
+  if(id === 'screen-risk') runRiskSequence();
+  if(id === 'screen-chat') runChatSequence();
+  if(id === 'screen-mother') animatePregBar();
+  if(id === 'screen-contacts') renderContacts();
+  if(id === 'screen-patients') renderPatients();
+  if(id === 'screen-visits') renderVisits();
+  if(id === 'screen-alerts') renderAlerts();
+  if(id === 'screen-track') resetSymptomTracker();
+  if(demoMode){
+    const idx = demoScript.findIndex((s,i)=> i>=demoStep && s.screen===id);
   }
 }
 
-// Auto transition from splash to login after delay
-setTimeout(() => {
-  if (currentScreen === 'screen-splash') {
-    goTo('screen-login');
-  }
-}, 3500);
+/* Auto transition splash -> login */
+setTimeout(()=>{ if(currentScreen==='screen-splash') goTo('screen-login'); }, 3000);
 
 /* ============================================================
-   Ripple Effect System
-   Efficient click feedback with pooled animations
+   ROLE SWITCH (NO LOGIN NEEDED)
    ============================================================ */
-function rippleEffect(e) {
+function updateRoleToggle(){
+  const btn = document.getElementById('roleToggle');
+  if(currentRole === 'asha'){
+    btn.textContent = '👩🏽‍⚕️';
+    btn.classList.add('role-asha');
+    btn.classList.remove('role-mother');
+    btn.title = 'Switch to Mother';
+  } else {
+    btn.textContent = '💗';
+    btn.classList.add('role-mother');
+    btn.classList.remove('role-asha');
+    btn.title = 'Switch to ASHA Worker';
+  }
+}
+
+function setRole(role){
+  currentRole = role;
+  updateRoleToggle();
+  goTo(role === 'asha' ? 'screen-asha' : 'screen-mother');
+}
+
+function toggleRole(){
+  setRole(currentRole === 'asha' ? 'mother' : 'asha');
+}
+
+/* ============================================================
+   RIPPLE EFFECT
+   ============================================================ */
+function rippleEffect(e){
   const btn = e.currentTarget || e.target;
-  if (!btn) return;
-  
   const rect = btn.getBoundingClientRect();
   const circle = document.createElement('span');
   const size = Math.max(rect.width, rect.height);
-  
   circle.className = 'ripple-el';
-  circle.style.width = circle.style.height = size + 'px';
-  circle.style.left = (e.clientX - rect.left - size / 2) + 'px';
-  circle.style.top = (e.clientY - rect.top - size / 2) + 'px';
-  
+  circle.style.width = circle.style.height = size+'px';
+  circle.style.left = (e.clientX - rect.left - size/2)+'px';
+  circle.style.top = (e.clientY - rect.top - size/2)+'px';
   btn.style.position = btn.style.position || 'relative';
-  btn.style.overflow = 'hidden';
   btn.appendChild(circle);
-  
-  // Clean up after animation
-  setTimeout(() => circle.remove(), 600);
+  setTimeout(()=>circle.remove(), 650);
 }
-
-// Delegate click events for ripple effect
-document.addEventListener('click', (e) => {
-  const btn = e.target.closest('.btn, .fab, .role-card, .patient-row, .qa-card, .nav-item');
-  if (btn) {
-    rippleEffect({ currentTarget: btn, clientX: e.clientX, clientY: e.clientY });
-  }
+document.addEventListener('click', (e)=>{
+  const btn = e.target.closest('.btn, .fab, .role-card, .patient-row, .qa-card');
+  if(btn) rippleEffect({currentTarget:btn, clientX:e.clientX, clientY:e.clientY});
 });
 
 /* ============================================================
-   Voice Input System
-   Responsive mic with visual feedback states
+   OFFLINE / AIRPLANE MODE + MESH SYNC SIMULATION
    ============================================================ */
-function resetVoiceScreen() {
-  DOM.micBtn.classList.remove('recording');
-  DOM.micRipple.classList.remove('animate');
-  DOM.waveBars.classList.remove('animate');
-  DOM.micStatus.textContent = 'Tap mic to begin';
-  DOM.micStatus.style.color = '';
-  
-  // Reset vital fields
-  const fields = DOM.vitalsForm.querySelectorAll('.vital-field');
-  fields.forEach(f => f.classList.remove('show'));
-  
-  DOM.confirmWrap.innerHTML = '';
+function showToast(msg, duration = 3200){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=> t.classList.remove('show'), duration);
 }
 
-function startRecording() {
-  if (DOM.micBtn.classList.contains('recording')) return;
+function toggleOffline(){
+  offline = !offline;
+  const btn = document.getElementById('offlineToggle');
+  const badge = document.getElementById('offlineBadge');
 
-  // Start recording state
-  DOM.micBtn.classList.add('recording');
-  DOM.micRipple.classList.add('animate');
-  DOM.waveBars.classList.add('animate');
-  DOM.micStatus.textContent = '🎙️ Listening… "मरीज़ का ब्लड प्रेशर 160/100 है"';
-  DOM.micStatus.style.color = '';
+  clearTimeout(syncTimer);
+  clearTimeout(syncTimer2);
 
-  // Simulate recording duration
-  setTimeout(() => {
-    // Stop recording state
-    DOM.micBtn.classList.remove('recording');
-    DOM.micRipple.classList.remove('animate');
-    DOM.waveBars.classList.remove('animate');
-    DOM.micStatus.textContent = '✅ Vitals captured successfully';
-    DOM.micStatus.style.color = 'var(--safe)';
+  if(offline){
+    btn.classList.add('off-on');
+    btn.textContent = '✈️';
+    badge.classList.add('show');
 
-    // Reveal vitals with staggered animation
-    const fields = DOM.vitalsForm.querySelectorAll('.vital-field');
-    fields.forEach((f, i) => {
-      requestAnimationFrame(() => {
-        setTimeout(() => f.classList.add('show'), i * 160);
-      });
+    const meshes = Math.floor(Math.random() * 3) + 2;
+    document.getElementById('offlineStatusText').textContent = `📡 Syncing with ${meshes} ASHAs nearby`;
+    document.getElementById('offlineLastSync').textContent = 'Last synced: 2 mins ago';
+
+    showToast('Working offline. Data will sync when network is available.');
+
+    // Simulate Bluetooth mesh sync
+    syncTimer = setTimeout(()=>{
+      if(!offline) return;
+      document.getElementById('offlineStatusText').textContent = '✅ All data synced';
+      document.getElementById('offlineLastSync').textContent = 'Last synced: just now';
+      showToast('Synced ✓');
+      syncTimer2 = setTimeout(()=>{
+        if(!offline) return;
+        document.getElementById('offlineStatusText').textContent = `📡 Syncing with ${meshes} ASHAs nearby`;
+        document.getElementById('offlineLastSync').textContent = 'Last synced: just now';
+      }, 3500);
+    }, 2500);
+  } else {
+    btn.classList.remove('off-on');
+    btn.textContent = '📶';
+    badge.classList.remove('show');
+    showToast('Back online. All data synced.');
+  }
+}
+
+/* ============================================================
+   DARK MODE
+   ============================================================ */
+function toggleDark(){
+  dark = !dark;
+  document.body.classList.toggle('dark', dark);
+  document.getElementById('darkToggle').classList.toggle('on', dark);
+  document.getElementById('darkToggle').textContent = dark ? '☀️' : '🌙';
+}
+
+/* ============================================================
+   VOICE INPUT
+   ============================================================ */
+function resetVoiceScreen(){
+  document.getElementById('micBtn').classList.remove('recording');
+  document.getElementById('micRipple').classList.remove('animate');
+  document.getElementById('waveBars').classList.remove('animate');
+  document.getElementById('micStatus').textContent = 'Tap mic to begin';
+  document.querySelectorAll('.vital-field').forEach(f=>f.classList.remove('show'));
+  document.getElementById('confirmWrap').innerHTML = '';
+
+  document.getElementById('vitalPatientName').textContent = currentVoicePatient || 'Sushila Devi';
+
+  const prefill = document.getElementById('voicePrefillNote');
+  if(voicePrefill){
+    prefill.style.display = 'block';
+    prefill.textContent = '📋 Pre-filled from alert: ' + voicePrefill;
+  } else {
+    prefill.style.display = 'none';
+  }
+}
+
+function startRecording(){
+  const mic = document.getElementById('micBtn');
+  const ripple = document.getElementById('micRipple');
+  const wave = document.getElementById('waveBars');
+  const status = document.getElementById('micStatus');
+  if(mic.classList.contains('recording')) return;
+
+  mic.classList.add('recording');
+  ripple.classList.add('animate');
+  wave.classList.add('animate');
+  status.textContent = '🎙️ Listening… "मरीज़ का ब्लड प्रेशर 160/100 है"';
+
+  setTimeout(()=>{
+    mic.classList.remove('recording');
+    ripple.classList.remove('animate');
+    wave.classList.remove('animate');
+    status.textContent = '✅ Vitals captured successfully';
+
+    document.querySelectorAll('.vital-field').forEach((f,i)=>{
+      setTimeout(()=> f.classList.add('show'), i*160);
     });
 
-    // Show confirm button after vitals are revealed
-    setTimeout(() => {
-      DOM.confirmWrap.innerHTML = `
-        <button class="btn btn-primary" style="width:100%;" onclick="goTo('screen-risk')">
-          Confirm ✓
-        </button>
-      `;
-    }, fields.length * 160 + 200);
-  }, 2500);
+    setTimeout(()=>{
+      document.getElementById('confirmWrap').innerHTML =
+        '<button class="btn btn-primary" style="width:100%;" onclick="confirmVitals()">Confirm ✓</button>';
+    }, 5*160 + 200);
+  }, 2000);
+}
+
+function confirmVitals(){
+  // Persist visit log into patient history
+  const patient = currentVoicePatient || 'Sushila Devi';
+  const all = loadHistory();
+  if(!all[patient]) all[patient] = [];
+  all[patient].push({
+    date: new Date().toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'}),
+    note: 'Visit complete · BP 160/100 · Weight 55kg · Risk 89%',
+    flag: true
+  });
+  saveHistory(all);
+  goTo('screen-risk');
 }
 
 /* ============================================================
-   Risk Prediction Animation Sequence
-   Smooth gauge with GPU-accelerated animations
+   RISK PREDICTION SEQUENCE
    ============================================================ */
-function runRiskSequence() {
-  // Reset state
-  DOM.gaugeFill.style.transition = 'none';
-  DOM.gaugeFill.style.strokeDashoffset = 565;
-  DOM.gaugePct.textContent = '0%';
-  DOM.statusPill.classList.remove('visible');
-  
-  const actions = DOM.actionList.querySelectorAll('.action-item');
-  actions.forEach(a => a.classList.remove('done'));
-  DOM.confettiLayer.innerHTML = '';
+function runRiskSequence(){
+  const fill = document.getElementById('gaugeFill');
+  const pct = document.getElementById('gaugePct');
+  const pill = document.getElementById('statusPill');
+  const actions = document.querySelectorAll('#actionList .action-item');
+  const confettiLayer = document.getElementById('confettiLayer');
+  const summary = document.getElementById('visitSummary');
 
-  // Animate gauge with requestAnimationFrame
-  requestAnimationFrame(() => {
-    DOM.gaugeFill.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(0.25, 0.1, 0.25, 1)';
-    const target = 565 - (565 * 0.89);
-    DOM.gaugeFill.style.strokeDashoffset = target;
+  summary.style.display = 'none';
+  fill.style.transition = 'none';
+  fill.style.strokeDashoffset = 565;
+  pct.textContent = '0%';
+  pill.style.visibility = 'hidden';
+  actions.forEach(a=>a.classList.remove('done'));
+  confettiLayer.innerHTML = '';
+
+  // Set summary info
+  document.getElementById('vsPatient').textContent = currentVoicePatient || 'Sushila Devi';
+  document.getElementById('vsRisk').textContent = '89%';
+  const nextDate = new Date(Date.now() + 3*86400000).toLocaleDateString('en-IN', {weekday:'short', day:'numeric', month:'short'});
+  document.getElementById('vsNext').textContent = nextDate;
+
+  requestAnimationFrame(()=>{
+    fill.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(.22,1,.36,1)';
+    const target = 565 - (565*0.89);
+    fill.style.strokeDashoffset = target;
   });
 
-  // Counter animation
   let count = 0;
-  const targetCount = 89;
-  const counterDuration = 1600;
-  const counterInterval = counterDuration / targetCount;
-  
-  const counter = setInterval(() => {
-    count += 1;
-    if (count >= targetCount) {
-      count = targetCount;
-      clearInterval(counter);
-    }
-    DOM.gaugePct.textContent = count + '%';
-  }, counterInterval);
+  const counter = setInterval(()=>{
+    count += 2;
+    if(count>=89){ count=89; clearInterval(counter); }
+    pct.textContent = count+'%';
+  }, 1600/45);
 
-  // Show status pill after animation
-  setTimeout(() => {
-    DOM.statusPill.classList.add('visible');
-  }, 1700);
+  setTimeout(()=>{ pill.style.visibility='visible'; }, 1700);
 
-  // Sequential action reveal
-  actions.forEach((action, i) => {
-    setTimeout(() => {
-      action.classList.add('done');
-    }, 2000 + i * 450);
+  actions.forEach((a,i)=>{
+    setTimeout(()=> a.classList.add('done'), 2000 + i*450);
   });
 
-  // Fire confetti after actions complete
-  setTimeout(fireConfetti, 2000 + actions.length * 450 + 200);
+  setTimeout(()=>{
+    fireConfetti();
+    summary.style.display = 'block';
+  }, 2000 + actions.length*450 + 200);
 }
 
-function fireConfetti() {
-  const colors = ['#D4A84B', '#E07A68', '#3D8B85', '#ffffff', '#5BA88F'];
-  const layer = DOM.confettiLayer;
-  
-  // Create confetti pieces
-  for (let i = 0; i < 50; i++) {
+function fireConfetti(){
+  const layer = document.getElementById('confettiLayer');
+  const colors = ['#F8C630','#E86A5A','#0A6E5C','#ffffff'];
+  for(let i=0;i<40;i++){
     const p = document.createElement('div');
     p.className = 'confetti-piece';
-    p.style.left = Math.random() * 100 + '%';
-    p.style.background = colors[Math.floor(Math.random() * colors.length)];
-    p.style.animation = `confettiFall ${1.6 + Math.random() * 1.2}s ease-in ${Math.random() * 0.3}s forwards`;
-    p.style.transform = `rotate(${Math.random() * 360}deg)`;
+    p.style.left = Math.random()*100+'%';
+    p.style.background = colors[i%colors.length];
+    p.style.animation = `confettiFall ${1.6+Math.random()*1.2}s ease-in ${Math.random()*0.3}s forwards`;
+    p.style.transform = `rotate(${Math.random()*360}deg)`;
     layer.appendChild(p);
   }
-
-  // Inject keyframes if not already present
-  if (!document.getElementById('confetti-style')) {
-    const style = document.createElement('style');
-    style.id = 'confetti-style';
-    style.textContent = `
-      @keyframes confettiFall {
-        0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-        100% { transform: translateY(640px) rotate(480deg); opacity: 0; }
-      }
-    `;
-    document.head.appendChild(style);
-  }
-
-  // Clean up after animation
-  setTimeout(() => {
-    layer.innerHTML = '';
-  }, 3500);
+  const styleTag = document.createElement('style');
+  styleTag.textContent = `@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(640px) rotate(480deg);opacity:0}}`;
+  document.head.appendChild(styleTag);
+  setTimeout(()=> layer.innerHTML='', 3200);
 }
 
 /* ============================================================
-   AI Chat Assistant - Conversational State Machine
-   Keyword-based intent recognition with branching logic
+   CHAT — MULTI-LANGUAGE AI ASSISTANT
    ============================================================ */
+const chatScript = [
+  {who:'her', text:"मुझे 2 दिन से खून बह रहा है पर मैं किसी को बताने से डरती हूँ…"},
+  {who:'ai', text:"I'm here for you, and this is private. Bleeding for 2 days needs urgent care — can I connect you to Sunita ASHA right now?", lang:'EN'},
+  {who:'her', text:"I feel very weak and dizzy."},
+  {who:'ai', text:"Please sit down and drink water if you can. I'm alerting your ASHA worker discreetly — help is on the way.", lang:'EN'},
+  {who:'her', text:"My husband doesn't let me go to the hospital."},
+  {who:'ai', text:"You deserve safe care. I've quietly notified your ASHA worker — she'll reach out in a way that keeps you safe.", lang:'EN'},
+  {who:'her', text:"kya mein santra kha sakti hu?"},
+  {who:'ai', text:"Ji bilkul! Santra mein vitamin C hota hai jo aapki immunity badhata hai. Lekin dhyan rakhein ki din mein 1-2 se zyada na khayein kyunki isme natural sugar bhi hoti hai.", lang:'Hinglish'}
+];
 
-// AI Response knowledge base with branching logic
-const aiKnowledge = {
-  // Emergency keywords - highest priority
-  emergency: {
-    keywords: ['bleeding', 'रक्त', 'खून', 'blood', 'hemorrhage'],
-    response: "I understand you're experiencing bleeding. This needs immediate attention. I'm quietly alerting your ASHA worker Sunita — she'll reach out to help you safely. Please try to rest and stay calm. Is there someone nearby who can stay with you?",
-    escalation: 'alert_asha',
-    urgency: 'high'
-  },
-  
-  // Pain-related concerns
-  pain: {
-    keywords: ['pain', 'dard', 'दर्द', 'ache', 'hurt', 'stomach pain', 'पेट दर्द'],
-    response: "I hear you — pain can be worrying. Can you tell me where it hurts? Is it mild, moderate, or severe? For now, try to rest in a comfortable position. If the pain becomes severe or doesn't stop, please let me know right away.",
-    followUp: "Where exactly do you feel the pain? Is it constant or does it come and go?",
-    urgency: 'medium'
-  },
-  
-  // Dizziness and weakness
-  dizziness: {
-    keywords: ['dizzy', 'dizziness', 'chakkar', 'चक्कर', 'weak', 'weakness', 'thakan', 'थकान', 'sick', 'nauseous'],
-    response: "Feeling dizzy or weak is common during pregnancy. Please sit or lie down slowly, and drink some water if you can. Try not to stand up quickly. If you feel very weak or faint, please tell someone near you to stay with you.",
-    followUp: "Have you eaten anything today? Sometimes low blood sugar can make you feel dizzy.",
-    urgency: 'medium'
-  },
-  
-  // Headache
-  headache: {
-    keywords: ['headache', 'sir dard', 'सिर दर्द', 'migraine', 'sensitivity to light'],
-    response: "Headaches can be normal during pregnancy, but they can also signal high blood pressure. Are you also seeing any spots or changes in your vision? Try resting in a quiet, dark room. Please mention this to your ASHA worker during the next visit.",
-    followUp: "How long have you had the headache? Is it on one side or all over your head?",
-    urgency: 'medium'
-  },
-  
-  // Fever and infection
-  fever: {
-    keywords: ['fever', 'bukhar', 'बुखार', 'temperature', 'hot', 'sweating', 'infection'],
-    response: "A fever during pregnancy should be monitored carefully. Please check your temperature if you have a thermometer. Try to rest, drink plenty of fluids, and keep yourself cool. If your fever is above 100°F or doesn't go down, please contact your ASHA worker immediately.",
-    followUp: "Do you have any chills, body aches, or other symptoms along with the fever?",
-    urgency: 'high'
-  },
-  
-  // Swelling concerns
-  swelling: {
-    keywords: ['swelling', 'swell', 'uphla', 'उबला', 'edema', 'swollen', 'hands', 'feet', 'face'],
-    response: "Some swelling in feet and ankles is common, especially in later pregnancy. Try resting with your feet elevated. However, sudden swelling in your face or hands, or severe swelling, should be reported to your ASHA worker right away.",
-    followUp: "Is the swelling in both feet or just one? Does it go away when you rest?",
-    urgency: 'medium'
-  },
-  
-  // Contractions and labor signs
-  contractions: {
-    keywords: ['contraction', 'contractions', 'sankoch', 'संकुचन', 'labor', 'painful cramps', 'tightening'],
-    response: "If you're experiencing contractions before your due date, this could be serious. How far apart are they? Try to time them. If they're regular and getting stronger, or if you feel pressure in your pelvis, please contact your ASHA worker or go to the hospital right away.",
-    followUp: "Are the contractions regular? How many have you had in the last hour?",
-    urgency: 'high'
-  },
-  
-  // Nutrition - Oranges
-  santra: {
-    keywords: ['santra', 'orange', 'narangi', 'नारंगी', 'vitamin c', 'citrus'],
-    response: "Ji bilkul! Oranges are excellent during pregnancy. They're rich in Vitamin C which helps your body absorb iron and supports your immune system. One to two oranges a day is a good amount. However, if you have gestational diabetes, speak with your ASHA about portion sizes.",
-    followUp: null,
-    urgency: 'low'
-  },
-  
-  // General nutrition
-  nutrition: {
-    keywords: ['khana', 'खाना', 'food', 'diet', 'nutrition', 'eat', 'healthy', 'iron', 'calcium', 'protein'],
-    response: "Good nutrition is very important during pregnancy. Try to eat plenty of vegetables, dal, milk, and fruits. Iron-rich foods like spinach and lentils are especially helpful. Don't forget to take your iron and calcium supplements as advised by your ASHA worker.",
-    followUp: "Have you been taking your prenatal vitamins and supplements regularly?",
-    urgency: 'low'
-  },
-  
-  // Emotional support
-  emotional: {
-    keywords: ['sad', 'depressed', 'upset', 'worried', 'stress', 'anxious', 'rona', 'रोना', 'cry', 'scared', 'dar'],
-    response: "It's completely normal to feel emotional during pregnancy. Your feelings are valid. Remember that you're not alone — I'm here to listen. Taking care of your emotional health is just as important as physical health. Is there something specific on your mind?",
-    followUp: "Would you like to talk about what's worrying you? Sometimes sharing can help.",
-    urgency: 'medium'
-  },
-  
-  // Husband/family concerns (domestic issues)
-  family: {
-    keywords: ['husband', 'patni', 'पति', 'family', 'home', 'in-laws', 'saas', 'sas', 'relations'],
-    response: "Family dynamics can be challenging during pregnancy. Your health and your baby's health are the most important things right now. If you ever feel unsafe or need support, your ASHA worker is there to help you. You deserve to be treated with care and respect.",
-    followUp: "Is everything okay at home? You can talk to me openly — this conversation is private.",
-    urgency: 'medium'
-  },
-  
-  // Medication and treatment
-  medicine: {
-    keywords: ['medicine', 'medicine', 'दवा', 'tablet', 'capsule', 'injection', 'treatment', 'doctor'],
-    response: "It's important to take any medicines prescribed by your doctor or ASHA worker exactly as directed. Don't stop taking iron or calcium supplements without consulting them first. If you're experiencing any side effects, please let your ASHA know.",
-    followUp: "Are you currently taking any medicines or supplements?",
-    urgency: 'low'
-  },
-  
-  // Water and hydration
-  water: {
-    keywords: ['pani', 'पानी', 'water', 'drink', 'hydration', 'thirst'],
-    response: "Staying hydrated is very important during pregnancy. Try to drink at least 8-10 glasses of water throughout the day. If it's hot, drink more. Signs of dehydration include dark urine, dizziness, or dry mouth. Are you drinking enough water?",
-    followUp: "How much water do you drink in a day? Try to keep a water container near you.",
-    urgency: 'low'
-  },
-  
-  // Rest and sleep
-  rest: {
-    keywords: ['sleep', 'sone', 'सोना', 'rest', 'thakav', ' थकावट', 'tired', 'nap'],
-    response: "Getting enough rest is essential during pregnancy. Try to sleep at least 8 hours at night, and take short naps during the day if possible. Rest on your left side, especially in later pregnancy — this improves blood flow to your baby.",
-    followUp: "How are you sleeping at night? Are you having trouble falling asleep or staying asleep?",
-    urgency: 'low'
-  },
-  
-  // Hospital and delivery planning
-  hospital: {
-    keywords: ['hospital', 'aspatal', 'अस्पताल', 'delivery', 'janam', 'जन्म', 'birth', 'doctor appointment'],
-    response: "It's good that you're thinking about delivery planning. Your ASHA worker can help you register at the nearest hospital that has delivery facilities. Try to plan how you'll get to the hospital when the time comes. Do you know which hospital you'll go to?",
-    followUp: "How far is the hospital from your home? Do you have transportation arranged?",
-    urgency: 'medium'
+let chatRun = false;
+function runChatSequence(){
+  const body = document.getElementById('chatBody');
+  body.innerHTML = '';
+  chatRun = true;
+  chatScript.forEach((m,i)=>{
+    setTimeout(()=>{
+      if(!chatRun) return;
+      addChatMessage(m.who, m.text, m.lang);
+    }, i*750);
+  });
+}
+
+function setChatLang(lang){
+  chatLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b=>{
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+}
+
+function addChatMessage(who, text, langLabel){
+  const body = document.getElementById('chatBody');
+  const div = document.createElement('div');
+  div.className = 'msg '+(who==='her'?'her':'ai');
+  div.textContent = text;
+  if(who === 'ai' && langLabel){
+    const badge = document.createElement('span');
+    badge.className = 'msg-lang';
+    badge.textContent = langLabel;
+    div.appendChild(badge);
   }
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+
+function sendChat(){
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if(!text) return;
+  addChatMessage('her', text);
+  input.value = '';
+  const reply = getAIResponse(text);
+  setTimeout(()=> addChatMessage('ai', reply.text, reply.label), 600);
+}
+
+function sendQuick(text){
+  addChatMessage('her', text);
+  const reply = getAIResponse(text);
+  setTimeout(()=> addChatMessage('ai', reply.text, reply.label), 500);
+}
+
+/* Keyword detection: English + Hindi + Hinglish */
+const keywordMap = {
+  bleeding: {en:['bleeding','blood','bleed'], hi:['खून','रक्त','ब्लीडिंग'], hing:['khoon','khun','bleeding','blood']},
+  contractions: {en:['contraction','contractions','labor pain'], hi:['संकुचन','सिकुड़न','प्रसव पीड़ा'], hing:['sankuchan','contractions','labor pain']},
+  dizzy: {en:['dizzy','dizziness','lightheaded'], hi:['चक्कर'], hing:['chakkar','dizzy']},
+  headache: {en:['headache'], hi:['सिरदर्द','सिर दर्द'], hing:['sir dard','sar dard','headache']},
+  fever: {en:['fever','temperature'], hi:['बुखार'], hing:['bukhar','fever']},
+  swelling: {en:['swelling','swollen','edema'], hi:['सूजन'], hing:['sujan','swelling','swollen']},
+  nausea: {en:['nausea','vomit','vomiting'], hi:['मतली','उल्टी'], hing:['matli','ulti','nausea']},
+  pain: {en:['pain','ache','hurt'], hi:['दर्द'], hing:['dard','pain']},
+  anxiety: {en:['anxiety','panic','scared','afraid','tense'], hi:['घबराहट','डर','चिंता'], hing:['ghabrahat','ghabra','dar','anxiety']},
+  orange: {en:['orange','santra'], hi:['संतरा'], hing:['santra','orange']}
 };
 
-// Intent recognition function
-function recognizeIntent(message) {
-  const normalizedMessage = message.toLowerCase().trim();
-  
-  // Check each category for keyword matches
-  for (const [intent, data] of Object.entries(aiKnowledge)) {
-    for (const keyword of data.keywords) {
-      if (normalizedMessage.includes(keyword)) {
-        return { intent, ...data };
-      }
-    }
-  }
-  
+function hasWord(text, arr){ return arr.some(w=> text.includes(w)); }
+
+function detectTopic(text){
+  text = text.toLowerCase();
+  if(hasWord(text, keywordMap.bleeding.en.concat(keywordMap.bleeding.hi, keywordMap.bleeding.hing))) return 'bleeding';
+  if(hasWord(text, keywordMap.contractions.en.concat(keywordMap.contractions.hi, keywordMap.contractions.hing))) return 'contractions';
+  if((hasWord(text, ['dizzy','chakkar','चक्कर']) || hasWord(text, keywordMap.dizzy.en)) && (hasWord(text, ['headache','sir dard','sar dard','सिरदर्द']) || hasWord(text, keywordMap.headache.en))) return 'headacheDizziness';
+  if(hasWord(text, keywordMap.headache.en.concat(keywordMap.headache.hi, keywordMap.headache.hing))) return 'headache';
+  if(hasWord(text, keywordMap.dizzy.en.concat(keywordMap.dizzy.hi, keywordMap.dizzy.hing))) return 'dizzy';
+  if(hasWord(text, keywordMap.fever.en.concat(keywordMap.fever.hi, keywordMap.fever.hing))) return 'fever';
+  if(hasWord(text, keywordMap.swelling.en.concat(keywordMap.swelling.hi, keywordMap.swelling.hing))) return 'swelling';
+  if(hasWord(text, keywordMap.nausea.en.concat(keywordMap.nausea.hi, keywordMap.nausea.hing))) return 'nausea';
+  if(hasWord(text, keywordMap.pain.en.concat(keywordMap.pain.hi, keywordMap.pain.hing))) return 'pain';
+  if(hasWord(text, keywordMap.anxiety.en.concat(keywordMap.anxiety.hi, keywordMap.anxiety.hing))) return 'anxiety';
+  if(hasWord(text, keywordMap.orange.en.concat(keywordMap.orange.hi, keywordMap.orange.hing))) return 'orange';
   return null;
 }
 
-// Generate AI response based on intent
-function generateResponse(intent, conversationHistory) {
-  const response = intent.response;
-  
-  // Check for follow-up context from previous messages
-  if (intent.followUp && conversationHistory.length > 2) {
-    // 50% chance to ask follow-up to make conversation more natural
-    if (Math.random() > 0.5) {
-      return response + '\n\n' + intent.followUp;
-    }
+function detectLanguage(text){
+  if(/[\u0900-\u097F]/.test(text)) return 'hindi';
+  const hinglishWords = ['khoon','khun','chakkar','sir dard','sar dard','bukhar','sankuchan','sujan','matli','ghabrahat','ghabra','dard','ulti','santra'];
+  if(hinglishWords.some(w=> text.toLowerCase().includes(w))) return 'hinglish';
+  return chatLang;
+}
+
+function langLabel(lang){
+  if(lang === 'english') return 'EN';
+  if(lang === 'hindi') return 'HI';
+  return 'Hinglish';
+}
+
+const AIResponses = {
+  bleeding: {
+    english: {text:"Bleeding detected. Please sit down. I'm alerting your ASHA worker right now. Drink water if you can. Do not wait.", label:'EN'},
+    hindi: {text:"खून बह रहा है। कृपया तुरंत बैठ जाएँ। मैं आपकी आशा वर्कर को अलर्ट कर रही हूँ। थोड़ा पानी पिएँ।", label:'HI'},
+    hinglish: {text:"Bleeding detected. Please sit down. Main aapki ASHA worker ko alert kar rahi hoon. Kya aap thoda paani pi sakti hain?", label:'Hinglish'}
+  },
+  contractions: {
+    english: {text:"You may be having contractions. Please note the time between them. I'm notifying your ASHA worker for a check-up.", label:'EN'},
+    hindi: {text:"संकुचन हो सकते हैं। कृपया समय का ध्यान रखें। मैं आपकी आशा वर्कर को सूचित कर रही हूँ।", label:'HI'},
+    hinglish: {text:"Sankuchan ho rahe hain? Time note karein. Main aapki ASHA worker ko bata rahi hoon.", label:'Hinglish'}
+  },
+  headacheDizziness: {
+    english: {text:"Severe headache with dizziness is a warning sign. Please sit down and do not move around. I'm alerting your ASHA worker immediately.", label:'EN'},
+    hindi: {text:"तेज सिरदर्द और चक्कर आना खतरे का संकेत है। कृपया बैठ जाएँ। मैं आशा वर्कर को अलर्ट कर रही हूँ।", label:'HI'},
+    hinglish: {text:"Severe headache + chakkar warning sign hai. Please baith jaayein. Main ASHA worker ko turant alert kar rahi hoon.", label:'Hinglish'}
+  },
+  headache: {
+    english: {text:"Headache can be normal, but if it's severe or continuous, please check your BP. I can alert your ASHA worker if needed.", label:'EN'},
+    hindi: {text:"सिरदर्द हो सकता है, लेकिन अगर तेज़ है तो बीपी जाँचें। ज़रूरत हो तो मैं आशा वर्कर को बुला सकती हूँ।", label:'HI'},
+    hinglish: {text:"Headache ho raha hai? Kitna time se? Let me check if this is serious. Agar BP bhi high hai toh alert bhej doon?", label:'Hinglish'}
+  },
+  dizzy: {
+    english: {text:"Feeling dizzy? Please sit down immediately and drink water. Avoid standing up suddenly.", label:'EN'},
+    hindi: {text:"चक्कर आ रहे हैं? कृपया तुरंत बैठ जाएँ और पानी पिएँ। अचानक खड़े न हों।", label:'HI'},
+    hinglish: {text:"Chakkar aa rahe hain? Please baith jaayein aur thoda paani piyein. Turant uthna mat.", label:'Hinglish'}
+  },
+  fever: {
+    english: {text:"Fever? Have you checked with a thermometer? Please rest and hydrate. If fever continues, your ASHA worker should visit.", label:'EN'},
+    hindi: {text:"बुखार है? क्या आपने थर्मामीटर से जाँचा? आराम करें और पानी पिएँ।", label:'HI'},
+    hinglish: {text:"Bukhar hai? Kya aapne thermometer se check kiya? Aarish karein aur paani piyein.", label:'Hinglish'}
+  },
+  swelling: {
+    english: {text:"Swelling may be normal during pregnancy, but sudden severe swelling needs a BP check. I'm noting this for your ASHA worker.", label:'EN'},
+    hindi: {text:"सूजन प्रेग्नेंसी में आम हो सकती है, लेकिन अचानक तेज़ सूजन हो तो बीपी जाँचें।", label:'HI'},
+    hinglish: {text:"Sujan pregnancy mein normal ho sakta hai, lekin sudden severe sujan ho toh BP check karein. Main ASHA worker ko note kar rahi hoon.", label:'Hinglish'}
+  },
+  nausea: {
+    english: {text:"Nausea is common, but if you can't keep anything down, please drink small sips of water. Your ASHA worker can help.", label:'EN'},
+    hindi: {text:"मतली आम है, लेकिन अगर कुछ भी न रह सके तो थोड़ा-थोड़ा पानी पिएँ।", label:'HI'},
+    hinglish: {text:"Matli common hai, lekin agar kuch nahi reh paata toh chhote ghunt paani piyein. ASHA worker ko bata sakti hain.", label:'Hinglish'}
+  },
+  pain: {
+    english: {text:"Where is the pain? Please tell me if it's constant or comes and goes. If it's severe, I'll notify your ASHA worker.", label:'EN'},
+    hindi: {text:"दर्द कहाँ है? कृपया बताएँ। अगर दर्द तेज़ है तो मैं आशा वर्कर को बुलाऊँगी।", label:'HI'},
+    hinglish: {text:"Dard kahan hai? Batao. Agar bahut tez hai toh main ASHA worker ko bula rahi hoon.", label:'Hinglish'}
+  },
+  anxiety: {
+    english: {text:"It's okay to feel scared. You're not alone. I'm here for you. I can connect you to a counselor if you want.", label:'EN'},
+    hindi: {text:"डरना स्वाभाविक है। आप अकेली नहीं हैं। चाहें तो मैं काउंसलर से बात करा सकती हूँ।", label:'HI'},
+    hinglish: {text:"Ghabrana normal hai. Aap akele nahi hain. Main aapke liye hoon. Chaho toh counselor se baat karwa sakti hoon.", label:'Hinglish'}
+  },
+  orange: {
+    english: {text:"Orange is safe in pregnancy. It gives Vitamin C and hydration. Eat 1-2 per day, not too many because of natural sugar.", label:'EN'},
+    hindi: {text:"संतरा प्रेग्नेंसी में सुरक्षित है। विटामिन C देता है। दिन में 1-2 खाएँ।", label:'HI'},
+    hinglish: {text:"Ji bilkul! Santra safe hai. Vitamin C ke liye achha hai. Din mein 1-2 khaayein.", label:'Hinglish'}
   }
-  
-  return response;
-}
+};
 
-// Fallback response for unrecognized queries
-function generateFallbackResponse(message) {
-  const fallbacks = [
-    "I understand. Could you tell me more about how you're feeling? Your ASHA worker is also available to help with any questions.",
-    "That's a good question. I want to make sure I help you correctly — could you describe what you're experiencing in more detail?",
-    "I hear you. While I'm not a replacement for medical advice, your ASHA worker Sunita can help with most concerns. Would you like me to note this for her?",
-    "Thank you for sharing. Taking care of yourself during pregnancy is so important. Is there something specific I can help you with today?",
-    "I appreciate you telling me. Every pregnancy is different, and your ASHA worker knows your situation best. Shall I ask her to check on you?"
-  ];
-  
-  return fallbacks[Math.floor(Math.random() * fallbacks.length)];
-}
+const fallbackAI = {
+  english: {text:"I'm here to help. Can you tell me more about how you're feeling?", label:'EN'},
+  hindi: {text:"मैं आपकी मदद के लिए यहाँ हूँ। क्या आप बता सकती हैं कि आप कैसा महसूस कर रही हैं?", label:'HI'},
+  hinglish: {text:"Main yahan hoon. Bataiye, aap kaise feel kar rahi hain? Koi symptom hai?", label:'Hinglish'}
+};
 
-// Initialize chat
-function initChat() {
-  // Only initialize if chat body is empty
-  if (DOM.chatBody.children.length === 0) {
-    // Welcome message
-    setTimeout(() => {
-      addMessage('ai', "Namaste! 🙏 I'm your AI assistant, here to support you privately and safely. How are you feeling today? You can talk to me about any health concerns, nutrition, or just share how you're doing.");
-    }, 500);
+function getAIResponse(text){
+  const topic = detectTopic(text);
+  const lang = detectLanguage(text);
+  if(!topic){
+    return fallbackAI[lang] || fallbackAI.hinglish;
   }
-}
-
-// Add message to chat
-function addMessage(sender, text, isHtml = false) {
-  const msgDiv = document.createElement('div');
-  msgDiv.className = `msg ${sender === 'ai' ? 'ai' : 'her'}`;
-  
-  if (isHtml) {
-    msgDiv.innerHTML = text;
-  } else {
-    msgDiv.textContent = text;
-  }
-  
-  DOM.chatBody.appendChild(msgDiv);
-  
-  // Scroll to bottom
-  requestAnimationFrame(() => {
-    DOM.chatBody.scrollTop = DOM.chatBody.scrollHeight;
-  });
-  
-  return msgDiv;
-}
-
-// Add typing indicator
-function addTypingIndicator() {
-  const typing = document.createElement('div');
-  typing.className = 'msg-typing';
-  typing.id = 'typingIndicator';
-  typing.innerHTML = `
-    <div class="typing-dots">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  `;
-  DOM.chatBody.appendChild(typing);
-  DOM.chatBody.scrollTop = DOM.chatBody.scrollHeight;
-}
-
-// Remove typing indicator
-function removeTypingIndicator() {
-  const typing = document.getElementById('typingIndicator');
-  if (typing) {
-    typing.remove();
-  }
-}
-
-// Send chat message handler
-function sendChatMessage() {
-  const input = DOM.chatInput;
-  const message = input.value.trim();
-  
-  if (!message || chatState.isTyping) return;
-  
-  // Add user message
-  addMessage('her', message);
-  
-  // Add to conversation history
-  chatState.conversationHistory.push({ role: 'user', content: message });
-  
-  // Clear input
-  input.value = '';
-  
-  // Process with AI
-  processWithAI(message);
-}
-
-// Handle Enter key in chat input
-function handleChatKeydown(event) {
-  if (event.key === 'Enter' && !event.shiftKey) {
-    event.preventDefault();
-    sendChatMessage();
-  }
-}
-
-// Process message with AI
-function processWithAI(message) {
-  chatState.isTyping = true;
-  
-  // Show typing indicator
-  addTypingIndicator();
-  
-  // Recognize intent
-  const intent = recognizeIntent(message);
-  
-  // Determine response delay based on message length and intent
-  const baseDelay = 800;
-  const variableDelay = Math.random() * 1000 + 500; // 500-1500ms
-  const totalDelay = baseDelay + variableDelay;
-  
-  setTimeout(() => {
-    removeTypingIndicator();
-    
-    let response;
-    
-    if (intent) {
-      response = generateResponse(intent, chatState.conversationHistory);
-      chatState.lastIntent = intent.intent;
-      
-      // Special handling for high urgency
-      if (intent.urgency === 'high') {
-        // Additional supportive message for emergencies
-        setTimeout(() => {
-          addMessage('ai', "Please remember — you're not alone. Your ASHA worker is there to help you, and this conversation is completely private. 🙏");
-        }, 2000);
-      }
-    } else {
-      response = generateFallbackResponse(message);
-    }
-    
-    addMessage('ai', response);
-    
-    // Add to conversation history
-    chatState.conversationHistory.push({ role: 'assistant', content: response });
-    
-    chatState.isTyping = false;
-    
-  }, totalDelay);
+  const responses = AIResponses[topic];
+  return responses[lang] || responses.hinglish || responses.english;
 }
 
 /* ============================================================
-   Mother Dashboard - Pregnancy Progress
+   MOTHER DASHBOARD — pregnancy bar
    ============================================================ */
-function animatePregBar() {
-  const bar = DOM.pregBar;
-  if (!bar) return;
-  
-  // Reset and animate
+function animatePregBar(){
+  const bar = document.getElementById('pregBar');
   bar.style.width = '0%';
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      bar.style.width = '83%';
-    }, 60);
+  requestAnimationFrame(()=> setTimeout(()=> bar.style.width = '83%', 60));
+}
+
+/* ============================================================
+   EMERGENCY / SOS / SAFE WORD
+   ============================================================ */
+function runEmergencyActions(){
+  const items = document.querySelectorAll('#swActions .action-item');
+  const success = document.getElementById('swSuccess');
+  const closeBtn = document.getElementById('swCloseBtn');
+
+  items.forEach(i=> i.classList.remove('done'));
+  success.classList.remove('show');
+  closeBtn.classList.remove('show');
+
+  items.forEach((item,i)=>{
+    setTimeout(()=> item.classList.add('done'), 500 + i*900);
   });
-}
 
-/* ============================================================
-   Offline Toggle System
-   ============================================================ */
-function toggleOffline() {
-  offline = !offline;
-  const btn = document.getElementById('offlineToggle');
-  const badge = DOM.offlineBadge;
-  
-  btn.classList.toggle('on', offline);
-  btn.textContent = offline ? '🚫' : '📶';
-  badge.classList.toggle('show', offline);
-  
-  if (offline) {
-    DOM.meshCount.textContent = Math.floor(Math.random() * 3) + 2;
-  }
-}
-
-/* ============================================================
-   Dark/Light Mode Toggle
-   ============================================================ */
-function toggleDark() {
-  isLightMode = !isLightMode;
-  const btn = document.getElementById('darkToggle');
-  
-  if (isLightMode) {
-    // Switch to light mode (original theme)
-    document.body.style.background = '#F5F0EB';
-    document.querySelector('.phone').style.background = '#F5F0EB';
-    btn.textContent = '☀️';
-    btn.classList.remove('on');
-    btn.title = 'Dark mode';
-  } else {
-    // Switch to dark mode
-    document.body.style.background = 'var(--bg-primary)';
-    document.querySelector('.phone').style.background = 'linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%)';
-    btn.textContent = '🌙';
-    btn.classList.add('on');
-    btn.title = 'Light mode';
-  }
-}
-
-/* ============================================================
-   Safe Word Emergency System
-   Discreet emergency trigger with reassuring modal flow
-   ============================================================ */
-function triggerSafeWord() {
-  const items = DOM.swActions.querySelectorAll('.action-item');
-  
-  // Reset state
-  items.forEach(i => i.classList.remove('done'));
-  DOM.swSuccess.classList.remove('show');
-  DOM.swCloseBtn.classList.remove('show');
-  
-  // Show modal
-  DOM.swVeil.classList.add('show');
-  
-  // Sequential action reveal
-  items.forEach((item, i) => {
-    setTimeout(() => {
-      item.classList.add('done');
-    }, 500 + i * 900);
-  });
-  
-  // Show success and close button
-  const totalDelay = 500 + items.length * 900;
-  setTimeout(() => {
-    DOM.swSuccess.classList.add('show');
-    DOM.swCloseBtn.classList.add('show');
+  const totalDelay = 500 + items.length*900;
+  setTimeout(()=>{
+    success.classList.add('show');
+    closeBtn.classList.add('show');
   }, totalDelay + 200);
-  
-  // Show toast notification
-  showToast('🛟 Silent alert sent to your ASHA worker. Stay calm — help is coming.');
+
+  showToast('🛟 Silent alert sent. Stay calm — help is coming.');
 }
 
-function closeSafeWordModal() {
-  DOM.swVeil.classList.remove('show');
+function showEmergency(countdown){
+  if(typeof countdown === 'undefined') countdown = false;
+  const veil = document.getElementById('swVeil');
+  const countdownEl = document.getElementById('swCountdown');
+  const actions = document.getElementById('swActions');
+  const success = document.getElementById('swSuccess');
+  const closeBtn = document.getElementById('swCloseBtn');
+
+  clearInterval(emergencyInterval);
+  success.classList.remove('show');
+  closeBtn.classList.remove('show');
+  veil.classList.add('show');
+
+  if(countdown){
+    countdownEl.style.display = 'block';
+    actions.style.display = 'none';
+    let n = 5;
+    countdownEl.textContent = 'Emergency protocol initiating in ' + n + '...';
+    emergencyInterval = setInterval(()=>{
+      n--;
+      if(n <= 0){
+        clearInterval(emergencyInterval);
+        countdownEl.style.display = 'none';
+        actions.style.display = 'flex';
+        runEmergencyActions();
+      } else {
+        countdownEl.textContent = 'Emergency protocol initiating in ' + n + '...';
+      }
+    }, 1000);
+  } else {
+    countdownEl.style.display = 'none';
+    actions.style.display = 'flex';
+    runEmergencyActions();
+  }
+}
+
+function closeSafeWordModal(){
+  clearInterval(emergencyInterval);
+  document.getElementById('swVeil').classList.remove('show');
 }
 
 /* ============================================================
-   Toast Notification System
+   DEMO MODE WALKTHROUGH
    ============================================================ */
-function showToast(message, duration = 3200) {
-  DOM.toast.textContent = message;
-  DOM.toast.classList.add('show');
-  
-  setTimeout(() => {
-    DOM.toast.classList.remove('show');
-  }, duration);
-}
-
-/* ============================================================
-   Demo Mode Walkthrough
-   ============================================================ */
-function toggleDemo() {
+function toggleDemo(){
   demoMode = !demoMode;
   const btn = document.getElementById('demoToggle');
-  
   btn.classList.toggle('on', demoMode);
-  
-  if (demoMode) {
+  const overlay = document.getElementById('demoTooltip');
+  if(demoMode){
     demoStep = 0;
     showDemoStep();
   } else {
-    DOM.demoTooltip.classList.remove('show');
+    overlay.classList.remove('show');
     clearTimeout(demoIdleTimer);
   }
 }
 
-function showDemoStep() {
-  if (!demoMode || demoStep >= demoScript.length) {
-    if (demoMode) {
-      demoMode = false;
-      document.getElementById('demoToggle').classList.remove('on');
-      DOM.demoTooltip.classList.remove('show');
-    }
+function showDemoStep(){
+  if(!demoMode || demoStep >= demoScript.length){
+    if(demoMode){ demoMode=false; document.getElementById('demoToggle').classList.remove('on'); document.getElementById('demoTooltip').classList.remove('show'); }
     return;
   }
-  
   const step = demoScript[demoStep];
   goTo(step.screen);
-  
-  DOM.demoStepLbl.textContent = `STEP ${demoStep + 1}/${demoScript.length}`;
-  DOM.demoText.textContent = step.text;
-  
-  setTimeout(() => {
-    DOM.demoTooltip.classList.add('show');
-  }, 250);
-  
+  const tooltip = document.getElementById('demoTooltip');
+  document.getElementById('demoStepLbl').textContent = `STEP ${demoStep+1}/${demoScript.length}`;
+  document.getElementById('demoText').textContent = step.text;
+  setTimeout(()=> tooltip.classList.add('show'), 250);
   demoStep++;
   resetIdleTimer();
 }
 
-function resetIdleTimer() {
-  if (!demoMode) return;
-  
+function resetIdleTimer(){
+  if(!demoMode) return;
   clearTimeout(demoIdleTimer);
   demoIdleTimer = setTimeout(showDemoStep, 10000);
 }
 
 /* ============================================================
-   Emergency Contacts (localStorage CRUD)
+   LOCAL STORAGE — SEED DATA HELPERS
    ============================================================ */
 const CONTACTS_KEY = 'hersetu_contacts';
+const HISTORY_KEY = 'hersetu_history';
+const PATIENTS_KEY = 'hersetu_patients';
+const VISITS_KEY = 'hersetu_visits';
+const ALERTS_KEY = 'hersetu_alerts';
+const SYMPTOMS_KEY = 'hersetu_symptoms';
+
+function safeSet(key, value){
+  try{ localStorage.setItem(key, JSON.stringify(value)); }catch(e){}
+}
+function safeGet(key){
+  try{ return localStorage.getItem(key); }catch(e){ return null; }
+}
+
+/* ============================================================
+   EMERGENCY CONTACTS
+   ============================================================ */
 const defaultContacts = [
-  { id: 'c1', name: 'Ramesh Kumar', relation: 'Husband', phone: '+91 98765 43210', icon: '🧑' },
-  { id: 'c2', name: 'Sunita Devi', relation: 'ASHA Worker', phone: '+91 91234 56780', icon: '🩺' },
-  { id: 'c3', name: 'Kamla Devi', relation: 'Mother-in-Law', phone: '+91 99887 66554', icon: '👵' }
+  {id:'c1', name:'Ramesh Kumar', relation:'Husband', phone:'+91 98765 43210', icon:'🧑'},
+  {id:'c2', name:'Sunita Devi', relation:'ASHA Worker', phone:'+91 91234 56780', icon:'🩺'},
+  {id:'c3', name:'Kamla Devi', relation:'Mother-in-Law', phone:'+91 99887 66554', icon:'👵'}
 ];
 
-let editingContactId = null;
+function loadContacts(){
+  const raw = safeGet(CONTACTS_KEY);
+  if(raw){ try{ return JSON.parse(raw); }catch(e){} }
+  safeSet(CONTACTS_KEY, defaultContacts);
+  return JSON.parse(JSON.stringify(defaultContacts));
+}
+function saveContacts(list){ safeSet(CONTACTS_KEY, list); }
 
-function loadContacts() {
-  try {
-    const raw = localStorage.getItem(CONTACTS_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch (e) {}
-  
-  localStorage.setItem(CONTACTS_KEY, JSON.stringify(defaultContacts));
-  return defaultContacts.slice();
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str == null ? '' : str;
+  return d.innerHTML;
 }
 
-function saveContacts(list) {
-  localStorage.setItem(CONTACTS_KEY, JSON.stringify(list));
-}
-
-function renderContacts() {
+function renderContacts(){
   const list = loadContacts();
-  const wrap = DOM.contactsList;
+  const wrap = document.getElementById('contactsList');
   wrap.innerHTML = '';
-  
-  if (list.length === 0) {
-    wrap.innerHTML = `
-      <div style="padding:20px 22px;color:var(--text-muted);font-size:12.5px;text-align:center;">
-        No contacts yet. Add one below.
-      </div>
-    `;
+  if(list.length === 0){
+    wrap.innerHTML = '<div style="padding:20px 22px;color:var(--ink-soft);font-size:12.5px;text-align:center;">No contacts yet. Add one below.</div>';
     return;
   }
-  
-  list.forEach(c => {
+  list.forEach(c=>{
     const row = document.createElement('div');
     row.className = 'card contact-row';
     row.innerHTML = `
-      <div class="contact-ic" aria-hidden="true">${c.icon || '👤'}</div>
+      <div class="contact-ic">${c.icon || '👤'}</div>
       <div style="flex:1">
         <div class="contact-name">${escapeHtml(c.name)}</div>
         <div class="contact-meta">${escapeHtml(c.relation)} · ${escapeHtml(c.phone)}</div>
       </div>
-      <div class="contact-actions">
-        <button class="icon-btn" onclick="editContact('${c.id}')" title="Edit" aria-label="Edit ${c.name}">✏️</button>
-        <button class="icon-btn danger" onclick="deleteContact('${c.id}')" title="Delete" aria-label="Delete ${c.name}">🗑️</button>
-      </div>
-    `;
+      <div class="contact-actions" style="display:flex;gap:6px;">
+        <button class="icon-btn" onclick="editContact('${c.id}')" title="Edit">✏️</button>
+        <button class="icon-btn danger" onclick="deleteContact('${c.id}')" title="Delete">🗑️</button>
+      </div>`;
     wrap.appendChild(row);
   });
 }
 
-function escapeHtml(str) {
-  if (str == null) return '';
-  const d = document.createElement('div');
-  d.textContent = str;
-  return d.innerHTML;
-}
-
-function showContactForm() {
+function showContactForm(){
   editingContactId = null;
   document.getElementById('cfName').value = '';
   document.getElementById('cfRelation').value = '';
@@ -3100,17 +1664,13 @@ function showContactForm() {
   document.getElementById('contactForm').style.display = 'flex';
   document.getElementById('cfName').focus();
 }
+function hideContactForm(){ document.getElementById('contactForm').style.display = 'none'; editingContactId = null; }
+let editingContactId = null;
 
-function hideContactForm() {
-  document.getElementById('contactForm').style.display = 'none';
-  editingContactId = null;
-}
-
-function editContact(id) {
+function editContact(id){
   const list = loadContacts();
-  const c = list.find(x => x.id === id);
-  if (!c) return;
-  
+  const c = list.find(x=>x.id===id);
+  if(!c) return;
   editingContactId = id;
   document.getElementById('cfName').value = c.name;
   document.getElementById('cfRelation').value = c.relation;
@@ -3119,159 +1679,509 @@ function editContact(id) {
   document.getElementById('cfName').focus();
 }
 
-function saveContactForm() {
+function saveContactForm(){
   const name = document.getElementById('cfName').value.trim();
   const relation = document.getElementById('cfRelation').value.trim();
   const phone = document.getElementById('cfPhone').value.trim();
-  
-  if (!name || !phone) {
+  if(!name || !phone){
     showToast('Please enter at least a name and phone number.');
     return;
   }
-  
   const list = loadContacts();
-  
-  if (editingContactId) {
-    const c = list.find(x => x.id === editingContactId);
-    if (c) {
-      c.name = name;
-      c.relation = relation;
-      c.phone = phone;
-    }
+  if(editingContactId){
+    const c = list.find(x=>x.id===editingContactId);
+    if(c){ c.name=name; c.relation=relation; c.phone=phone; }
   } else {
-    list.push({ id: 'c' + Date.now(), name, relation, phone, icon: '👤' });
+    list.push({id:'c'+Date.now(), name, relation, phone, icon:'👤'});
   }
-  
   saveContacts(list);
   hideContactForm();
   renderContacts();
-  showToast('Contact saved successfully');
 }
 
-function deleteContact(id) {
-  const list = loadContacts().filter(x => x.id !== id);
+function deleteContact(id){
+  const list = loadContacts().filter(x=>x.id!==id);
   saveContacts(list);
   renderContacts();
-  showToast('Contact deleted');
 }
 
 /* ============================================================
-   Patient Medical History (localStorage)
+   PATIENTS LIST
    ============================================================ */
-const HISTORY_KEY = 'hersetu_history';
+const defaultPatients = [
+  {id:'p1', name:'Sushila Devi', risk:'Critical', lastVisit:'3 days ago', meta:'8 months · BP elevated'},
+  {id:'p2', name:'Radha Kumari', risk:'High', lastVisit:'2 days ago', meta:'6 months · BP elevated'},
+  {id:'p3', name:'Meena Yadav', risk:'Stable', lastVisit:'1 week ago', meta:'4 months · Routine'},
+  {id:'p4', name:'Kamla Bano', risk:'Stable', lastVisit:'5 days ago', meta:'7 months · Routine'},
+  {id:'p5', name:'Rekha Devi', risk:'High', lastVisit:'Yesterday', meta:'5 months · Swelling'}
+];
+
+let patientFilter = 'all';
+
+function loadPatients(){
+  const raw = safeGet(PATIENTS_KEY);
+  if(raw){ try{ return JSON.parse(raw); }catch(e){} }
+  safeSet(PATIENTS_KEY, defaultPatients);
+  return JSON.parse(JSON.stringify(defaultPatients));
+}
+function savePatients(list){ safeSet(PATIENTS_KEY, list); }
+
+function setPatientFilter(filter, btn){
+  patientFilter = filter;
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderPatients();
+}
+
+function renderPatients(){
+  const list = loadPatients();
+  const q = document.getElementById('patientSearch').value.toLowerCase().trim();
+  let filtered = list.filter(p => p.name.toLowerCase().includes(q));
+  if(patientFilter !== 'all') filtered = filtered.filter(p => p.risk === patientFilter);
+  const wrap = document.getElementById('patientsList');
+  wrap.innerHTML = '';
+  if(filtered.length === 0){
+    wrap.innerHTML = '<div style="padding:20px 22px;color:var(--ink-soft);font-size:12.5px;text-align:center;">No patients found.</div>';
+    return;
+  }
+  filtered.forEach(p=>{
+    const dotClass = p.risk === 'Critical' ? 'crit' : p.risk === 'High' ? 'high' : 'ok';
+    const badgeClass = p.risk === 'Critical' ? 'badge-red' : p.risk === 'High' ? 'badge-gold' : 'badge-green';
+    const row = document.createElement('div');
+    row.className = 'card patient-row';
+    row.innerHTML = `
+      <div class="patient-dot ${dotClass}"></div>
+      <div style="flex:1">
+        <div class="patient-name">${escapeHtml(p.name)}</div>
+        <div class="patient-meta">${escapeHtml(p.meta)} · Last visit ${escapeHtml(p.lastVisit)}</div>
+      </div>
+      <span class="badge ${badgeClass}">${escapeHtml(p.risk)}</span>`;
+    row.onclick = ()=> openPatientHistory(event, p.name, p.meta);
+    wrap.appendChild(row);
+  });
+}
+
+/* ============================================================
+   VISITS
+   ============================================================ */
+const defaultVisits = [
+  {id:'v1', patient:'Sushila Devi', time:'10:30 AM', status:'Pending', type:'Home visit'},
+  {id:'v2', patient:'Radha Kumari', time:'11:15 AM', status:'Pending', type:'BP check'},
+  {id:'v3', patient:'Meena Yadav', time:'12:00 PM', status:'Done', type:'Routine check'},
+  {id:'v4', patient:'Kamla Bano', time:'2:30 PM', status:'Pending', type:'Follow-up'},
+  {id:'v5', patient:'Rekha Devi', time:'4:00 PM', status:'Missed', type:'Home visit'}
+];
+
+function loadVisits(){
+  const raw = safeGet(VISITS_KEY);
+  if(raw){ try{ return JSON.parse(raw); }catch(e){} }
+  safeSet(VISITS_KEY, defaultVisits);
+  return JSON.parse(JSON.stringify(defaultVisits));
+}
+function saveVisits(list){ safeSet(VISITS_KEY, list); }
+
+function renderVisits(){
+  const list = loadVisits();
+  const wrap = document.getElementById('visitsList');
+  wrap.innerHTML = '';
+  list.forEach(v=>{
+    const statusClass = v.status === 'Done' ? 'status-done' : v.status === 'Missed' ? 'status-missed' : 'status-pending';
+    const row = document.createElement('div');
+    row.className = 'card visit-row';
+    row.innerHTML = `
+      <div class="visit-time">${escapeHtml(v.time)}</div>
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:13.5px;">${escapeHtml(v.patient)}</div>
+        <div class="patient-meta">${escapeHtml(v.type)}</div>
+      </div>
+      <span class="badge ${statusClass}">${escapeHtml(v.status)}</span>`;
+    row.onclick = ()=> openVisit(v.id);
+    wrap.appendChild(row);
+  });
+}
+
+function openVisit(id){
+  const v = loadVisits().find(x=>x.id === id);
+  if(!v) return;
+  currentVoicePatient = v.patient;
+  voicePrefill = 'Scheduled visit — ' + v.time;
+  goTo('screen-voice');
+}
+
+/* ============================================================
+   ALERTS
+   ============================================================ */
+const defaultAlerts = [
+  {id:'a1', patient:'Nandita Devi', symptom:'Severe headache, BP 160/100', urgency:'Critical', time:'5 mins ago', priority:'critical'},
+  {id:'a2', patient:'Rekha Devi', symptom:'Mild swelling in feet', urgency:'High', time:'25 mins ago', priority:'high'},
+  {id:'a3', patient:'Sushila Devi', symptom:'Heavy bleeding', urgency:'Critical', time:'1 hr ago', priority:'critical'},
+  {id:'a4', patient:'Meena Yadav', symptom:'Routine check-up', urgency:'Normal', time:'2 hrs ago', priority:'normal'}
+];
+
+function loadAlerts(){
+  const raw = safeGet(ALERTS_KEY);
+  if(raw){ try{ return JSON.parse(raw); }catch(e){} }
+  safeSet(ALERTS_KEY, defaultAlerts);
+  return JSON.parse(JSON.stringify(defaultAlerts));
+}
+function saveAlerts(list){ safeSet(ALERTS_KEY, list); }
+
+function renderAlerts(){
+  const priorityOrder = {critical:1, high:2, normal:3};
+  const list = loadAlerts().sort((a,b)=> priorityOrder[a.priority] - priorityOrder[b.priority]);
+  const wrap = document.getElementById('alertsList');
+  wrap.innerHTML = '';
+  list.forEach(a=>{
+    const row = document.createElement('div');
+    row.className = 'card alert-row priority-' + a.priority;
+    row.innerHTML = `
+      <div style="flex:1">
+        <div style="font-weight:700;font-size:13.5px;">⚠️ ${escapeHtml(a.patient)}</div>
+        <div class="alert-symptom">${escapeHtml(a.symptom)}</div>
+        <div style="font-size:10.5px;color:var(--ink-soft);margin-top:4px;">${escapeHtml(a.time)}</div>
+      </div>
+      <span class="badge ${a.priority === 'critical' ? 'badge-red' : a.priority === 'high' ? 'badge-gold' : 'badge-green'}">${escapeHtml(a.urgency)}</span>`;
+    row.onclick = ()=> openAlert(a.id);
+    wrap.appendChild(row);
+  });
+}
+
+function openAlert(id){
+  const a = loadAlerts().find(x=>x.id === id);
+  if(!a) return;
+  currentVoicePatient = a.patient;
+  voicePrefill = a.symptom;
+  goTo('screen-voice');
+}
+
+/* ============================================================
+   PATIENT HISTORY
+   ============================================================ */
 const defaultHistory = {
   'Sushila Devi': [
-    { date: 'June 15, 2026', note: 'Headache reported, BP 140/90', flag: false },
-    { date: 'June 22, 2026', note: 'Dizziness, prescribed iron supplements', flag: false },
-    { date: 'July 1, 2026', note: 'Severe headaches, high risk flagged', flag: true },
-    { date: 'July 10, 2026', note: 'False contractions, advised rest', flag: false },
-    { date: 'July 15, 2026', note: 'High risk triggered, BP 150/95', flag: true }
+    {date:'June 15, 2026', note:'Headache reported, BP 140/90', flag:false},
+    {date:'June 22, 2026', note:'Dizziness, prescribed iron supplements', flag:false},
+    {date:'July 1, 2026', note:'Severe headaches, high risk flagged', flag:true},
+    {date:'July 10, 2026', note:'False contractions, advised rest', flag:false},
+    {date:'July 15, 2026', note:'High risk triggered, BP 150/95', flag:true}
   ],
   'Radha Kumari': [
-    { date: 'June 18, 2026', note: 'Routine check-up, BP 128/84', flag: false },
-    { date: 'July 5, 2026', note: 'Mild swelling in feet noted', flag: false },
-    { date: 'July 20, 2026', note: 'BP elevated to 138/92, advised follow-up', flag: true }
+    {date:'June 18, 2026', note:'Routine check-up, BP 128/84', flag:false},
+    {date:'July 5, 2026', note:'Mild swelling in feet noted', flag:false},
+    {date:'July 20, 2026', note:'BP elevated to 138/92, advised follow-up', flag:true}
   ],
   'Meena Yadav': [
-    { date: 'June 20, 2026', note: 'First trimester check-up, all normal', flag: false },
-    { date: 'July 18, 2026', note: 'Routine visit, vitals stable', flag: false }
+    {date:'June 20, 2026', note:'First trimester check-up, all normal', flag:false},
+    {date:'July 18, 2026', note:'Routine visit, vitals stable', flag:false}
   ]
 };
-
 let currentHistoryPatient = null;
 
-function loadHistory() {
-  try {
-    const raw = localStorage.getItem(HISTORY_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch (e) {}
-  
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(defaultHistory));
+function loadHistory(){
+  const raw = safeGet(HISTORY_KEY);
+  if(raw){ try{ return JSON.parse(raw); }catch(e){} }
+  safeSet(HISTORY_KEY, defaultHistory);
   return JSON.parse(JSON.stringify(defaultHistory));
 }
+function saveHistory(all){ safeSet(HISTORY_KEY, all); }
 
-function saveHistory(all) {
-  localStorage.setItem(HISTORY_KEY, JSON.stringify(all));
-}
-
-function openPatientHistory(evt, name, meta) {
-  if (evt) evt.stopPropagation();
-  
+function openPatientHistory(evt, name, meta){
+  if(evt) evt.stopPropagation();
   currentHistoryPatient = name;
   document.getElementById('histPatientName').textContent = name;
   document.getElementById('histPatientMeta').textContent = meta || '';
   document.getElementById('historyForm').style.display = 'none';
-  
   goTo('screen-history');
   renderHistory();
 }
 
-function renderHistory() {
+function renderHistory(){
   const all = loadHistory();
   const entries = all[currentHistoryPatient] || [];
-  const wrap = DOM.historyTimeline;
+  const wrap = document.getElementById('historyTimeline');
   wrap.innerHTML = '';
-  
-  if (entries.length === 0) {
-    wrap.innerHTML = `
-      <div style="padding:10px 4px;color:var(--text-muted);font-size:12.5px;">
-        No history recorded yet.
-      </div>
-    `;
+  if(entries.length === 0){
+    wrap.innerHTML = '<div style="padding:10px 4px;color:var(--ink-soft);font-size:12.5px;">No history recorded yet.</div>';
     return;
   }
-  
-  entries.forEach(e => {
+  entries.forEach(e=>{
     const item = document.createElement('div');
     item.className = 'timeline-item' + (e.flag ? ' flag' : '');
     item.innerHTML = `
-      <div class="timeline-dot" aria-hidden="true"></div>
+      <div class="timeline-dot"></div>
       <div class="timeline-date">${escapeHtml(e.date)}</div>
-      <div class="timeline-note">${e.flag ? '⚠️ ' : ''}${escapeHtml(e.note)}</div>
-    `;
+      <div class="timeline-note">${e.flag ? '⚠️ ' : ''}${escapeHtml(e.note)}</div>`;
     wrap.appendChild(item);
   });
 }
 
-function showHistoryForm() {
+function showHistoryForm(){
   document.getElementById('hfDate').value = '';
   document.getElementById('hfNote').value = '';
   document.getElementById('hfFlag').checked = false;
   document.getElementById('historyForm').style.display = 'flex';
 }
+function hideHistoryForm(){ document.getElementById('historyForm').style.display = 'none'; }
 
-function hideHistoryForm() {
-  document.getElementById('historyForm').style.display = 'none';
-}
-
-function saveHistoryEntry() {
+function saveHistoryEntry(){
   const date = document.getElementById('hfDate').value.trim();
   const note = document.getElementById('hfNote').value.trim();
   const flag = document.getElementById('hfFlag').checked;
-  
-  if (!date || !note) {
+  if(!date || !note){
     showToast('Please enter both a date and a note.');
     return;
   }
-  
   const all = loadHistory();
-  if (!all[currentHistoryPatient]) all[currentHistoryPatient] = [];
-  
-  all[currentHistoryPatient].push({ date, note, flag });
+  if(!all[currentHistoryPatient]) all[currentHistoryPatient] = [];
+  all[currentHistoryPatient].push({date, note, flag});
   saveHistory(all);
   hideHistoryForm();
   renderHistory();
-  showToast('Medical entry saved');
 }
 
 /* ============================================================
-   Initialization
+   SYMPTOM TRACKER + RISK SCORE
    ============================================================ */
-updateNav('screen-splash');
+const symptomDefs = [
+  {id:'swelling', label:'Swelling', cat:'Physical', icon:'🦶', points:15},
+  {id:'headache', label:'Headache', cat:'Physical', icon:'🤕', points:5},
+  {id:'severeHeadache', label:'Severe Headache', cat:'Physical', icon:'⚠️', points:25},
+  {id:'backPain', label:'Back Pain', cat:'Physical', icon:'🔙', points:5},
+  {id:'nausea', label:'Nausea', cat:'Physical', icon:'🤢', points:5},
+  {id:'contractions', label:'Contractions', cat:'Physical', icon:'💢', points:35},
+  {id:'bloating', label:'Bloating', cat:'Physical', icon:'🎈', points:5},
+  {id:'moodSwings', label:'Mood Swings', cat:'Mental', icon:'😔', points:10},
+  {id:'anxiety', label:'Anxiety', cat:'Mental', icon:'😰', points:10},
+  {id:'depression', label:'Depression', cat:'Mental', icon:'😞', points:10},
+  {id:'panic', label:'Panic', cat:'Mental', icon:'😱', points:10},
+  {id:'insomnia', label:'Insomnia', cat:'Mental', icon:'🌙', points:5},
+  {id:'bleedingLight', label:'Light Bleeding', cat:'Bleeding', icon:'🩸', points:20},
+  {id:'bleedingHeavy', label:'Heavy Bleeding', cat:'Bleeding', icon:'🔴', points:40},
+  {id:'bleedingPain', label:'Bleeding With Pain', cat:'Bleeding', icon:'💥', points:10},
+  {id:'bleedingNoPain', label:'Bleeding Without Pain', cat:'Bleeding', icon:'🩸', points:5},
+  {id:'fever', label:'Fever', cat:'General', icon:'🌡️', points:15},
+  {id:'dizziness', label:'Dizziness', cat:'General', icon:'🌀', points:10},
+  {id:'fatigue', label:'Fatigue', cat:'General', icon:'😴', points:5},
+  {id:'appetiteLoss', label:'Loss of Appetite', cat:'General', icon:'🍽️', points:5}
+];
 
-// Set initial dark mode state (default is dark)
-document.body.style.background = 'var(--bg-primary)';
-document.querySelector('.phone').style.background = 'linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%)';
+const defaultSymptomHistory = [
+  {date:'2026-07-18', score:35, level:'Medium', notes:'Swelling, mild headache'},
+  {date:'2026-07-19', score:15, level:'Low', notes:'Fatigue'}
+];
+
+let selectedSymptoms = [];
+
+function loadSymptomHistory(){
+  const raw = safeGet(SYMPTOMS_KEY);
+  if(raw){ try{ return JSON.parse(raw); }catch(e){} }
+  safeSet(SYMPTOMS_KEY, defaultSymptomHistory);
+  return JSON.parse(JSON.stringify(defaultSymptomHistory));
+}
+function saveSymptomHistory(all){ safeSet(SYMPTOMS_KEY, all); }
+
+function resetSymptomTracker(){
+  selectedSymptoms = [];
+  document.querySelectorAll('.sym-chip').forEach(c=>c.classList.remove('selected'));
+  document.getElementById('selectedSymptoms').innerHTML = '<span style="color:var(--ink-soft);font-size:12px;">No symptoms selected yet.</span>';
+  document.getElementById('trackRiskBar').style.width = '0%';
+  document.getElementById('trackRiskBar').classList.remove('critical');
+  document.getElementById('trackRiskLabel').textContent = '—';
+  document.getElementById('trackRiskMessage').textContent = 'Select symptoms and enter BP to calculate risk.';
+  document.getElementById('customSymptom').value = '';
+  document.getElementById('bpSystolic').value = '';
+  document.getElementById('bpDiastolic').value = '';
+  document.getElementById('bpCategory').textContent = '—';
+  renderSymptomTrackerCategories();
+  renderSymptomHistory();
+}
+
+function renderSymptomTrackerCategories(){
+  const cats = ['Physical','Mental','Bleeding','General'];
+  cats.forEach(cat=>{
+    const wrap = document.getElementById('sym'+cat);
+    const defs = symptomDefs.filter(s=>s.cat === cat);
+    wrap.innerHTML = '';
+    defs.forEach(s=>{
+      const chip = document.createElement('button');
+      chip.className = 'sym-chip' + (selectedSymptoms.some(x=>x.id === s.id) ? ' selected' : '');
+      chip.dataset.sym = s.id;
+      chip.innerHTML = `${s.icon} ${s.label}`;
+      chip.onclick = ()=> toggleSymptom(s.id);
+      wrap.appendChild(chip);
+    });
+  });
+}
+
+function toggleSymptom(id){
+  const def = symptomDefs.find(s=>s.id === id);
+  if(!def) return;
+  const idx = selectedSymptoms.findIndex(s=>s.id === id);
+  if(idx > -1){
+    selectedSymptoms.splice(idx, 1);
+  } else {
+    selectedSymptoms.push({id:def.id, label:def.label, points:def.points});
+  }
+  renderSymptomTrackerCategories();
+  renderSelectedSymptoms();
+}
+
+function addCustomSymptom(){
+  const input = document.getElementById('customSymptom');
+  const val = input.value.trim();
+  if(!val) return;
+  const id = 'custom_' + Date.now();
+  selectedSymptoms.push({id, label:val, points:5});
+  input.value = '';
+  renderSelectedSymptoms();
+  showToast('Custom symptom added: ' + val);
+}
+
+function renderSelectedSymptoms(){
+  const wrap = document.getElementById('selectedSymptoms');
+  if(selectedSymptoms.length === 0){
+    wrap.innerHTML = '<span style="color:var(--ink-soft);font-size:12px;">No symptoms selected yet.</span>';
+    return;
+  }
+  wrap.innerHTML = '';
+  selectedSymptoms.forEach((s, i)=>{
+    const chip = document.createElement('span');
+    chip.className = 'selected-chip';
+    chip.innerHTML = `${escapeHtml(s.label)} <button onclick="removeSelectedSymptom(${i})">×</button>`;
+    wrap.appendChild(chip);
+  });
+}
+
+function removeSelectedSymptom(i){
+  selectedSymptoms.splice(i, 1);
+  renderSymptomTrackerCategories();
+  renderSelectedSymptoms();
+}
+
+function getBpCategory(){
+  const s = parseInt(document.getElementById('bpSystolic').value, 10);
+  const d = parseInt(document.getElementById('bpDiastolic').value, 10);
+  if(!s || !d) return {cls:'none', label:'—'};
+  if(s > 180 || d > 120) return {cls:'crisis', label:'Hypertensive Crisis'};
+  if(s >= 140 || d >= 90) return {cls:'high', label:'High Stage 2'};
+  if(s >= 130 || d >= 80) return {cls:'high', label:'High Stage 1'};
+  if(s >= 120) return {cls:'elevated', label:'Elevated'};
+  return {cls:'normal', label:'Normal'};
+}
+
+function updateBpCategory(){
+  const cat = getBpCategory();
+  const el = document.getElementById('bpCategory');
+  el.textContent = cat.label;
+  el.className = 'bp-category';
+  if(cat.cls === 'normal') el.classList.add('bp-cat-normal');
+  if(cat.cls === 'elevated') el.classList.add('bp-cat-elevated');
+  if(cat.cls === 'high') el.classList.add('bp-cat-high');
+  if(cat.cls === 'crisis'){
+    el.classList.add('bp-cat-crisis');
+    showToast('🚨 Hypertensive crisis detected! Alert sent to ASHA.');
+  }
+}
+
+function calculateRisk(){
+  let score = 0;
+  selectedSymptoms.forEach(s=> score += s.points);
+
+  const bp = getBpCategory();
+  if(bp.cls === 'crisis') score = Math.max(score, 85);
+  else if(bp.cls === 'high') score += 30;
+  else if(bp.cls === 'elevated') score += 10;
+
+  score = Math.min(100, Math.max(0, score));
+
+  const bar = document.getElementById('trackRiskBar');
+  const label = document.getElementById('trackRiskLabel');
+  const msg = document.getElementById('trackRiskMessage');
+  bar.style.width = score + '%';
+
+  let level = 'Low', colorClass = '';
+  let message = '';
+
+  if(score <= 30){
+    level = 'Low';
+    message = '✅ Continue routine care. Drink water, rest, and eat healthy.';
+  } else if(score <= 60){
+    level = 'Medium';
+    message = '🟡 Please visit your ASHA worker tomorrow.';
+  } else if(score <= 80){
+    level = 'High';
+    message = '🟠 Alert sent to your ASHA worker. She will contact you soon.';
+  } else {
+    level = 'Critical';
+    message = '🔴 Critical risk! Emergency protocol initiating…';
+    bar.classList.add('critical');
+  }
+
+  if(score > 80){
+    bar.classList.add('critical');
+    setTimeout(()=> showEmergency(true), 1200);
+  } else {
+    bar.classList.remove('critical');
+  }
+
+  label.textContent = level + ' · ' + score + '%';
+  msg.textContent = message;
+
+  // Save to symptom history
+  const all = loadSymptomHistory();
+  all.push({
+    date: new Date().toISOString(),
+    score: score,
+    level: level,
+    notes: selectedSymptoms.map(s=>s.label).join(', ') || 'No symptoms selected'
+  });
+  saveSymptomHistory(all);
+  renderSymptomHistory();
+}
+
+function renderSymptomHistory(){
+  const all = loadSymptomHistory().slice(-7).reverse();
+  const wrap = document.getElementById('symptomHistory');
+  wrap.innerHTML = '';
+  if(all.length === 0){
+    wrap.innerHTML = '<div style="padding:10px 22px;color:var(--ink-soft);font-size:12px;">No symptom entries yet.</div>';
+    return;
+  }
+  all.forEach(e=>{
+    const d = new Date(e.date);
+    const dateStr = isNaN(d) ? e.date : d.toLocaleDateString('en-IN', {day:'numeric', month:'short'});
+    const levelClass = e.level === 'Critical' ? 'level-critical' : e.level === 'High' ? 'level-high' : e.level === 'Medium' ? 'level-medium' : 'level-low';
+    const row = document.createElement('div');
+    row.className = 'card sym-history-item';
+    row.innerHTML = `
+      <div>
+        <div style="font-weight:700;">${escapeHtml(dateStr)}</div>
+        <div style="font-size:11px;color:var(--ink-soft);">${escapeHtml(e.notes || '')}</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="${levelClass}" style="font-weight:800;">${escapeHtml(e.level)}</div>
+        <div style="font-size:11px;color:var(--ink-soft);">${e.score}%</div>
+      </div>`;
+    wrap.appendChild(row);
+  });
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+function initStorage(){
+  loadContacts();
+  loadHistory();
+  loadPatients();
+  loadVisits();
+  loadAlerts();
+  loadSymptomHistory();
+}
+
+initStorage();
+updateRoleToggle();
+updateNav('screen-splash');
 </script>
 </body>
 </html>
+```
