@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -50,9 +49,8 @@
     }
 
     * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
-    html, body { height: 100%; }
+    html, body { height: 100%; margin:0; padding:0; }
     body {
-      margin: 0; padding: 0;
       background: var(--bg-warm);
       color: var(--ink);
       font-family: var(--font-body);
@@ -60,7 +58,6 @@
       overflow-x: hidden;
     }
 
-    /* Typography */
     h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; margin: 0 0 0.35em; letter-spacing: -0.02em; }
     h1 { font-size: 1.85rem; font-weight: 900; }
     h2 { font-size: 1.25rem; font-weight: 700; }
@@ -68,17 +65,16 @@
     p { margin: 0; line-height: 1.55; color: var(--ink-muted); }
     .label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); font-weight: 600; }
 
-    /* App Shell */
     #app { max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; background: var(--bg-warm); box-shadow: 0 0 60px rgba(0,0,0,0.08); }
     @media (min-width: 768px) { #app { border-radius: 28px; margin: 16px auto; min-height: calc(100vh - 32px); overflow: hidden; border: 1px solid rgba(0,0,0,0.06); } }
 
-    /* Sticky Header Bar */
+    /* Sticky Header */
     .top-bar {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(250,248,243,0.88);
+      background: rgba(250,248,243,0.92);
       backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid rgba(45,36,32,0.06);
-      padding: 14px 18px;
+      padding: 12px 18px;
       display: flex; align-items: center; justify-content: space-between;
       transition: background 0.3s;
     }
@@ -89,24 +85,20 @@
     .logo-text h3 { margin-bottom: 2px; font-size: 1rem; }
     .logo-text span { font-size: 0.7rem; color: var(--ink-muted); font-weight: 500; }
 
-    .top-actions { display: flex; gap: 8px; align-items: center; }
+    .top-actions { display: flex; gap: 6px; align-items: center; }
     .btn-icon {
-      width: 42px; height: 42px; border-radius: 50%;
+      width: 40px; height: 40px; border-radius: 50%;
       border: none; background: var(--surface);
       color: var(--ink-muted); cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       box-shadow: 0 2px 8px var(--shadow); transition: all 0.2s;
     }
-    .btn-icon:hover { background: var(--sage); color: #fff; transform: translateY(-1px); }
+    .btn-icon:hover { background: var(--sage); color: #fff; }
 
-    /* Airplane Toggle */
-    .plane-toggle { display: flex; align-items: center; gap: 6px; background: var(--surface); border-radius: 999px; padding: 4px 10px 4px 4px; border: none; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05); cursor: pointer; }
-    [data-theme="dark"] .plane-toggle { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); }
-    .plane-toggle .dot { width: 24px; height: 24px; border-radius: 50%; background: var(--ink-muted); transition: background 0.25s, transform 0.25s; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.75rem; }
-    .plane-toggle.active .dot { background: var(--danger); transform: translateX(0); }
-    .plane-toggle .label-tiny { font-size: 0.65rem; font-weight: 600; color: var(--ink-muted); }
+    .plane-toggle { display: flex; align-items: center; gap: 6px; background: var(--surface); border-radius: 999px; padding: 4px 10px 4px 4px; border: none; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05); cursor: pointer; font-size:0.7rem; font-weight:600; color:var(--ink-muted); }
+    .plane-toggle .dot { width: 24px; height: 24px; border-radius: 50%; background: var(--ink-muted); transition: background 0.25s; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.7rem; }
+    .plane-toggle.active .dot { background: var(--danger); }
 
-    /* Sync Badge */
     .sync-badge {
       position: absolute; top: -4px; right: -4px;
       background: var(--danger); color: #fff; font-size: 0.6rem; font-weight: 800;
@@ -115,38 +107,38 @@
       box-shadow: 0 2px 6px rgba(194,77,62,0.35);
       animation: pulse 2s infinite;
     }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.15); }
-    }
+    @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
 
-    /* Main Sections */
-    section { display: none; animation: fadeUp 0.35s ease both; padding: 18px 18px 100px; }
+    /* Sections */
+    section { display: none; animation: fadeUp 0.3s ease both; padding: 16px 18px 100px; }
     section.active { display: block; }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Cards */
     .card {
       background: var(--card);
       border-radius: var(--radius);
-      padding: 22px;
+      padding: 20px;
       box-shadow: 0 8px 28px var(--shadow);
       border: 1px solid rgba(45,36,32,0.03);
-      margin-bottom: 18px;
-      transition: transform 0.15s;
+      margin-bottom: 16px;
     }
-    .card:active { transform: scale(0.995); }
 
     /* Role Selector */
     .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 10px; }
-    .role-card { background: var(--card); border-radius: var(--radius); padding: 22px 14px; text-align: center; box-shadow: 0 8px 24px var(--shadow); border: 2px solid transparent; cursor: pointer; transition: border-color 0.2s, transform 0.2s; position: relative; overflow: hidden; }
-    .role-card:hover { border-color: var(--sage); transform: translateY(-2px); }
-    .role-card .role-emoji { font-size: 2.5rem; margin-bottom: 10px; }
-    .role-card h3 { font-size: 1.05rem; margin-bottom: 6px; }
+    .role-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 24px 14px;
+      text-align: center;
+      box-shadow: 0 8px 24px var(--shadow);
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .role-card:hover { border-color: var(--sage); transform: translateY(-3px); }
+    .role-card .role-emoji { font-size: 2.8rem; margin-bottom: 10px; }
+    .role-card h3 { font-size: 1.1rem; margin-bottom: 6px; }
     .role-card p { font-size: 0.85rem; }
 
     /* Buttons */
@@ -155,7 +147,6 @@
       width: 100%; padding: 16px 20px;
       border: none; border-radius: 16px; font-family: var(--font-body); font-weight: 700; font-size: 1rem;
       cursor: pointer; transition: all 0.2s; box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-      letter-spacing: 0.01em;
     }
     .btn-primary { background: linear-gradient(135deg, var(--sage-deep), var(--sage)); color: #fff; }
     .btn-primary:hover { filter: brightness(1.08); box-shadow: 0 8px 22px rgba(93,122,93,0.35); }
@@ -164,26 +155,38 @@
     .btn-outline { background: var(--surface); color: var(--ink); border: 1px solid rgba(0,0,0,0.08); }
     .btn-sm { padding: 10px 16px; font-size: 0.9rem; border-radius: 12px; width: auto; }
 
-    /* Stats Row */
+    /* Stats */
     .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 4px; }
     .stat-pill { background: var(--surface); border-radius: 14px; padding: 14px 6px; text-align: center; border: 1px solid rgba(0,0,0,0.04); }
     .stat-pill h4 { font-family: var(--font-display); font-size: 1.3rem; margin-bottom: 2px; }
     .stat-pill span { font-size: 0.7rem; color: var(--ink-muted); font-weight: 600; }
 
     /* Patient List */
-    .patient-row { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid rgba(45,36,32,0.05); }
+    .patient-row {
+      display: flex; align-items: center; gap: 14px; padding: 14px 0;
+      border-bottom: 1px solid rgba(45,36,32,0.05);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
     .patient-row:last-child { border-bottom: none; }
-    .avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, var(--sage), var(--terracotta)); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(122,154,122,0.25); flex-shrink: 0; }
+    .patient-row:hover { background: rgba(122,154,122,0.05); border-radius: 12px; padding-left: 8px; padding-right: 8px; }
+    .avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--sage), var(--terracotta));
+      color: #fff; display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1.1rem;
+      box-shadow: 0 4px 12px rgba(122,154,122,0.25); flex-shrink: 0;
+    }
     .patient-info { flex: 1; min-width: 0; }
-    .patient-info h4 { font-size: 0.95rem; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .patient-info h4 { font-size: 0.95rem; margin-bottom: 3px; }
     .patient-info .meta { font-size: 0.8rem; color: var(--ink-muted); }
     .badge { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; padding: 4px 8px; border-radius: 999px; letter-spacing: 0.04em; white-space: nowrap; }
     .badge-red { background: rgba(194,77,62,0.1); color: var(--danger); }
     .badge-amber { background: rgba(200,169,126,0.15); color: var(--amber-deep); }
     .badge-green { background: rgba(122,154,122,0.15); color: var(--sage-deep); }
 
-    /* Voice Input Screen */
-    .voice-stage { text-align: center; padding: 24px 0; }
+    /* Voice Input */
+    .voice-stage { text-align: center; padding: 20px 0; }
     .mic-btn {
       width: 120px; height: 120px; border-radius: 50%;
       background: linear-gradient(135deg, var(--terracotta), var(--terracotta-deep));
@@ -195,30 +198,27 @@
     }
     .mic-btn:active { transform: scale(0.95); }
     @keyframes micIdle {
-      0%, 100% { box-shadow: 0 14px 40px rgba(192,120,90,0.35), 0 0 0 12px rgba(192,120,90,0.1); }
+      0%,100% { box-shadow: 0 14px 40px rgba(192,120,90,0.35), 0 0 0 12px rgba(192,120,90,0.1); }
       50% { box-shadow: 0 14px 40px rgba(192,120,90,0.45), 0 0 0 16px rgba(192,120,90,0.08); }
     }
     .listening-ring { animation: listening 1.4s ease-in-out infinite; }
     @keyframes listening {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(192,120,90,0.4); }
+      0%,100% { box-shadow: 0 0 0 0 rgba(192,120,90,0.4); }
       50% { box-shadow: 0 0 0 24px rgba(192,120,90,0); }
     }
 
-    /* Vital Cards */
     .vital-card { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: var(--surface); border-radius: 16px; margin-bottom: 10px; border: 1px solid rgba(45,36,32,0.04); }
-    .vital-icon { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, var(--sage), var(--sage-deep)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(122,154,122,0.2); flex-shrink: 0; }
+    .vital-icon { width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, var(--sage), var(--sage-deep)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
     .vital-body { flex: 1; }
     .vital-body h4 { font-size: 1rem; margin-bottom: 2px; }
     .vital-body p { font-size: 0.9rem; font-weight: 600; color: var(--ink); }
-    .vital-play { background: transparent; border: none; color: var(--ink-muted); font-size: 1.2rem; cursor: pointer; }
+    .vital-play { background: transparent; border: none; color: var(--ink-muted); font-size: 1.1rem; cursor: pointer; padding: 4px; }
 
     /* Risk Gauge */
-    .gauge-wrap { text-align: center; padding: 10px 0 20px; }
+    .gauge-wrap { text-align: center; padding: 10px 0 20px; position:relative; }
     .gauge-svg { width: 220px; height: 220px; transform: rotate(-90deg); }
     .gauge-track { fill: none; stroke: var(--surface); stroke-width: 14; }
     .gauge-fill { fill: none; stroke: var(--danger); stroke-width: 14; stroke-linecap: round; stroke-dasharray: 565; stroke-dashoffset: 565; transition: stroke-dashoffset 1.4s ease-out; }
-    .gauge-fill.green-fill { stroke: var(--sage); }
-    .gauge-fill.amber-fill { stroke: var(--amber-deep); }
     .gauge-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(90deg); text-align: center; pointer-events: none; }
     .gauge-text h2 { font-size: 2.4rem; font-weight: 900; color: var(--ink); line-height: 1; }
     .gauge-text span { font-size: 0.85rem; color: var(--ink-muted); font-weight: 600; }
@@ -226,7 +226,7 @@
     /* Auto Actions */
     .action-line { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px dashed rgba(45,36,32,0.08); animation: slideUp 0.4s ease; }
     .action-line:last-of-type { border-bottom: none; }
-    .action-check { width: 36px; height: 36px; border-radius: 50%; background: var(--sage); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; box-shadow: 0 4px 10px rgba(122,154,122,0.3); flex-shrink: 0; animation: checkPop 0.5s ease both; }
+    .action-check { width: 36px; height: 36px; border-radius: 50%; background: var(--sage); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; animation: checkPop 0.5s ease both; }
     .action-check.delay-1 { animation-delay: 0.15s; }
     .action-check.delay-2 { animation-delay: 0.3s; }
     .action-check.delay-3 { animation-delay: 0.45s; }
@@ -235,11 +235,12 @@
       60% { transform: scale(1.2); opacity: 1; }
       100% { transform: scale(1); }
     }
+    @keyframes slideUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
     .action-body h4 { font-size: 0.95rem; margin-bottom: 2px; }
     .action-body p { font-size: 0.8rem; }
 
-    /* AI Chat */
-    .chat-window { height: 360px; overflow-y: auto; padding: 6px 0; -ms-overflow-style: none; scrollbar-width: none; }
+    /* Chat */
+    .chat-window { height: 320px; overflow-y: auto; padding: 6px 0; -ms-overflow-style: none; scrollbar-width: none; }
     .chat-window::-webkit-scrollbar { display: none; }
     .bubble { max-width: 82%; padding: 12px 16px; border-radius: 18px; margin-bottom: 10px; font-size: 0.92rem; line-height: 1.45; animation: bubbleIn 0.25s ease; box-shadow: 0 2px 8px var(--shadow); }
     @keyframes bubbleIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
@@ -255,7 +256,6 @@
     /* Pregnancy Tracker */
     .tracker-bar { height: 28px; border-radius: 14px; background: var(--surface); position: relative; overflow: hidden; margin: 14px 0; border: 1px solid rgba(45,36,32,0.04); }
     .tracker-fill { height: 100%; width: 72%; background: linear-gradient(90deg, var(--sage), var(--terracotta)); border-radius: 14px; position: relative; }
-    .tracker-fill::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 6px; background: rgba(255,255,255,0.35); border-radius: 0 14px 14px 0; }
     .tracker-labels { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--ink-muted); font-weight: 600; margin-top: 6px; }
 
     /* Safe Word */
@@ -270,7 +270,7 @@
     }
     .safe-word-btn:active { transform: scale(0.96); }
 
-    /* Banner / Toast */
+    /* Banner */
     .banner {
       position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
       background: var(--ink); color: #fff; padding: 14px 20px; border-radius: 16px;
@@ -286,46 +286,60 @@
     .mt-10 { margin-top: 10px; }
     .mb-10 { margin-bottom: 10px; }
     .hidden { display: none !important; }
+    .flex { display: flex; align-items: center; gap: 8px; }
 
-    /* Small decorative shapes for warmth */
-    .soft-blob {
-      position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(122,154,122,0.12) 0%, transparent 70%); border-radius: 50%; z-index: -1; pointer-events: none;
+    /* History Timeline */
+    .timeline-item {
+      padding: 12px 0 12px 24px;
+      border-left: 3px solid var(--sage);
+      margin-left: 8px;
+      position: relative;
     }
+    .timeline-item:last-child { border-left-color: transparent; }
+    .timeline-item::before {
+      content: '';
+      position: absolute; left: -8px; top: 16px;
+      width: 14px; height: 14px; border-radius: 50%;
+      background: var(--sage);
+      border: 2px solid var(--card);
+    }
+    .timeline-item.flag::before { background: var(--danger); }
+    .timeline-item .date { font-size: 0.75rem; font-weight: 700; color: var(--ink-muted); }
+    .timeline-item .note { font-size: 0.9rem; margin-top: 2px; }
   </style>
 </head>
 <body>
 
 <div id="app" data-theme="light">
   
-  <!-- Sticky Header (Always Visible) -->
-  <header class="top-bar" id="mainHeader">
+  <!-- Header -->
+  <header class="top-bar">
     <div class="logo-row">
-      <div class="logo-icon" aria-label="HerSetu">H</div>
+      <div class="logo-icon">H</div>
       <div class="logo-text">
         <h3>HerSetu</h3>
-        <span id="headerSubtitle">मातृ स्वास्थ्य / Maternal Health</span>
+        <span id="headerSubtitle">मातृ स्वास्थ्य · Maternal Health</span>
       </div>
     </div>
     <div class="top-actions">
-      <button class="plane-toggle" id="planeToggle" onclick="toggleAirplane()" aria-label="Toggle Airplane Mode">
+      <button class="plane-toggle" id="planeToggle" onclick="toggleAirplane()">
         <span class="dot">✈</span>
-        <span class="label-tiny" id="planeLabel">Online</span>
+        <span id="planeLabel">Online</span>
       </button>
       <div style="position:relative;">
-        <button class="btn-icon" onclick="showScreen('asha-dash')" aria-label="Sync">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21v-5h5"/></svg>
+        <button class="btn-icon" onclick="updateSyncUI()" aria-label="Sync">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21v-5h5"/></svg>
         </button>
         <span class="sync-badge hidden" id="syncBadge">0</span>
       </div>
       <button class="btn-icon" onclick="toggleDark()" aria-label="Dark Mode">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       </button>
     </div>
   </header>
 
   <!-- ===== SPLASH ===== -->
-  <section id="splash" class="active text-center" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;padding:24px;">
-    <div class="soft-blob" style="top:-80px;right:-80px;"></div>
+  <section id="splash" class="active text-center" style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:80vh;padding:24px;">
     <div style="font-size:4.5rem;animation:bounce 2s infinite ease-in-out;">🌸</div>
     <h1 style="font-size:2.4rem;margin-top:12px;">HerSetu</h1>
     <p style="font-size:1.1rem;color:var(--ink-muted);margin-top:8px;max-width:320px;">Offline-first maternal health for every village.<br><span style="font-family:var(--font-hindi);">गाँव का स्वास्थ्य, हर माँ का अधिकार</span></p>
@@ -379,18 +393,9 @@
     <p>Prioritized by risk. Speak vitals — no typing.</p>
 
     <div class="stat-row">
-      <div class="stat-pill">
-        <h4>8</h4>
-        <span>Assigned</span>
-      </div>
-      <div class="stat-pill">
-        <h4 style="color:var(--amber-deep);">2</h4>
-        <span>High Risk</span>
-      </div>
-      <div class="stat-pill">
-        <h4 style="color:var(--danger);">1</h4>
-        <span>Critical</span>
-      </div>
+      <div class="stat-pill"><h4>8</h4><span>Assigned</span></div>
+      <div class="stat-pill"><h4 style="color:var(--amber-deep);">2</h4><span>High Risk</span></div>
+      <div class="stat-pill"><h4 style="color:var(--danger);">1</h4><span>Critical</span></div>
     </div>
 
     <div class="card">
@@ -424,494 +429,32 @@
       </div>
     </div>
 
+    <!-- Patient History Section (Visible) -->
+    <div class="card">
+      <h3>📋 Patient History</h3>
+      <p style="font-size:0.85rem;margin-bottom:12px;">Click a patient above to view full history.</p>
+      <div id="historyPreview">
+        <div class="timeline-item">
+          <div class="date">July 15, 2026</div>
+          <div class="note">⚠️ High risk triggered — BP 150/95</div>
+        </div>
+        <div class="timeline-item">
+          <div class="date">July 10, 2026</div>
+          <div class="note">False contractions, advised rest</div>
+        </div>
+        <div class="timeline-item flag">
+          <div class="date">July 1, 2026</div>
+          <div class="note">⚠️ Severe headaches, high risk flagged</div>
+        </div>
+        <div class="timeline-item">
+          <div class="date">June 22, 2026</div>
+          <div class="note">Dizziness, prescribed iron supplements</div>
+        </div>
+      </div>
+      <button class="btn btn-sm btn-outline mt-10" onclick="showFullHistory()">View Full History →</button>
+    </div>
+
     <div class="card" style="background: linear-gradient(135deg, var(--surface), #F0EBDD);">
       <h3>Visit Reminder</h3>
       <p style="margin-top:4px;">Next visit due for <strong>Sushila Devi</strong> at <strong>Rampur</strong> — <span style="color:var(--danger);font-weight:700;">Overdue by 1 day</span></p>
-      <button class="btn btn-terracotta mt-10" onclick="startVisit(1)">📍 Start Visit — Speak Vitals</button>
-    </div>
-  </section>
-
-  <!-- ===== ASHA VISIT / VOICE INPUT ===== -->
-  <section id="asha-visit">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-      <button class="btn-sm btn-outline" onclick="showScreen('asha-dash')">← Back</button>
-      <h3 style="margin:0;">Visit: Sushila Devi</h3>
-    </div>
-    <p style="font-size:0.85rem;">Voice-first: Speak clearly. No typing needed.</p>
-
-    <div class="voice-stage">
-      <button class="mic-btn" id="micBtn" onclick="simulateVoiceCapture()" aria-label="Speak vitals">
-        <span>🎤</span>
-      </button>
-      <p class="label mt-10" id="micStatus">Tap mic · बोलिए / Speak vitals</p>
-      <p style="font-size:0.8rem;color:var(--ink-muted);">"BP 160 by 100. Weight 55 kilograms. 8 months."</p>
-    </div>
-
-    <div id="vitalsCaptured" class="hidden">
-      <h3>Captured Vitals</h3>
-      <p style="font-size:0.8rem;color:var(--ink-muted);margin-bottom:12px;">Auto-logged from voice. Confirm to predict risk.</p>
-
-      <div class="vital-card">
-        <div class="vital-icon">❤️</div>
-        <div class="vital-body">
-          <h4>Blood Pressure <button class="vital-play" onclick="speakHindi('ब्लड प्रेशर एक सौ साठ बटा एक सौ')" aria-label="Play">🔊</button></h4>
-          <p>160 / 100 mmHg</p>
-        </div>
-      </div>
-
-      <div class="vital-card">
-        <div class="vital-icon">⚖️</div>
-        <div class="vital-body">
-          <h4>Weight <button class="vital-play" onclick="speakHindi('वज़न पचपन किलोग्राम')" aria-label="Play">🔊</button></h4>
-          <p>55 kg</p>
-        </div>
-      </div>
-
-      <div class="vital-card">
-        <div class="vital-icon">👶</div>
-        <div class="vital-body">
-          <h4>Gestation <button class="vital-play" onclick="speakHindi('आठ महीने')" aria-label="Play">🔊</button></h4>
-          <p>8 months (32 weeks)</p>
-        </div>
-      </div>
-
-      <div style="display:flex;gap:10px;margin-top:14px;">
-        <button class="btn btn-terracotta" onclick="predictRisk()">Confirm Vitals → Predict Risk</button>
-      </div>
-      <p style="font-size:0.75rem;color:var(--ink-muted);margin-top:8px;">Auto-logged. Saves 2-3 hours of paperwork.</p>
-    </div>
-  </section>
-
-  <!-- ===== RISK PREDICTION RESULT ===== -->
-  <section id="asha-risk">
-    <h2>Risk Prediction</h2>
-    <p>Rule-based engine (WHO danger signs). Not a diagnosis — flags for referral.</p>
-
-    <div class="card">
-      <div class="gauge-wrap" style="position:relative;">
-        <svg class="gauge-svg" viewBox="0 0 200 200">
-          <circle cx="100" cy="100" r="85" class="gauge-track" />
-          <circle cx="100" cy="100" r="85" class="gauge-fill" id="gaugeFill" />
-        </svg>
-        <div class="gauge-text">
-          <h2 id="riskPercent">89%</h2>
-          <span id="riskLabel">Critical — Immediate Referral</span>
-        </div>
-      </div>
-
-      <div class="card" style="margin-top:10px;padding:14px 18px;">
-        <h3 style="margin-bottom:10px;">Auto-Triggered Actions</h3>
-        <div class="action-line">
-          <div class="action-check">✓</div>
-          <div class="action-body"><h4>Ambulance Booked</h4><p>108 Emergency — ETA 18 min</p></div>
-        </div>
-        <div class="action-line">
-          <div class="action-check delay-1">✓</div>
-          <div class="action-body"><h4>Bed Reserved</h4><p>EmOC Hospital — Rampur PHC</p></div>
-        </div>
-        <div class="action-line">
-          <div class="action-check delay-2">✓</div>
-          <div class="action-body"><h4>₹500 Transport Credit</h4><p>Auto-credited via UPI to mother</p></div>
-        </div>
-        <div class="action-line">
-          <div class="action-check delay-3">✓</div>
-          <div class="action-body"><h4>Husband Alerted</h4><p>Voice call placed to family member</p></div>
-        </div>
-      </div>
-
-      <div style="margin-top:10px;">
-        <button class="btn btn-primary" onclick="completeVisit()">Done — Return to Dashboard</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== MOTHER LOGIN ===== -->
-  <section id="mother-login">
-    <h2>Welcome, Sushila</h2>
-    <p>8 months pregnant · 2 weeks left · Safe & private</p>
-    <div class="card">
-      <div style="display:flex;align-items:center;gap:14px;">
-        <div class="avatar" style="background: linear-gradient(135deg, var(--terracotta), var(--terracotta-deep));">SD</div>
-        <div>
-          <h3>Sushila Devi</h3>
-          <p>Mother · Rampur Village</p>
-          <p style="font-size:0.85rem;margin-top:4px;">Due date: ~3-4 weeks</p>
-        </div>
-      </div>
-      <button class="btn btn-terracotta mt-10" onclick="showScreen('mother-dash')">Continue as Sushila →</button>
-    </div>
-  </section>
-
-  <!-- ===== MOTHER DASHBOARD ===== -->
-  <section id="mother-dash">
-    <h2>Hello Sushila 🌸</h2>
-    <p style="font-size:0.9rem;">Your private health space. Everything is encrypted offline.</p>
-
-    <div class="card" style="padding:18px;">
-      <h3>Pregnancy Progress</h3>
-      <div class="tracker-bar">
-        <div class="tracker-fill"></div>
-      </div>
-      <div class="tracker-labels">
-        <span>Start</span>
-        <span>Now (32w)</span>
-        <span>Due</span>
-      </div>
-      <p style="margin-top:10px;font-size:0.95rem;font-weight:600;">8 months · 32 weeks · Due in ~3-4 weeks</p>
-      <p style="font-size:0.8rem;color:var(--ink-muted);">Next check-up: ASHA Sunita Devi will visit tomorrow.</p>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-      <button class="btn btn-primary" onclick="showScreen('mother-ai')" style="font-size:0.85rem;padding:16px 10px;">
-        💬 Talk to Her (Private AI)
-      </button>
-      <button class="btn btn-outline" onclick="showScreen('mother-safe')" style="font-size:0.85rem;padding:16px 10px;">
-        🛟 Safe Word
-      </button>
-    </div>
-
-    <div class="card">
-      <h3>Quick Actions</h3>
-      <div style="display:flex;gap:10px;margin-top:10px;">
-        <button class="btn btn-sm btn-outline" onclick="showScreen('mother-ai')">😰 Pain / Bleeding</button>
-        <button class="btn btn-sm btn-outline" onclick="showScreen('contacts')">📞 Emergency</button>
-      </div>
-    </div>
-
-    <div class="card" style="background: linear-gradient(135deg, #FDF6F0, #FAF3E8);">
-      <h3>Transport Support</h3>
-      <p style="margin-top:6px;">If you need to go to hospital: <strong style="color:var(--sage-deep);">₹500 is ready</strong> for your travel. Auto-booked when needed.</p>
-    </div>
-  </section>
-
-  <!-- ===== AI ASSISTANT (Mother) ===== -->
-  <section id="mother-ai">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-      <button class="btn-sm btn-outline" onclick="showScreen('mother-dash')">← Back</button>
-      <h3 style="margin:0;">Private Assistant</h3>
-      <span style="font-size:0.7rem;color:var(--ink-muted);margin-left:auto;">Encrypted · Offline</span>
-    </div>
-
-    <div class="chat-window" id="chatWindow">
-      <div class="bubble bubble-bot">
-        <strong>HerSetu Assistant</strong>
-        Namaste Sushila. I'm here only for you. No one else can see this. What is on your mind today?
-        <br><span style="font-family:var(--font-hindi);font-size:0.95rem;color:var(--ink);">नमस्ते सुषीला। मैं सिर्फ आपके लिए हूँ।</span>
-      </div>
-      <div class="bubble bubble-user">I feel pain in my lower belly</div>
-      <div class="bubble bubble-bot">
-        <strong>HerSetu Assistant</strong>
-        I'm listening. Is the pain sharp or dull? Any bleeding? You are safe talking here.
-        <br><span style="font-family:var(--font-hindi);font-size:0.95rem;color:var(--ink);">क्या कोई रक्तस्राव है? आप सुरक्षित हैं।</span>
-      </div>
-    </div>
-
-    <div class="chat-chips">
-      <button class="chip" onclick="sendQuick('Pain in belly')">Pain in belly</button>
-      <button class="chip" onclick="sendQuick('Feeling sad / afraid')">Feeling sad</button>
-      <button class="chip" onclick="sendQuick('Baby not moving')">Baby not moving</button>
-      <button class="chip" onclick="sendQuick('Safe word help')">Safe word help</button>
-    </div>
-
-    <div class="chat-input-row">
-      <input class="chat-input" id="aiInput" placeholder="Type or speak..." onkeydown="if(event.key==='Enter') sendAI()" />
-      <button class="btn-icon" onclick="recordAI()" aria-label="Voice">🎤</button>
-      <button class="btn btn-primary" onclick="sendAI()" style="width:auto;padding:10px 16px;">Send</button>
-    </div>
-  </section>
-
-  <!-- ===== SAFE WORD ===== -->
-  <section id="mother-safe">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-      <button class="btn-sm btn-outline" onclick="showScreen('mother-dash')">← Back</button>
-      <h3 style="margin:0;">Safe Word</h3>
-    </div>
-
-    <div class="card text-center">
-      <div style="font-size:3rem;">🛡️</div>
-      <h3>Secret Emergency Code</h3>
-      <p style="margin-top:8px;">If someone stops you from going to hospital, type your safe word. Help will come quietly — no loud alarm, no one will know.</p>
-      
-      <div class="safe-word-panel">
-        <input type="password" id="safeInput" placeholder="Type safe word..." class="chat-input" style="text-align:center;letter-spacing:4px;" onkeydown="if(event.key==='Enter') triggerSafeWord()" />
-        <p style="font-size:0.75rem;color:var(--ink-muted);margin-top:8px;">Your word: <strong>SURYA</strong></p>
-        <button class="safe-word-btn mt-10" onclick="triggerSafeWord()">ACTIVATE</button>
-      </div>
-    </div>
-
-    <div class="card" id="safeConfirm" style="display:none;background: linear-gradient(135deg, #E8F5E9, #C8E6C9);">
-      <h3>Help is on the way</h3>
-      <p>We alerted ASHA Sunita quietly. Stay safe. An ambulance and support will reach you. <strong>₹500 credit activated.</strong></p>
-    </div>
-  </section>
-
-  <!-- ===== EMERGENCY CONTACTS ===== -->
-  <section id="contacts">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-      <button class="btn-sm btn-outline" onclick="showScreen('mother-dash')">← Back</button>
-      <h3 style="margin:0;">Emergency Contacts</h3>
-    </div>
-
-    <div class="card">
-      <h3>Family & Health</h3>
-      <div class="patient-row">
-        <div class="avatar" style="background: linear-gradient(135deg, var(--terracotta), #A35E40);">R</div>
-        <div class="patient-info">
-          <h4>Ram Devi (Husband)</h4>
-          <p class="meta">+91 98765 43210 · Auto-alert on critical risk</p>
-        </div>
-      </div>
-      <div class="patient-row">
-        <div class="avatar" style="background: linear-gradient(135deg, var(--sage), #5D7A5D);">S</div>
-        <div class="patient-info">
-          <h4>Sunita Devi (ASHA)</h4>
-          <p class="meta">+91 91234 56789 · Silent alert enabled</p>
-        </div>
-      </div>
-      <div class="patient-row">
-        <div class="avatar" style="background: linear-gradient(135deg, var(--danger), #A33A2E);">A</div>
-        <div class="patient-info">
-          <h4>Ambulance (108)</h4>
-          <p class="meta">Emergency · Auto-booked when risk is critical</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Banner Toast -->
-  <div class="banner" id="banner"></div>
-
-</div>
-
-<script>
-  /*
-   * HerSetu Prototype — Offline-First Maternal Health
-   * Stack: Pure HTML/CSS/JS + Web Speech API + localStorage + IndexedDB-like queue
-   * Design: Voice-first, low-literacy, soothing palette for rural India
-   */
-
-  // ===== STATE =====
-  let state = {
-    role: null,
-    airplane: false,
-    pendingSync: 3, // Seeded: 3 records pending
-    patients: [
-      { id: 1, name: "Sushila Devi", avatar: "SD", risk: "Critical", bp: "160/100", weight: "55", months: 8, village: "Rampur", status: "Due visit" },
-      { id: 2, name: "Radha Kumari", avatar: "RK", risk: "High", bp: "140/90", weight: "58", months: 6, village: "Rampur", status: "Due visit" },
-      { id: 3, name: "Meena Yadav", avatar: "MY", risk: "Stable", bp: "110/70", weight: "62", months: 5, village: "Rampur", status: "Done" }
-    ]
-  };
-
-  // ===== NAVIGATION =====
-  function navigate(id) {
-    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-    const target = document.getElementById(id);
-    if (target) target.classList.add('active');
-    window.scrollTo(0, 0);
-  }
-
-  function showScreen(id) {
-    navigate(id);
-    if (id === 'asha-dash') document.getElementById('headerSubtitle').textContent = "ASHA Dashboard · Sunita Devi";
-    if (id === 'mother-dash') document.getElementById('headerSubtitle').textContent = "Mother Dashboard · Sushila Devi";
-    updateSyncUI();
-  }
-
-  // ===== AIRPLANE MODE =====
-  function toggleAirplane() {
-    state.airplane = !state.airplane;
-    const btn = document.getElementById('planeToggle');
-    const label = document.getElementById('planeLabel');
-    btn.classList.toggle('active', state.airplane);
-    label.textContent = state.airplane ? "Offline" : "Online";
-    updateSyncUI();
-    if (!state.airplane) {
-      // Auto-sync simulation
-      setTimeout(() => {
-        state.pendingSync = 0;
-        showBanner("Synced! 3 records uploaded.", "green");
-        updateSyncUI();
-      }, 1200);
-    } else {
-      showBanner("Airplane Mode ON — Working offline.", "green");
-    }
-  }
-
-  function updateSyncUI() {
-    const badge = document.getElementById('syncBadge');
-    if (state.pendingSync > 0) {
-      badge.textContent = state.pendingSync;
-      badge.classList.remove('hidden');
-    } else {
-      badge.classList.add('hidden');
-    }
-  }
-
-  // ===== DARK MODE =====
-  function toggleDark() {
-    const app = document.getElementById('app');
-    const isDark = app.getAttribute('data-theme') === 'dark';
-    app.setAttribute('data-theme', isDark ? 'light' : 'dark');
-  }
-
-  // ===== ROLE ENTRY =====
-  function enterRole(role) {
-    state.role = role;
-    if (role === 'asha') showScreen('asha-login');
-    else showScreen('mother-login');
-  }
-
-  // ===== ASHA VISIT FLOW =====
-  function startVisit(id) {
-    state.currentVisit = id;
-    showScreen('asha-visit');
-    // Reset voice UI
-    document.getElementById('micStatus').textContent = "Tap mic · बोलिए / Speak vitals";
-    document.getElementById('vitalsCaptured').classList.add('hidden');
-    document.getElementById('micBtn').classList.remove('listening-ring');
-  }
-
-  function simulateVoiceCapture() {
-    const btn = document.getElementById('micBtn');
-    const status = document.getElementById('micStatus');
-    btn.classList.add('listening-ring');
-    status.textContent = "Listening... बोल रही हूँ";
-    setTimeout(() => {
-      btn.classList.remove('listening-ring');
-      status.textContent = "Voice captured";
-      document.getElementById('vitalsCaptured').classList.remove('hidden');
-      // Add to pending sync if offline
-      if (state.airplane) {
-        state.pendingSync++;
-        updateSyncUI();
-        showBanner("Visit saved offline.", "green");
-      }
-    }, 2200);
-  }
-
-  function predictRisk() {
-    // Deterministic high risk for Sushila (id 1) for demo
-    const risk = 89;
-    document.getElementById('riskPercent').textContent = risk + "%";
-    document.getElementById('riskLabel').textContent = "Critical — Immediate Referral";
-    const fill = document.getElementById('gaugeFill');
-    fill.classList.remove('green-fill', 'amber-fill');
-    fill.classList.add('red-fill'); // We'll set via CSS manually or transition
-    fill.style.stroke = "var(--danger)";
-    fill.style.strokeDashoffset = 565 - (565 * risk / 100);
-
-    // Auto-actions
-    document.getElementById('asha-risk').classList.remove('hidden');
-    // If airplane mode, add to queue
-    if (state.airplane) {
-      state.pendingSync += 4; // visit + actions
-      updateSyncUI();
-    }
-    showScreen('asha-risk');
-  }
-
-  function completeVisit() {
-    showBanner("Visit completed. Sushila alerted.", "green");
-    showScreen('asha-dash');
-  }
-
-  // ===== MOTHER AI CHAT =====
-  function sendQuick(msg) {
-    addBubble(msg, 'user');
-    const responses = {
-      "Pain in belly": "Pain is important to share. Where exactly? I'm quietly alerting Sunita ASHA for you. <br><span style='font-family:var(--font-hindi);font-size:0.9rem;'>दर्द कहाँ है? मैं सुनिता को चुपचाप बता रही हूँ।</span>",
-      "Feeling sad / afraid": "You are not alone, Sushila. Talking helps. Would you like help? <br><span style='font-family:var(--font-hindi);font-size:0.9rem;'>आप अकेली नहीं हैं।</span>",
-      "Baby not moving": "When did you last feel movement? Try eating something sweet and lying on your left side. I'm alerting help quietly. <br><span style='font-family:var(--font-hindi);font-size:0.9rem;'>बच्चा कब हिला था? मदद आ रही है।</span>",
-      "Safe word help": "Your safe word is SURYA. Use it if you are stopped from leaving. I will call ASHA and ambulance silently. <br><span style='font-family:var(--font-hindi);font-size:0.9rem;'>सुरक्षा शब्द: सूर्य।</span>"
-    };
-    setTimeout(() => addBubble(responses[msg] || "I'm here with you, Sushila. What do you need?", 'bot'), 600);
-    // Silent alert if serious keywords
-    if (msg.includes("sad") || msg.includes("afraid") || msg.includes("Baby not moving")) {
-      setTimeout(() => {
-        showBanner("ASHA alerted quietly.", "green");
-        if (state.airplane) { state.pendingSync++; updateSyncUI(); }
-      }, 1200);
-    }
-  }
-
-  function sendAI() {
-    const input = document.getElementById('aiInput');
-    const text = input.value.trim();
-    if (!text) return;
-    addBubble(text, 'user');
-    input.value = "";
-    setTimeout(() => addBubble("I'm listening, Sushila. Help is close. <br><span style='font-family:var(--font-hindi);font-size:0.9rem;'>मैं सुन रही हूँ। मदद पास है।</span>", 'bot'), 700);
-  }
-
-  function recordAI() {
-    showBanner("Listening... बोलिए", "green");
-    setTimeout(() => {
-      sendQuick("Feeling worried");
-    }, 1500);
-  }
-
-  function addBubble(text, sender) {
-    const windowEl = document.getElementById('chatWindow');
-    const bubble = document.createElement('div');
-    bubble.className = `bubble bubble-${sender}`;
-    bubble.innerHTML = sender === 'bot' ? `<strong>HerSetu Assistant</strong>${text}` : text;
-    windowEl.appendChild(bubble);
-    windowEl.scrollTop = windowEl.scrollHeight;
-  }
-
-  // ===== SAFE WORD =====
-  function triggerSafeWord() {
-    const val = document.getElementById('safeInput').value.trim();
-    if (val.toLowerCase() === "surya" || val === "SURYA") {
-      document.getElementById('safeConfirm').style.display = 'block';
-      if (state.airplane) {
-        state.pendingSync++;
-        updateSyncUI();
-      }
-      showBanner("Silent alert sent. Stay safe.", "green");
-    } else {
-      showBanner("Incorrect word. Try again.", "green");
-    }
-  }
-
-  // ===== SPEECH SYNTHESIS (Hindi) =====
-  function speakHindi(text) {
-    if ('speechSynthesis' in window) {
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = 'hi-IN';
-      utter.rate = 0.85;
-      window.speechSynthesis.speak(utter);
-    }
-  }
-
-  // ===== DEMO WALKTHROUGH =====
-  function startDemo() {
-    showBanner("Demo Mode: Follow highlighted steps.", "green");
-    setTimeout(() => {
-      enterRole('asha');
-      setTimeout(() => showScreen('asha-login'), 800);
-    }, 600);
-  }
-
-  // ===== BANNER =====
-  function showBanner(msg, type) {
-    const b = document.getElementById('banner');
-    b.textContent = msg;
-    b.className = "banner show " + (type || "");
-    setTimeout(() => b.classList.remove('show'), 3000);
-  }
-
-  // ===== INIT =====
-  document.addEventListener('DOMContentLoaded', () => {
-    updateSyncUI();
-    // Pre-seed chat
-    document.getElementById('chatWindow').innerHTML = `
-      <div class="bubble bubble-bot"><strong>HerSetu Assistant</strong>Namaste Sushila. I'm here only for you. No one else can see this. What is on your mind today?<br><span style="font-family:var(--font-hindi);font-size:0.95rem;color:var(--ink);">नमस्ते सुषीला। मैं सिर्फ आपके लिए हूँ।</span></div>
-    `;
-  });
-
-</script>
-
-</body>
-</html>
-```
+      <button class="btn btn-terracotta mt-10" onclick="startVisit(
