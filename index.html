@@ -1,0 +1,1864 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#7A9B8A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>HerSetu — Maternal Health Companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   HERSETU — COMPLETE STYLESHEET
+   Mobile-first, calming healthcare palette
+   ============================================ */
+
+:root {
+  /* Light Mode (Default) */
+  --bg-primary: #F5F0EB;
+  --bg-secondary: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-input: #F0EBE5;
+  --text-primary: #2D2A26;
+  --text-secondary: #6B6560;
+  --text-muted: #9B9590;
+  --sage: #7A9B8A;
+  --sage-light: #A8C5B6;
+  --sage-dark: #5A7B6A;
+  --terracotta: #CC7A6B;
+  --terracotta-light: #E8A99D;
+  --beige: #F5F0EB;
+  --beige-dark: #E8DFD5;
+  --green-safe: #6BAF7A;
+  --green-bg: #E8F5EC;
+  --amber-warn: #D4A843;
+  --amber-bg: #FFF3D6;
+  --red-emergency: #D4645A;
+  --red-bg: #FDE8E6;
+  --red-pulse: rgba(212, 100, 90, 0.3);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.1);
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+[data-theme="dark"] {
+  --bg-primary: #1A1F1E;
+  --bg-secondary: #232A28;
+  --bg-card: #2A3331;
+  --bg-input: #333D3B;
+  --text-primary: #F0EBE5;
+  --text-secondary: #B0A99F;
+  --text-muted: #7A7570;
+  --sage: #8AB89E;
+  --sage-light: #5A7B6A;
+  --sage-dark: #A8C5B6;
+  --beige: #2A3331;
+  --beige-dark: #333D3B;
+  --green-bg: #1E3328;
+  --amber-bg: #332D1A;
+  --red-bg: #331E1C;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.4);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  font-family: var(--font);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 16px;
+  line-height: 1.6;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+.hidden { display: none !important; }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-1 { gap: 8px; }
+.gap-2 { gap: 12px; }
+.gap-3 { gap: 16px; }
+.gap-4 { gap: 24px; }
+.text-center { text-align: center; }
+.w-full { width: 100%; }
+.mt-2 { margin-top: 12px; }
+.mt-3 { margin-top: 16px; }
+.mt-4 { margin-top: 24px; }
+.mb-2 { margin-bottom: 12px; }
+.mb-3 { margin-bottom: 16px; }
+.p-3 { padding: 16px; }
+.p-4 { padding: 24px; }
+
+/* ============================================
+   SCREEN CONTAINER & TRANSITIONS
+   ============================================ */
+.screen {
+  display: none;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 0 16px 100px;
+  animation: fadeIn 0.4s ease;
+}
+.screen.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.08); opacity: 1; }
+}
+
+@keyframes emergencyPulse {
+  0%, 100% { box-shadow: 0 0 0 0 var(--red-pulse); }
+  50% { box-shadow: 0 0 0 16px transparent; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes badgePop {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+@keyframes syncDrain {
+  0% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+
+/* ============================================
+   SPLASH SCREEN
+   ============================================ */
+#splash {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: linear-gradient(135deg, var(--sage) 0%, var(--sage-dark) 100%);
+  padding: 24px;
+}
+
+.splash-logo {
+  width: 100px;
+  height: 100px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52px;
+  margin-bottom: 24px;
+  animation: breathe 3s ease-in-out infinite;
+  backdrop-filter: blur(10px);
+}
+
+.splash-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -0.5px;
+}
+
+.splash-subtitle {
+  font-size: 16px;
+  color: rgba(255,255,255,0.85);
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.splash-tagline {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  margin-top: 32px;
+  text-align: center;
+  max-width: 280px;
+  line-height: 1.5;
+}
+
+.splash-loader {
+  margin-top: 40px;
+  width: 120px;
+  height: 3px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.splash-loader-bar {
+  height: 100%;
+  background: white;
+  border-radius: 2px;
+  animation: shimmer 1.5s ease-in-out;
+  width: 100%;
+}
+
+/* ============================================
+   TOP BAR
+   ============================================ */
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg-primary);
+  padding: 12px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--beige-dark);
+  margin: 0 -16px;
+  padding: 12px 16px;
+  backdrop-filter: blur(10px);
+}
+
+.top-bar-title {
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.top-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ============================================
+   AIRPLANE MODE TOGGLE (PROMINENT)
+   ============================================ */
+.airplane-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-card);
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--beige-dark);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all var(--transition);
+  user-select: none;
+}
+
+.airplane-toggle.offline {
+  background: var(--red-bg);
+  border-color: var(--red-emergency);
+  color: var(--red-emergency);
+}
+
+.airplane-toggle .toggle-switch {
+  width: 40px;
+  height: 22px;
+  background: var(--sage);
+  border-radius: 11px;
+  position: relative;
+  transition: background var(--transition);
+}
+
+.airplane-toggle.offline .toggle-switch {
+  background: var(--red-emergency);
+}
+
+.airplane-toggle .toggle-switch::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.airplane-toggle.offline .toggle-switch::after {
+  transform: translateX(18px);
+}
+
+/* ============================================
+   SYNC BADGE
+   ============================================ */
+.sync-badge {
+  position: fixed;
+  top: 70px;
+  right: 16px;
+  z-index: 200;
+  background: var(--terracotta);
+  color: white;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: var(--shadow-md);
+  animation: badgePop 0.4s ease;
+  transition: all var(--transition);
+}
+
+.sync-badge.synced {
+  background: var(--green-safe);
+}
+
+.sync-badge .sync-icon {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
+.sync-badge.synced .sync-icon {
+  animation: none;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   ROLE SELECTION
+   ============================================ */
+.role-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.role-card {
+  background: var(--bg-card);
+  border: 2px solid var(--beige-dark);
+  border-radius: var(--radius-lg);
+  padding: 28px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.role-card:hover, .role-card:active {
+  border-color: var(--sage);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.role-card .role-icon {
+  font-size: 48px;
+}
+
+.role-card .role-name {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.role-card .role-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border-radius: var(--radius-md);
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition);
+  min-height: 52px;
+  min-width: 52px;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--sage);
+  color: white;
+}
+.btn-primary:hover { background: var(--sage-dark); }
+
+.btn-secondary {
+  background: var(--bg-input);
+  color: var(--text-primary);
+}
+
+.btn-emergency {
+  background: var(--red-emergency);
+  color: white;
+  animation: emergencyPulse 2s infinite;
+}
+
+.btn-voice {
+  background: var(--terracotta);
+  color: white;
+  border-radius: var(--radius-full);
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  font-size: 22px;
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 14px;
+  min-height: 40px;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--beige-dark);
+  transition: all var(--transition);
+}
+
+.card-risk-red {
+  border-left: 4px solid var(--red-emergency);
+  background: var(--red-bg);
+}
+
+.card-risk-amber {
+  border-left: 4px solid var(--amber-warn);
+  background: var(--amber-bg);
+}
+
+.card-risk-green {
+  border-left: 4px solid var(--green-safe);
+  background: var(--green-bg);
+}
+
+/* ============================================
+   MOTHER DASHBOARD
+   ============================================ */
+.pregnancy-progress {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 20px;
+}
+
+.pregnancy-circle {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: conic-gradient(var(--sage) var(--progress, 75%), var(--beige-dark) 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  position: relative;
+}
+
+.pregnancy-circle-inner {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pregnancy-week {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--sage);
+}
+
+.pregnancy-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.pregnancy-trimester {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.quick-action {
+  background: var(--bg-card);
+  border: 1px solid var(--beige-dark);
+  border-radius: var(--radius-md);
+  padding: 16px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-height: 90px;
+  justify-content: center;
+}
+
+.quick-action:active {
+  transform: scale(0.95);
+  background: var(--bg-input);
+}
+
+.quick-action .qa-icon {
+  font-size: 28px;
+}
+
+.quick-action .qa-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   SYMPTOM LOGGING (ICON-BASED)
+   ============================================ */
+.symptom-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.symptom-btn {
+  background: var(--bg-card);
+  border: 2px solid var(--beige-dark);
+  border-radius: var(--radius-md);
+  padding: 16px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-height: 88px;
+  justify-content: center;
+  user-select: none;
+}
+
+.symptom-btn.selected {
+  border-color: var(--terracotta);
+  background: var(--red-bg);
+}
+
+.symptom-btn .sym-icon {
+  font-size: 30px;
+}
+
+.symptom-btn .sym-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.symptom-btn.selected .sym-label {
+  color: var(--terracotta);
+}
+
+/* Vitals Input */
+.vitals-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.vital-input {
+  background: var(--bg-input);
+  border: 2px solid var(--beige-dark);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  text-align: center;
+}
+
+.vital-input label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: block;
+  margin-bottom: 4px;
+}
+
+.vital-input input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text-primary);
+  font-family: var(--font);
+  outline: none;
+}
+
+.vital-input .vital-unit {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ============================================
+   RISK RESULT
+   ============================================ */
+.risk-result {
+  text-align: center;
+  padding: 32px 16px;
+}
+
+.risk-gauge {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.risk-gauge.red {
+  background: radial-gradient(circle, var(--red-bg) 40%, transparent 70%);
+  border: 4px solid var(--red-emergency);
+  animation: emergencyPulse 2s infinite;
+}
+
+.risk-gauge.amber {
+  background: radial-gradient(circle, var(--amber-bg) 40%, transparent 70%);
+  border: 4px solid var(--amber-warn);
+}
+
+.risk-gauge.green {
+  background: radial-gradient(circle, var(--green-bg) 40%, transparent 70%);
+  border: 4px solid var(--green-safe);
+}
+
+.risk-gauge-icon {
+  font-size: 64px;
+}
+
+.risk-level {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.risk-level.red { color: var(--red-emergency); }
+.risk-level.amber { color: var(--amber-warn); }
+.risk-level.green { color: var(--green-safe); }
+
+.risk-message {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.risk-rules {
+  margin-top: 20px;
+  text-align: left;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.risk-rule {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.risk-rule .rule-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   ASHA DASHBOARD
+   ============================================ */
+.dash-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.dash-stat {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 14px 10px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.dash-stat-number {
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.dash-stat-number.red { color: var(--red-emergency); }
+.dash-stat-number.amber { color: var(--amber-warn); }
+.dash-stat-number.green { color: var(--green-safe); }
+
+.dash-stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.patient-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.patient-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  border-left: 4px solid transparent;
+}
+
+.patient-card:active { transform: scale(0.98); }
+.patient-card.risk-red { border-left-color: var(--red-emergency); }
+.patient-card.risk-amber { border-left-color: var(--amber-warn); }
+.patient-card.risk-green { border-left-color: var(--green-safe); }
+
+.patient-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.patient-card.risk-red .patient-avatar { background: var(--red-bg); }
+.patient-card.risk-amber .patient-avatar { background: var(--amber-bg); }
+.patient-card.risk-green .patient-avatar { background: var(--green-bg); }
+
+.patient-info { flex: 1; min-width: 0; }
+
+.patient-name {
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.patient-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.patient-risk-badge {
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.patient-risk-badge.red { background: var(--red-bg); color: var(--red-emergency); }
+.patient-risk-badge.amber { background: var(--amber-bg); color: var(--amber-warn); }
+.patient-risk-badge.green { background: var(--green-bg); color: var(--green-safe); }
+
+/* ============================================
+   AI CHAT
+   ============================================ */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 160px);
+  height: calc(100dvh - 160px);
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-msg {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  line-height: 1.5;
+  animation: slideUp 0.3s ease;
+}
+
+.chat-msg.bot {
+  background: var(--bg-card);
+  border: 1px solid var(--beige-dark);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+
+.chat-msg.user {
+  background: var(--sage);
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 12px 0;
+  border-top: 1px solid var(--beige-dark);
+}
+
+.chat-input {
+  flex: 1;
+  background: var(--bg-input);
+  border: 2px solid var(--beige-dark);
+  border-radius: var(--radius-full);
+  padding: 12px 18px;
+  font-size: 15px;
+  font-family: var(--font);
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+.chat-input:focus {
+  border-color: var(--sage);
+}
+
+/* ============================================
+   EMERGENCY / SAFE WORD
+   ============================================ */
+.emergency-screen {
+  background: var(--red-bg) !important;
+}
+
+.safe-word-btn {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--red-emergency);
+  color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: var(--font);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 32px auto;
+  animation: emergencyPulse 2s infinite;
+  box-shadow: 0 4px 20px var(--red-pulse);
+}
+
+.safe-word-btn .sw-icon {
+  font-size: 36px;
+}
+
+.emergency-steps {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.emergency-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--beige-dark);
+}
+
+.emergency-step:last-child { border-bottom: none; }
+
+.emergency-step .step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--red-emergency);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.emergency-step .step-text {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+/* ============================================
+   MEDICAL HISTORY TIMELINE
+   ============================================ */
+.timeline {
+  position: relative;
+  padding-left: 24px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--beige-dark);
+}
+
+.timeline-item {
+  position: relative;
+  padding: 12px 0 24px;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 16px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--sage);
+  border: 2px solid var(--bg-primary);
+}
+
+.timeline-item.red::before { background: var(--red-emergency); }
+.timeline-item.amber::before { background: var(--amber-warn); }
+
+.timeline-date {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.timeline-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+.timeline-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* ============================================
+   BOTTOM NAV
+   ============================================ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-card);
+  border-top: 1px solid var(--beige-dark);
+  display: flex;
+  justify-content: space-around;
+  padding: 8px 0;
+  padding-bottom: max(8px, env(safe-area-inset-bottom));
+  z-index: 100;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 12px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: var(--text-muted);
+  font-family: var(--font);
+  font-size: 10px;
+  font-weight: 600;
+  transition: color var(--transition);
+  min-width: 56px;
+}
+
+.nav-item.active {
+  color: var(--sage);
+}
+
+.nav-item .nav-icon {
+  font-size: 22px;
+}
+
+/* ============================================
+   DEMO WALKTHROUGH BANNER
+   ============================================ */
+.demo-banner {
+  position: fixed;
+  bottom: 70px;
+  left: 16px;
+  right: 16px;
+  background: var(--sage-dark);
+  color: white;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.4s ease;
+}
+
+.demo-banner-text {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.demo-banner-close {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   SETTINGS
+   ============================================ */
+.settings-group {
+  margin-bottom: 24px;
+}
+
+.settings-group-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--beige-dark);
+}
+
+.settings-item-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.settings-item-label .si-icon {
+  font-size: 20px;
+}
+
+.toggle {
+  width: 48px;
+  height: 26px;
+  background: var(--beige-dark);
+  border-radius: 13px;
+  position: relative;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.toggle.on {
+  background: var(--sage);
+}
+
+.toggle::after {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.toggle.on::after {
+  transform: translateX(22px);
+}
+
+/* ============================================
+   SECTION HEADERS
+   ============================================ */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.section-link {
+  font-size: 13px;
+  color: var(--sage);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media (min-width: 480px) {
+  .screen { max-width: 420px; margin: 0 auto; }
+  .bottom-nav { max-width: 420px; left: 50%; transform: translateX(-50%); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+  .sync-badge { right: calc(50% - 194px); }
+  .demo-banner { max-width: 388px; left: 50%; transform: translateX(-50%); }
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--beige-dark); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     SPLASH SCREEN
+     ============================================ -->
+<div id="splash" class="screen active">
+  <div class="splash-logo">🤰</div>
+  <div class="splash-title">HerSetu</div>
+  <div class="splash-subtitle">मातृ स्वास्थ्य साथी</div>
+  <div class="splash-tagline">Offline-first maternal health companion for India's 900,000+ villages</div>
+  <div class="splash-loader"><div class="splash-loader-bar"></div></div>
+</div>
+
+<!-- ============================================
+     ROLE SELECTION
+     ============================================ -->
+<div id="role" class="screen">
+  <div style="padding-top: 60px; text-align: center;">
+    <div style="font-size: 48px; margin-bottom: 12px;">🙏</div>
+    <h1 style="font-size: 24px; font-weight: 800;">Welcome to HerSetu</h1>
+    <p style="color: var(--text-secondary); margin-top: 6px;">आप कौन हैं? / Who are you?</p>
+  </div>
+  <div class="role-cards">
+    <div class="role-card" onclick="selectRole('mother')">
+      <div class="role-icon">🤰</div>
+      <div class="role-name">Mother</div>
+      <div class="role-desc">गर्भवती माँ</div>
+    </div>
+    <div class="role-card" onclick="selectRole('asha')">
+      <div class="role-icon">👩‍⚕️</div>
+      <div class="role-name">ASHA Worker</div>
+      <div class="role-desc">आशा कार्यकर्ता</div>
+    </div>
+  </div>
+  <div style="text-align: center; margin-top: 32px;">
+    <button class="btn btn-secondary btn-sm" onclick="selectRole('mother')">
+      Continue as Sunita →
+    </button>
+  </div>
+</div>
+
+<!-- ============================================
+     MOTHER DASHBOARD
+     ============================================ -->
+<div id="mother" class="screen">
+  <div class="top-bar">
+    <div class="top-bar-title">🤰 Sunita</div>
+    <div class="top-bar-actions">
+      <div class="airplane-toggle" id="airplaneToggle" onclick="toggleAirplaneMode()">
+        <span>✈️</span>
+        <div class="toggle-switch"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pregnancy-progress">
+    <div class="pregnancy-circle" style="--progress: 75%">
+      <div class="pregnancy-circle-inner">
+        <div class="pregnancy-week">30</div>
+        <div class="pregnancy-label">WEEKS</div>
+      </div>
+    </div>
+    <div class="pregnancy-trimester">3rd Trimester · Due: 15 Aug 2025</div>
+    <div style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Gopalpur Village · PHC Sonpur</div>
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">Quick Actions</div>
+  </div>
+  <div class="quick-actions">
+    <div class="quick-action" onclick="navigateTo('symptoms')">
+      <div class="qa-icon">📋</div>
+      <div class="qa-label">Log Symptoms</div>
+    </div>
+    <div class="quick-action" onclick="navigateTo('chat')">
+      <div class="qa-icon">💬</div>
+      <div class="qa-label">AI Helper</div>
+    </div>
+    <div class="quick-action" onclick="navigateTo('emergency')">
+      <div class="qa-icon">🆘</div>
+      <div class="qa-label">Emergency</div>
+    </div>
+    <div class="quick-action" onclick="navigateTo('history')">
+      <div class="qa-icon">📊</div>
+      <div class="qa-label">History</div>
+    </div>
+    <div class="quick-action" onclick="speakHindi('आपकी प्रेगनेंसी 30 हफ्ते की है। सब ठीक चल रहा है।')">
+      <div class="qa-icon">🔊</div>
+      <div class="qa-label">Voice Info</div>
+    </div>
+    <div class="quick-action" onclick="navigateTo('settings')">
+      <div class="qa-icon">⚙️</div>
+      <div class="qa-label">Settings</div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">Today's Tip</div>
+  </div>
+  <div class="card" style="border-left: 4px solid var(--sage);">
+    <div style="font-size: 24px; margin-bottom: 8px;">🥬</div>
+    <div style="font-weight: 700; font-size: 15px;">Eat iron-rich foods</div>
+    <div style="font-size: 13px; color: var(--text-secondary); margin-top: 4px;">पालक, दाल, और गुड़ खाएं। हीमोग्लोबिन बढ़ाएं।</div>
+    <button class="btn btn-voice btn-sm mt-2" onclick="speakHindi('पालक, दाल, और गुड़ खाएं। इससे हीमोग्लोबिन बढ़ेगा।')">🔊</button>
+  </div>
+</div>
+
+<!-- ============================================
+     SYMPTOM LOGGING
+     ============================================ -->
+<div id="symptoms" class="screen">
+  <div class="top-bar">
+    <div class="top-bar-title" onclick="navigateTo('mother')" style="cursor:pointer;">← Log Symptoms</div>
+    <div class="top-bar-actions">
+      <div class="airplane-toggle" id="airplaneToggle2" onclick="toggleAirplaneMode()">
+        <span>✈️</span>
+        <div class="toggle-switch"></div>
+      </div>
+    </div>
+  </div>
+
+  <p style="color: var(--text-secondary); margin: 16px 0 12px; font-size: 14px;">
+    Tap the symptoms you feel today / आज आपको क्या महसूस हो रहा है?
+  </p>
+
+  <div class="symptom-grid" id="symptomGrid">
+    <div class="symptom-btn" data-symptom="swelling" onclick="toggleSymptom(this)">
+      <div class="sym-icon">🦶</div>
+      <div class="sym-label">Swollen Feet</div>
+    </div>
+    <div class="symptom-btn" data-symptom="headache" onclick="toggleSymptom(this)">
+      <div class="sym-icon">🤕</div>
+      <div class="sym-label">Headache</div>
+    </div>
+    <div class="symptom-btn" data-symptom="bleeding" onclick="toggleSymptom(this)">
+      <div class="sym-icon">🩸</div>
+      <div class="sym-label">Bleeding</div>
+    </div>
+    <div class="symptom-btn" data-symptom="fever" onclick="toggleSymptom(this)">
+      <div class="sym-icon">🌡️</div>
+      <div class="sym-label">Fever</div>
+    </div>
+    <div class="symptom-btn" data-symptom="vomiting" onclick="toggleSymptom(this)">
+      <div class="sym-icon">🤢</div>
+      <div class="sym-label">Vomiting</div>
+    </div>
+    <div class="symptom-btn" data-symptom="movement" onclick="toggleSymptom(this)">
+      <div class="sym-icon">👶</div>
+      <div class="sym-label">Less Movement</div>
+    </div>
+    <div class="symptom-btn" data-symptom="pain" onclick="toggleSymptom(this)">
+      <div class="sym-icon">😣</div>
+      <div class="sym-label">Stomach Pain</div>
+    </div>
+    <div class="symptom-btn" data-symptom="vision" onclick="toggleSymptom(this)">
+      <div class="sym-icon">👁️</div>
+      <div class="sym-label">Blurry Vision</div>
+    </div>
+    <div class="symptom-btn" data-symptom="breathing" onclick="toggleSymptom(this)">
+      <div class="sym-icon">😮‍💨</div>
+      <div class="sym-label">Breathless</div>
+    </div>
+  </div>
+
+  <div class="vitals-row">
+    <div class="vital-input">
+      <label>BP Systolic</label>
+      <input type="number" id="bpSystolic" value="120" placeholder="120">
+      <div class="vital-unit">mmHg</div>
+    </div>
+    <div class="vital-input">
+      <label>BP Diastolic</label>
+      <input type="number" id="bpDiastolic" value="80" placeholder="80">
+      <div class="vital-unit">mmHg</div>
+    </div>
+  </div>
+
+  <div class="vitals-row">
+    <div class="vital-input">
+      <label>Temperature</label>
+      <input type="number" id="temperature" value="98.6" step="0.1" placeholder="98.6">
+      <div class="vital-unit">°F</div>
+    </div>
+    <div class="vital-input">
+      <label>Heart Rate</label>
+      <input type="number" id="heartRate" value="82" placeholder="82">
+      <div class="vital-unit">bpm</div>
+    </div>
+  </div>
+
+  <button class="btn btn-primary btn-block mt-3" onclick="analyzeRisk()" style="font-size: 18px;">
+    🔍 Check Risk Level
+  </button>
+  <button class="btn btn-voice btn-block mt-2" onclick="speakHindi('अपने लक्षण चुनें और ब्लड प्रेशर डालें। फिर रिस्क चेक करें।')">
+    🔊 सुनें / Listen
+  </button>
+</div>
+
+<!-- ============================================
+     RISK RESULT
+     ============================================ -->
+<div id="result" class="screen">
+  <div class="top-bar">
+    <div class="top-bar-title" onclick="navigateTo('symptoms')" style="cursor:pointer;">← Risk Result</div>
+    <div class="top-bar-actions">
+      <div class="airplane-toggle" id="airplaneToggle3" onclick="toggleAirplaneMode()">
+        <span>✈️</span>
+        <div class="toggle-switch"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="risk-result" id="riskResultContainer">
+    <!-- Filled dynamically -->
+  </div>
+</div>
+
+<!-- ============================================
+     ASHA DASHBOARD
+     ============================================ -->
+<div id="dashboard" class="screen">
+  <div class="top-bar">
+    <div class="top-bar-title">👩‍⚕️ ASHA Dashboard</div>
+    <div class="top-bar-actions">
+      <div class="airplane-toggle" id="airplaneToggle4" onclick="toggleAirplaneMode()">
+        <span>✈️</span>
+        <div class="toggle-switch"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dash-stats" id="dashStats">
+    <!-- Filled dynamically -->
+  </div>
+
+  <div class="section-header">
+    <div class="section-title">Patients</div>
+    <div class="section-link" onclick="seedData()">🔄 Refresh</div>
+  </div>
+
+  <div class="patient-list" id="patientList">
+    <!-- Filled dynamically -->
+  </div>
+</div>
+
+<!-- ============================================
+     AI CHAT
+     ============================================ -->
+<div id="chat" class="screen">
+  <div class="top-bar">
+    <div class="top-bar-title" onclick="navigateTo('mother')" style="cursor:pointer;">← 💬 AI Helper</div>
+    <div class="top-bar-actions">
+      <button class="btn btn-voice btn-sm" onclick="speakHindi('मैं आपकी मदद के लिए यहाँ हूँ। कुछ भी पूछें।')">🔊</button>
+    </div>
+  </div>
+
+  <div class="chat-container">
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg bot">
+        Namaste Sunita! 🙏 Main aapki madad ke liye hoon. Aap mujhse pregnancy, nutrition, ya kisi bhi health topic pe pooch sakti hain. Bataiye, kya help chahiye? 😊
+      </div>
+    </div>
+    <div class="chat-input-row">
+      <input class="chat-input" id="chatInput" placeholder="Type your question..." onkeydown="if(event.key==='Enter')sendChat()">
+      <button class="btn btn-primary" onclick="sendChat()" style="border-radius: var(--radius-full); padding: 12px 18px;">➤</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     EMERGENCY / SAFE WORD
+     ============================================ -->
+<div id="emergency" class="screen">
+  <div class="top-bar">
+    <div class="top-bar-title" onclick="navigateTo('mother')" style="cursor:pointer;">← Emergency</div>
+  </div>
+
+  <div style="text-align: center; margin-top: 20px;">
+    <h2 style="font-size: 20px; font-weight: 800;">🆘 Emergency / Safe Word</h2>
+    <p style="color: var(--text-secondary); font-size: 14px; margin-top: 6px;">
+      Tap if you feel unsafe or need immediate help
+    </p>
+  </div>
+
+  <button class="safe-word-btn" id="safeWordBtn" onclick="triggerSafeWord()">
+    <span class="sw-icon">🛡️</span>
+    SAFE WORD
+  </button>
+
+  <div id="emergencySteps" class="hidden">
+    <div class="emergency-steps">
+      <div class="emergency-step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Emergency logged silently.</strong> Your location has been saved.</div>
+      </div>
+      <div class="emergency-step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Alert sent to ASHA worker</strong> (Kamla Devi) and emergency contacts.</div>
+      </div>
+      <div class="emergency-step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Call 108</strong> for ambulance. <a href="tel:108" style="color: var(--red-emergency); font-weight: 700;">Tap to call 108</a></div>
+      </div>
+      <div class="emergency-step">
+        <div class="step-num">4</div>
+        <div class="step-text"><strong>Go to nearest PHC:</strong> PHC Sonpur (3.2 km away)</div>
+      </div>
+      <div class="emergency-step">
+        <div class="step-num">5</div>
+        <div class="step-text"><strong>You are not alone.</strong> Help is on the way. Stay calm and breathe slowly. 🙏</div>
+      </div>
+    </div>
+    <button class="btn btn-voice btn-block mt-3" onclick="speakHindi('घबराएं नहीं। मदद आ रही है। 108 पर कॉल करें। नजदीकी पीएचसी सोनपुर है।')">
+      🔊 सुनें / Listen
+    </button>
+  </div>
+
+  <div class="card mt-3">
+    <div style="font-weight: 700; margin-bottom: 8px;">📞 Emergency Contacts</div>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span>🚑 Ambulance</span>
+        <a href="tel:108" class="btn btn-sm btn-emergency">Call 108</a>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span>👩‍⚕️ ASHA Kamla</span>
+        <a href="tel:9876543210" class="btn btn-sm btn-primary">Call</a>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span>🏥 PHC Sonpur</span>
+        <a href="tel:05622345678" class="btn btn-sm btn-secondary">Call</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     MEDICAL HISTORY
+     ============================================ -->
+<div id="history" class="screen">
+  <div class="top-bar">
+    <div class="top-bar-title" onclick="navigateTo('mother')" style="cursor:pointer;">← Medical History</div>
+  </div>
+
+  <div style="margin-top: 16px;">
+    <div class="section-header">
+      <div class="section-title">Sunita Sharma</div>
+    </div>
+    <p style="font-size: 13px; color: var(--text-muted);">Gopalpur Village · 30 weeks · G2P1</p>
+
+    <div class="timeline mt-3">
+      <div class="timeline-item amber">
+        <div class="timeline-date">Today, 10:30 AM</div>
+        <div class="timeline-title">⚠️ Swollen feet + Headache</div>
+        <div class="timeline-desc">BP: 138/88 · Flagged AMBER · Referred to PHC</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">12 Jun 2025</div>
+        <div class="timeline-title">✅ ANC Checkup #4</div>
+        <div class="timeline-desc">BP: 118/76 · Hb: 10.8 · Weight: 62kg · All normal</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">28 May 2025</div>
+        <div class="timeline-title">💉 TT Injection #2</div>
+        <div class="timeline-desc">Tetanus toxoid administered at PHC Sonpur</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">15 May 2025</div>
+        <div class="timeline-title">✅ ANC Checkup #3</div>
+        <div class="timeline-desc">BP: 112/72 · Hb: 10.2 · Iron tablets prescribed</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">10 Apr 2025</div>
+        <div class="timeline-title">✅ ANC Checkup #2</div>
+        <div class="timeline-desc">BP: 110/70 · USG: Normal · Single live fetus</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-date">15 Feb 2025</div>
+        <div class="timeline-title">✅ Pregnancy Confirmed</div>
+        <div class="timeline-desc">LMP: 10 Nov 2024 · EDD: 15 Aug 2025</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SETTINGS
+     ============================================ -->
+<div id="settings" class="screen">
+  <div class="top-bar">
+    <div class="top-bar-title" onclick="navigateTo('mother')" style="cursor:pointer;">← Settings</div>
+  </div>
+
+  <div style="margin-top: 16px;">
+    <div class="settings-group">
+      <div class="settings-group-title">Appearance</div>
+      <div class="settings-item">
+        <div class="settings-item-label"><span class="si-icon">🌙</span> Dark Mode</div>
+        <div class="toggle" id="darkModeToggle" onclick="toggleDarkMode()"></div>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <div class="settings-group-title">Demo</div>
+      <div class="settings-item">
+        <div class="settings-item-label"><span class="si-icon">🎬</span> Demo Walkthrough</div>
+        <div class="toggle" id="demoToggle" onclick="toggleDemoMode()"></div>
+      </div>
+      <div class="settings-item">
+        <div class="settings-item-label"><span class="si-icon">🔄</span> Reset Demo Data</div>
+        <button class="btn btn-sm btn-secondary" onclick="resetDemo()">Reset</button>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <div class="settings-group-title">About</div>
+      <div class="settings-item">
+        <div class="settings-item-label"><span class="si-icon">📱</span> Version</div>
+        <span style="color: var(--text-muted); font-size: 14px;">1.0.0 (Hackathon)</span>
+      </div>
+      <div class="settings-item">
+        <div class="settings-item-label"><span class="si-icon">💾</span> Storage Used</div>
+        <span style="color: var(--text-muted); font-size: 14px;" id="storageUsed">~2.1 MB</span>
+      </div>
+      <div class="settings-item">
+        <div class="settings-item-label"><span class="si-icon">📶</span> Network Status</div>
+        <span style="font-size: 14px; font-weight: 600;" id="networkStatus">Online</span>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <div class="settings-group-title">Disclaimer</div>
+      <div class="card" style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">
+        HerSetu <strong>flags symptoms for referral</strong>. It does not diagnose or replace medical advice. Always consult a qualified healthcare provider. Risk engine uses WHO danger sign guidelines.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SYNC BADGE (GLOBAL)
+     ============================================ -->
+<div class="sync-badge hidden" id="syncBadge">
+  <span class="sync-icon">🔄</span>
+  <span id="syncCount">3</span> records pending sync
+</div>
+
+<!-- ============================================
+     BOTTOM NAVIGATION
+     ============================================ -->
+<nav class="bottom-nav hidden" id="bottomNav">
+  <button class="nav-item active" data-nav="mother" onclick="navigateTo('mother')">
+    <span class="nav-icon">🏠</span>
+    Home
+  </button>
+  <button class="nav-item" data-nav="symptoms" onclick="navigateTo('symptoms')">
+    <span class="nav-icon">📋</span>
+    Log
+  </button>
+  <button class="nav-item" data-nav="dashboard" onclick="navigateTo('dashboard')">
+    <span class="nav-icon">👩‍⚕️</span>
+    ASHA
+  </button>
+  <button class="nav-item" data-nav="chat" onclick="navigateTo('chat')">
+    <span class="nav-icon">💬</span>
+    AI
+  </button>
+  <button class="nav-item" data-nav="emergency" onclick="navigateTo('emergency')">
+    <span class="nav-icon">🆘</span>
+    SOS
+  </button>
+</nav>
+
+<!-- ============================================
+     DEMO BANNER
+     ============================================ -->
+<div class="demo-banner hidden" id="demoBanner">
+  <div class="demo-banner-text" id="demoBannerText">
+    🎬 Demo Mode: Start by turning on Airplane Mode ✈️
+  </div>
+  <button class="demo-banner-close" onclick="closeDemoBanner()">✕</button>
+</div>
+
+<script>
+/* ============================================
+   HERSETU — COMPLETE APPLICATION LOGIC
+   Offline-first maternal health companion
+   ============================================ */
+
+// ============================================
+// STATE MANAGEMENT
+// ============================================
+const AppState = {
+  currentScreen: 'splash',
+  role: null,
+  isOffline: false,
+  isDarkMode: false,
+  isDemoMode: false,
+  syncQueue: [],
+  selectedSymptoms: [],
+  patients: [],
+  currentPatient: 'sunita',
+  demoStep: 0
+};
+
+// ============================================
+// SEEDED DATA — Realistic Indian patients
+// ============================================
+const SEED_PATIENTS = [
+  {
+    id: 'meena',
+    name: 'Meena Yadav',
+    age: 31,
+    village: 'Sonpur',
+    phc: 'PHC Sonpur',
+    weeks: 36,
+    trimester: 3,
+    risk: 'red',
+    bp: '152/98',
+    bpSys: 152,
+    bpDia: 98,
+    symptoms: ['swelling', 'headache', 'vision'],
+    lastVisit: '18 Jun 2025',
+    avatar: '👩',
+    notes: 'Severe pre-eclampsia signs. Immediate referral needed.',
+    synced: true
+  },
+  {
+    id: 'radha',
+    name: 'Radha Kumari',
+    age: 24,
+    village: 'Chandpur',
+    phc: 'PHC Chandpur',
+    weeks: 28,
+    trimester: 3,
+    risk: 'amber',
+    bp: '134/86',
+    bpSys: 134,
+    bpDia: 86,
+    symptoms: ['swelling', 'headache'],
+    lastVisit: '16 Jun 2025',
+    avatar: '👩',
+    notes: 'Mild hypertension. Monitor BP weekly.',
+    synced: true
+  },
+  {
+    id: 'sunita',
+    name: 'Sunita Sharma',
+    age: 26,
+    village: 'Gopalpur',
+    phc: 'PHC Sonpur',
+    weeks: 30,
+    trimester: 3,
+    risk: 'amber',
+    bp: '138/88',
+    bpSys: 138,
+    bpDia: 88,
+    symptoms: ['swelling', 'headache'],
+    lastVisit: 'Today',
+    avatar: '🤰',
+    notes: 'New symptoms logged. Swollen feet + headache.',
+    synced: false
+  },
+  {
+    id: 'sushila',
+    name: 'Sushila Devi',
+    age: 28,
+    village: 'Rampur',
+    phc: 'PHC Rampur',
+    weeks: 32,
+    trimester: 3,
+    risk: 'green',
+    bp: '116/74',
+    bpSys: 116,
+    bpDia: 74,
+    symptoms: [],
+    lastVisit: '14 Jun 2025',
+    avatar: '👩',
+    notes: 'All vitals normal. Next ANC in 2 weeks.',
+    synced: true
+  },
+  {
+    id: 'kavita',
+    name: 'Kavita Singh',
+    age: 22,
+    village: 'Madhopur',
+    phc: 'PHC Madhopur',
+    weeks: 24,
+    trimester: 2,
+    risk: 'green',
+    bp: '110/70',
+    bpSys: 110,
+    bpDia: 70,
+    symptoms: [],
+    lastVisit: '12 Jun 2025',
+    avatar: '👩',
+    notes: 'First pregnancy. Healthy. TT #2 due next month.',
+    synced: true
+  },
+  {
+    id: 'geeta',
+    name: 'Geeta Bai',
+    age: 34,
+    village: 'Bhawanipur',
+    phc: 'PHC Sonpur',
+    weeks: 38,
+    trimester: 3,
+    risk: 'amber',
+    bp: '130/85',
+    bpSys: 130,
+    bpDia: 85,
+    symptoms: ['swelling'],
+    lastVisit: '17 Jun 2025',
+    avatar: '👩',
+    notes: 'Near term. Mild edema. Delivery plan at CHC.',
+    synced: true
+  }
+];
+
+// ============================================
+// INDEXEDDB WRAPPER (Lightweight, no deps)
+// ============================================
+const DB = {
+  db: null,
+  DB_NAME: 'HerSetuDB',
+  DB_VERSION: 1,
+
+  async init() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open(this.DB_NAME
