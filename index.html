@@ -2,564 +2,582 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#7A9B8A">
-<title>HerSetu — Maternal Health Companion</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HerSetu</title>
 <style>
-:root{--bg:#F5F0EB;--bg2:#FFF;--bg3:#F0EBE5;--tx:#2D2A26;--tx2:#6B6560;--tx3:#9B9590;--sage:#7A9B8A;--sage-d:#5A7B6A;--sage-l:#A8C5B6;--terra:#CC7A6B;--terra-l:#E8A99D;--beige-d:#E8DFD5;--grn:#6BAF7A;--grn-bg:#E8F5EC;--amb:#D4A843;--amb-bg:#FFF3D6;--red:#D4645A;--red-bg:#FDE8E6;--red-p:rgba(212,100,90,.3);--sh:0 2px 8px rgba(0,0,0,.07);--r:14px;--tr:.3s ease}
-[data-theme=dark]{--bg:#1A1F1E;--bg2:#232A28;--bg3:#333D3B;--tx:#F0EBE5;--tx2:#B0A99F;--tx3:#7A7570;--sage:#8AB89E;--sage-d:#6A9880;--beige-d:#3A4442;--grn-bg:#1E3328;--amb-bg:#332D1A;--red-bg:#331E1C;--sh:0 2px 8px rgba(0,0,0,.3)}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);font-size:16px;line-height:1.6;min-height:100dvh;overflow-x:hidden;transition:background var(--tr),color var(--tr)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,-apple-system,sans-serif;background:#F5F0EB;color:#2D2A26;min-height:100vh;overflow-x:hidden}
 .hidden{display:none!important}
-.scr{display:none;min-height:100dvh;padding:0 16px 90px;animation:fi .35s ease}.scr.on{display:block}
-@keyframes fi{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@keyframes su{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-@keyframes br{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.06);opacity:1}}
-@keyframes ep{0%,100%{box-shadow:0 0 0 0 var(--red-p)}50%{box-shadow:0 0 0 14px transparent}}
-@keyframes sp{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-@keyframes bp{0%{transform:scale(0)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
-.tb{position:sticky;top:0;z-index:100;background:var(--bg);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--beige-d);margin:0 -16px}
-.tb-t{font-size:18px;font-weight:700;display:flex;align-items:center;gap:8px;cursor:pointer}
-.tb-a{display:flex;align-items:center;gap:8px}
-.ap{display:flex;align-items:center;gap:7px;background:var(--bg2);padding:7px 12px;border-radius:99px;border:2px solid var(--beige-d);cursor:pointer;font-size:12px;font-weight:700;color:var(--tx2);transition:all var(--tr);user-select:none}
-.ap.off{background:var(--red-bg);border-color:var(--red);color:var(--red)}
-.ap .sw{width:38px;height:21px;background:var(--sage);border-radius:11px;position:relative;transition:background var(--tr)}
-.ap.off .sw{background:var(--red)}
-.ap .sw::after{content:'';position:absolute;width:17px;height:17px;background:#fff;border-radius:50%;top:2px;left:2px;transition:transform var(--tr);box-shadow:0 1px 3px rgba(0,0,0,.15)}
-.ap.off .sw::after{transform:translateX(17px)}
-.sb{position:fixed;top:64px;right:16px;z-index:200;background:var(--terra);color:#fff;padding:6px 14px;border-radius:99px;font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px;box-shadow:var(--sh);animation:bp .4s ease}
-.sb.ok{background:var(--grn)}
-.sb .si{display:inline-block;animation:sp 1s linear infinite}.sb.ok .si{animation:none}
-#splash{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100dvh;background:linear-gradient(135deg,var(--sage),var(--sage-d));padding:24px}
-.sp-logo{width:96px;height:96px;background:rgba(255,255,255,.2);border-radius:26px;display:flex;align-items:center;justify-content:center;font-size:50px;margin-bottom:20px;animation:br 3s ease-in-out infinite;backdrop-filter:blur(8px)}
-.sp-t{font-size:34px;font-weight:800;color:#fff}.sp-s{font-size:15px;color:rgba(255,255,255,.85);margin-top:6px;font-weight:500}
-.sp-tag{font-size:12px;color:rgba(255,255,255,.55);margin-top:28px;text-align:center;max-width:260px}
-.sp-bar{margin-top:36px;width:110px;height:3px;background:rgba(255,255,255,.2);border-radius:2px;overflow:hidden}
-.sp-bar div{height:100%;background:#fff;border-radius:2px;width:100%}
-.rc{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px}
-.rc-c{background:var(--bg2);border:2px solid var(--beige-d);border-radius:20px;padding:26px 14px;text-align:center;cursor:pointer;transition:all var(--tr);display:flex;flex-direction:column;align-items:center;gap:10px}
-.rc-c:active{border-color:var(--sage);transform:scale(.97)}
-.rc-c .ri{font-size:44px}.rc-c .rn{font-size:15px;font-weight:700}.rc-c .rd{font-size:12px;color:var(--tx3)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:var(--r);font-family:inherit;font-size:15px;font-weight:600;border:none;cursor:pointer;transition:all var(--tr);min-height:50px}
-.btn-p{background:var(--sage);color:#fff}.btn-s{background:var(--bg3);color:var(--tx)}
-.btn-e{background:var(--red);color:#fff;animation:ep 2s infinite}
-.btn-v{background:var(--terra);color:#fff;border-radius:99px;width:48px;height:48px;padding:0;font-size:20px}
-.btn-sm{padding:8px 14px;font-size:13px;min-height:38px}.btn-b{width:100%}
-.card{background:var(--bg2);border-radius:var(--r);padding:14px;box-shadow:var(--sh);border:1px solid var(--beige-d)}
-.card-r{border-left:4px solid var(--red);background:var(--red-bg)}
-.card-a{border-left:4px solid var(--amb);background:var(--amb-bg)}
-.card-g{border-left:4px solid var(--grn);background:var(--grn-bg)}
-.pp{background:var(--bg2);border-radius:20px;padding:22px;text-align:center;box-shadow:var(--sh);margin-bottom:18px}
-.pc{width:130px;height:130px;border-radius:50%;background:conic-gradient(var(--sage) 75%,var(--beige-d) 0);display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
-.pci{width:102px;height:102px;border-radius:50%;background:var(--bg2);display:flex;flex-direction:column;align-items:center;justify-content:center}
-.pw{font-size:30px;font-weight:800;color:var(--sage)}.pl{font-size:11px;color:var(--tx3);font-weight:600}
-.qa{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
-.qa-c{background:var(--bg2);border:1px solid var(--beige-d);border-radius:var(--r);padding:14px 6px;text-align:center;cursor:pointer;transition:all var(--tr);display:flex;flex-direction:column;align-items:center;gap:6px;min-height:82px;justify-content:center}
-.qa-c:active{transform:scale(.95);background:var(--bg3)}
-.qa-c .qi{font-size:26px}.qa-c .ql{font-size:10px;font-weight:600;color:var(--tx2)}
-.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.sb2{background:var(--bg2);border:2px solid var(--beige-d);border-radius:var(--r);padding:14px 6px;text-align:center;cursor:pointer;transition:all var(--tr);display:flex;flex-direction:column;align-items:center;gap:5px;min-height:82px;justify-content:center;user-select:none}
-.sb2.sel{border-color:var(--terra);background:var(--red-bg)}
-.sb2 .si2{font-size:28px}.sb2 .sl{font-size:10px;font-weight:600;color:var(--tx2)}
-.sb2.sel .sl{color:var(--terra)}
-.vr{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.vi{background:var(--bg3);border:2px solid var(--beige-d);border-radius:var(--r);padding:10px;text-align:center}
-.vi label{font-size:11px;font-weight:600;color:var(--tx3);display:block;margin-bottom:2px}
-.vi input{width:100%;border:none;background:transparent;font-size:22px;font-weight:700;text-align:center;color:var(--tx);font-family:inherit;outline:none}
-.vi .vu{font-size:10px;color:var(--tx3)}
-.rr{text-align:center;padding:28px 14px}
-.rg{width:160px;height:160px;border-radius:50%;margin:0 auto 20px;display:flex;align-items:center;justify-content:center}
-.rg.r{background:radial-gradient(circle,var(--red-bg) 40%,transparent 70%);border:4px solid var(--red);animation:ep 2s infinite}
-.rg.a{background:radial-gradient(circle,var(--amb-bg) 40%,transparent 70%);border:4px solid var(--amb)}
-.rg.g{background:radial-gradient(circle,var(--grn-bg) 40%,transparent 70%);border:4px solid var(--grn)}
-.rg-i{font-size:56px}
-.rl{font-size:26px;font-weight:800;margin-bottom:6px}
-.rl.r{color:var(--red)}.rl.a{color:var(--amb)}.rl.g{color:var(--grn)}
-.rm{font-size:15px;color:var(--tx2);line-height:1.6;max-width:300px;margin:0 auto}
-.rrl{margin-top:18px;text-align:left;background:var(--bg2);border-radius:var(--r);padding:14px}
-.rrl-i{display:flex;align-items:center;gap:8px;padding:5px 0;font-size:13px;color:var(--tx2)}
-.rrl-d{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.ds{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
-.ds-c{background:var(--bg2);border-radius:var(--r);padding:12px 8px;text-align:center;box-shadow:var(--sh)}
-.ds-n{font-size:26px;font-weight:800}.ds-n.r{color:var(--red)}.ds-n.a{color:var(--amb)}.ds-n.g{color:var(--grn)}
-.ds-l{font-size:10px;color:var(--tx3);font-weight:600;margin-top:2px}
-.pl2{display:flex;flex-direction:column;gap:8px}
-.pc2{background:var(--bg2);border-radius:var(--r);padding:12px;display:flex;align-items:center;gap:10px;box-shadow:var(--sh);cursor:pointer;transition:all var(--tr);border-left:4px solid transparent}
-.pc2:active{transform:scale(.98)}.pc2.r{border-left-color:var(--red)}.pc2.a{border-left-color:var(--amb)}.pc2.g{border-left-color:var(--grn)}
-.pa{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.pc2.r .pa{background:var(--red-bg)}.pc2.a .pa{background:var(--amb-bg)}.pc2.g .pa{background:var(--grn-bg)}
-.pi{flex:1;min-width:0}.pn{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pm{font-size:11px;color:var(--tx3);display:flex;gap:6px;flex-wrap:wrap}
-.prb{padding:3px 9px;border-radius:99px;font-size:10px;font-weight:700;flex-shrink:0}
-.prb.r{background:var(--red-bg);color:var(--red)}.prb.a{background:var(--amb-bg);color:var(--amb)}.prb.g{background:var(--grn-bg);color:var(--grn)}
-.cc{display:flex;flex-direction:column;height:calc(100dvh - 150px)}
-.cm{flex:1;overflow-y:auto;padding:14px 0;display:flex;flex-direction:column;gap:10px}
-.cm-m{max-width:85%;padding:11px 14px;border-radius:var(--r);font-size:14px;line-height:1.5;animation:su .3s ease}
-.cm-m.b{background:var(--bg2);border:1px solid var(--beige-d);align-self:flex-start;border-bottom-left-radius:4px}
-.cm-m.u{background:var(--sage);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-.ci{display:flex;gap:8px;padding:10px 0;border-top:1px solid var(--beige-d)}
-.ci-i{flex:1;background:var(--bg3);border:2px solid var(--beige-d);border-radius:99px;padding:11px 16px;font-size:14px;font-family:inherit;color:var(--tx);outline:none}
-.ci-i:focus{border-color:var(--sage)}
-.swb{width:110px;height:110px;border-radius:50%;background:var(--red);color:#fff;border:none;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;margin:28px auto;animation:ep 2s infinite;box-shadow:0 4px 18px var(--red-p)}
-.swb .swi{font-size:32px}
-.es{background:var(--bg2);border-radius:var(--r);padding:18px;margin-top:18px}
-.es-i{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--beige-d)}
-.es-i:last-child{border-bottom:none}
-.es-n{width:26px;height:26px;border-radius:50%;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
-.es-t{font-size:13px;color:var(--tx);line-height:1.5}
-.tl{position:relative;padding-left:22px}
-.tl::before{content:'';position:absolute;left:7px;top:0;bottom:0;width:2px;background:var(--beige-d)}
-.tl-i{position:relative;padding:10px 0 20px}
-.tl-i::before{content:'';position:absolute;left:-18px;top:14px;width:10px;height:10px;border-radius:50%;background:var(--sage);border:2px solid var(--bg)}
-.tl-i.r::before{background:var(--red)}.tl-i.a::before{background:var(--amb)}
-.tl-d{font-size:11px;color:var(--tx3);font-weight:600}.tl-t{font-size:14px;font-weight:700;margin-top:2px}.tl-dc{font-size:12px;color:var(--tx2);margin-top:2px}
-.bn{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--beige-d);display:flex;justify-content:space-around;padding:6px 0;padding-bottom:max(6px,env(safe-area-inset-bottom));z-index:100;box-shadow:0 -2px 8px rgba(0,0,0,.04)}
-.ni{display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 10px;cursor:pointer;border:none;background:none;color:var(--tx3);font-family:inherit;font-size:9px;font-weight:600;transition:color var(--tr);min-width:50px}
-.ni.on{color:var(--sage)}.ni .ni-i{font-size:20px}
-.db{position:fixed;bottom:66px;left:16px;right:16px;background:var(--sage-d);color:#fff;padding:11px 14px;border-radius:var(--r);z-index:150;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 4px 16px rgba(0,0,0,.15);animation:su .4s ease}
-.db-t{font-size:12px;font-weight:600;line-height:1.4}.db-x{background:rgba(255,255,255,.2);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:14px;flex-shrink:0}
-.sh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.sh-t{font-size:17px;font-weight:700}.sh-l{font-size:12px;color:var(--sage);font-weight:600;cursor:pointer}
-.sg2{margin-bottom:20px}.sg2-t{font-size:12px;font-weight:700;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
-.si3{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--beige-d)}
-.si3-l{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
-.tg{width:44px;height:24px;background:var(--beige-d);border-radius:12px;position:relative;cursor:pointer;transition:background var(--tr)}
-.tg.on{background:var(--sage)}
-.tg::after{content:'';position:absolute;width:20px;height:20px;background:#fff;border-radius:50%;top:2px;left:2px;transition:transform var(--tr);box-shadow:0 1px 3px rgba(0,0,0,.12)}
-.tg.on::after{transform:translateX(20px)}
-@media(min-width:480px){.scr{max-width:420px;margin:0 auto}.bn{max-width:420px;left:50%;transform:translateX(-50%);border-radius:16px 16px 0 0}.sb{right:calc(50% - 194px)}.db{max-width:388px;left:50%;transform:translateX(-50%)}}
-::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:var(--beige-d);border-radius:2px}
+
+/* SPLASH */
+#splash{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:linear-gradient(135deg,#7A9B8A,#5A7B6A);color:white;text-align:center;padding:20px}
+#splash h1{font-size:42px;margin:16px 0 4px}
+#splash p{opacity:0.8;font-size:15px}
+#splash .loader{width:100px;height:3px;background:rgba(255,255,255,0.3);border-radius:3px;margin-top:40px;overflow:hidden}
+#splash .loader div{height:100%;background:white;width:0;animation:load 2s ease forwards}
+@keyframes load{to{width:100%}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* SCREENS */
+.screen{display:none;padding:16px 16px 90px;min-height:100vh;animation:fadeUp 0.3s ease}
+.screen.active{display:block}
+
+/* TOP BAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #E8DFD5;margin-bottom:16px}
+.topbar h2{font-size:18px}
+.ap-toggle{display:flex;align-items:center;gap:6px;background:white;padding:6px 12px;border-radius:20px;border:2px solid #E8DFD5;cursor:pointer;font-size:12px;font-weight:700}
+.ap-toggle.offline{background:#FDE8E6;border-color:#D4645A;color:#D4645A}
+.ap-toggle .dot{width:10px;height:10px;border-radius:50%;background:#7A9B8A}
+.ap-toggle.offline .dot{background:#D4645A}
+
+/* SYNC BADGE */
+.sync-badge{position:fixed;top:60px;right:16px;background:#CC7A6B;color:white;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;z-index:999;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.sync-badge.done{background:#6BAF7A}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;border-radius:12px;font-size:16px;font-weight:600;border:none;cursor:pointer;width:100%;margin-top:10px;font-family:inherit}
+.btn-green{background:#7A9B8A;color:white}
+.btn-red{background:#D4645A;color:white}
+.btn-gray{background:#E8DFD5;color:#2D2A26}
+.btn-voice{background:#CC7A6B;color:white;width:50px;height:50px;border-radius:50%;padding:0;font-size:20px;margin:10px auto;display:flex}
+
+/* ROLE CARDS */
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.role-card{background:white;border:2px solid #E8DFD5;border-radius:16px;padding:30px 12px;text-align:center;cursor:pointer}
+.role-card:active{border-color:#7A9B8A;transform:scale(0.97)}
+.role-card .icon{font-size:48px}
+.role-card .name{font-weight:700;margin-top:8px}
+.role-card .sub{font-size:12px;color:#9B9590}
+
+/* PREGNANCY CIRCLE */
+.preg-circle{width:130px;height:130px;border-radius:50%;background:conic-gradient(#7A9B8A 75%,#E8DFD5 0);display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
+.preg-inner{width:100px;height:100px;border-radius:50%;background:white;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.preg-inner .wk{font-size:32px;font-weight:800;color:#7A9B8A}
+.preg-inner .lbl{font-size:11px;color:#9B9590}
+
+/* QUICK ACTIONS */
+.quick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
+.quick-item{background:white;border:1px solid #E8DFD5;border-radius:12px;padding:14px 6px;text-align:center;cursor:pointer}
+.quick-item:active{background:#F0EBE5}
+.quick-item .qi{font-size:28px}
+.quick-item .ql{font-size:10px;font-weight:600;color:#6B6560;margin-top:4px}
+
+/* SYMPTOM GRID */
+.sym-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sym-btn{background:white;border:2px solid #E8DFD5;border-radius:12px;padding:14px 6px;text-align:center;cursor:pointer}
+.sym-btn.picked{border-color:#CC7A6B;background:#FDE8E6}
+.sym-btn .si{font-size:28px}
+.sym-btn .sl{font-size:10px;font-weight:600;color:#6B6560;margin-top:4px}
+
+/* VITALS */
+.vitals{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.vital-box{background:#F0EBE5;border-radius:12px;padding:10px;text-align:center}
+.vital-box label{font-size:11px;color:#9B9590;font-weight:600}
+.vital-box input{width:100%;border:none;background:transparent;font-size:22px;font-weight:700;text-align:center;font-family:inherit;color:#2D2A26;outline:none}
+
+/* RISK RESULT */
+.risk-box{text-align:center;padding:30px 10px}
+.risk-circle{width:150px;height:150px;border-radius:50%;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:60px}
+.risk-circle.RED{background:#FDE8E6;border:4px solid #D4645A;animation:pulse 1.5s infinite}
+.risk-circle.AMBER{background:#FFF3D6;border:4px solid #D4A843}
+.risk-circle.GREEN{background:#E8F5EC;border:4px solid #6BAF7A}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(212,100,90,0.3)}50%{box-shadow:0 0 0 15px transparent}}
+.risk-title{font-size:28px;font-weight:800}
+.risk-title.RED{color:#D4645A}
+.risk-title.AMBER{color:#D4A843}
+.risk-title.GREEN{color:#6BAF7A}
+.risk-msg{font-size:15px;color:#6B6560;margin-top:8px;line-height:1.6}
+.rules-box{background:white;border-radius:12px;padding:14px;margin-top:20px;text-align:left}
+.rule-item{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:13px;color:#6B6560}
+.rule-dot{width:8px;height:8px;border-radius:50%}
+
+/* DASHBOARD */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.stat-box{background:white;border-radius:12px;padding:12px;text-align:center}
+.stat-num{font-size:28px;font-weight:800}
+.stat-num.r{color:#D4645A}.stat-num.a{color:#D4A843}.stat-num.g{color:#6BAF7A}
+.stat-lbl{font-size:10px;color:#9B9590;font-weight:600}
+.patient-card{background:white;border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;margin-bottom:8px;border-left:4px solid transparent}
+.patient-card.r{border-left-color:#D4645A;background:#FDE8E6}
+.patient-card.a{border-left-color:#D4A843;background:#FFF3D6}
+.patient-card.g{border-left-color:#6BAF7A;background:#E8F5EC}
+.patient-card .av{font-size:24px}
+.patient-card .info{flex:1}
+.patient-card .pname{font-weight:700;font-size:14px}
+.patient-card .pmeta{font-size:11px;color:#9B9590}
+.patient-card .badge{padding:3px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.badge.r{background:#FDE8E6;color:#D4645A}
+.badge.a{background:#FFF3D6;color:#D4A843}
+.badge.g{background:#E8F5EC;color:#6BAF7A}
+
+/* CHAT */
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 140px)}
+.chat-msgs{flex:1;overflow-y:auto;padding:10px 0;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:85%;padding:10px 14px;border-radius:12px;font-size:14px;line-height:1.5}
+.msg.bot{background:white;border:1px solid #E8DFD5;align-self:flex-start;border-bottom-left-radius:4px}
+.msg.user{background:#7A9B8A;color:white;align-self:flex-end;border-bottom-right-radius:4px}
+.chat-bar{display:flex;gap:8px;padding:10px 0;border-top:1px solid #E8DFD5}
+.chat-bar input{flex:1;padding:12px;border:2px solid #E8DFD5;border-radius:20px;font-size:14px;font-family:inherit;outline:none}
+.chat-bar button{background:#7A9B8A;color:white;border:none;border-radius:50%;width:44px;height:44px;font-size:18px;cursor:pointer}
+
+/* EMERGENCY */
+.sos-btn{width:120px;height:120px;border-radius:50%;background:#D4645A;color:white;border:none;font-size:14px;font-weight:700;cursor:pointer;margin:24px auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;animation:pulse 2s infinite;font-family:inherit}
+.sos-btn .sos-icon{font-size:36px}
+.em-steps{background:white;border-radius:12px;padding:16px;margin-top:16px}
+.em-step{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #E8DFD5;font-size:13px}
+.em-step:last-child{border:none}
+.em-num{width:24px;height:24px;border-radius:50%;background:#D4645A;color:white;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid #E8DFD5;display:flex;justify-content:space-around;padding:8px 0;z-index:100}
+.nav-btn{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:none;font-size:9px;font-weight:600;color:#9B9590;cursor:pointer;padding:4px 8px;font-family:inherit}
+.nav-btn.active{color:#7A9B8A}
+.nav-btn .ni{font-size:20px}
+
+/* CARD */
+.card{background:white;border-radius:12px;padding:14px;border:1px solid #E8DFD5;margin-top:12px}
+
+/* TIMELINE */
+.timeline{padding-left:20px;border-left:2px solid #E8DFD5;margin-top:16px}
+.tl-item{padding:8px 0 16px 12px;position:relative}
+.tl-item::before{content:'';position:absolute;left:-26px;top:12px;width:10px;height:10px;border-radius:50%;background:#7A9B8A}
+.tl-item.warn::before{background:#D4A843}
+.tl-date{font-size:11px;color:#9B9590;font-weight:600}
+.tl-title{font-size:14px;font-weight:700}
+.tl-desc{font-size:12px;color:#6B6560}
+
+/* DARK MODE */
+body.dark{background:#1A1F1E;color:#F0EBE5}
+body.dark .screen{background:#1A1F1E}
+body.dark .topbar{border-color:#333}
+body.dark .role-card,body.dark .quick-item,body.dark .sym-btn,body.dark .card,
+body.dark .stat-box,body.dark .patient-card,body.dark .rules-box,body.dark .em-steps,
+body.dark .msg.bot,body.dark .preg-inner,body.dark .vital-box{background:#232A28;border-color:#333}
+body.dark .vital-box{background:#2A3331}
+body.dark .vital-box input{color:#F0EBE5}
+body.dark .bottom-nav{background:#232A28;border-color:#333}
+body.dark .ap-toggle{background:#232A28;border-color:#333;color:#B0A99F}
+body.dark .chat-bar input{background:#2A3331;border-color:#333;color:#F0EBE5}
+body.dark .patient-card.r{background:#331E1C}
+body.dark .patient-card.a{background:#332D1A}
+body.dark .patient-card.g{background:#1E3328}
 </style>
 </head>
 <body>
 
-<div id="splash" class="scr on">
-<div class="sp-logo">🤰</div>
-<div class="sp-t">HerSetu</div>
-<div class="sp-s">मातृ स्वास्थ्य साथी</div>
-<div class="sp-tag">Offline-first maternal health companion for India's 900,000+ villages</div>
-<div class="sp-bar"><div></div></div>
+<!-- SPLASH -->
+<div id="splash">
+<div style="font-size:64px">🤰</div>
+<h1>HerSetu</h1>
+<p>मातृ स्वास्थ्य साथी</p>
+<p style="font-size:12px;opacity:0.6;margin-top:8px">Offline-first · 900,000+ villages</p>
+<div class="loader"><div></div></div>
 </div>
 
-<div id="role" class="scr">
-<div style="padding-top:50px;text-align:center">
-<div style="font-size:44px;margin-bottom:10px">🙏</div>
-<h1 style="font-size:22px;font-weight:800">Welcome to HerSetu</h1>
-<p style="color:var(--tx2);margin-top:4px">आप कौन हैं? / Who are you?</p>
+<!-- ROLE SELECT -->
+<div id="scr-role" class="screen">
+<div style="text-align:center;padding-top:40px">
+<div style="font-size:48px">🙏</div>
+<h2 style="margin-top:8px">Welcome to HerSetu</h2>
+<p style="color:#6B6560;font-size:14px">आप कौन हैं?</p>
 </div>
-<div class="rc">
-<div class="rc-c" onclick="go('mother')"><div class="ri">🤰</div><div class="rn">Mother</div><div class="rd">गर्भवती माँ</div></div>
-<div class="rc-c" onclick="go('dashboard')"><div class="ri">👩‍⚕️</div><div class="rn">ASHA</div><div class="rd">आशा कार्यकर्ता</div></div>
+<div class="roles">
+<div class="role-card" onclick="showScreen('scr-mother')">
+<div class="icon">🤰</div>
+<div class="name">Mother</div>
+<div class="sub">गर्भवती माँ</div>
 </div>
-<div style="text-align:center;margin-top:28px"><button class="btn btn-s btn-sm" onclick="go('mother')">Continue as Sunita →</button></div>
+<div class="role-card" onclick="showScreen('scr-dash')">
+<div class="icon">👩‍⚕️</div>
+<div class="name">ASHA</div>
+<div class="sub">आशा कार्यकर्ता</div>
 </div>
-
-<div id="mother" class="scr">
-<div class="tb"><div class="tb-t">🤰 Sunita</div><div class="tb-a"><div class="ap" id="ap1" onclick="togAP()"><span>✈️</span><div class="sw"></div></div></div></div>
-<div class="pp"><div class="pc"><div class="pci"><div class="pw">30</div><div class="pl">WEEKS</div></div></div><div style="font-size:13px;font-weight:600;color:var(--tx2)">3rd Trimester · Due: 15 Aug 2025</div><div style="font-size:12px;color:var(--tx3);margin-top:3px">Gopalpur Village · PHC Sonpur</div></div>
-<div class="sh"><div class="sh-t">Quick Actions</div></div>
-<div class="qa">
-<div class="qa-c" onclick="go('symptoms')"><div class="qi">📋</div><div class="ql">Log Symptoms</div></div>
-<div class="qa-c" onclick="go('chat')"><div class="qi">💬</div><div class="ql">AI Helper</div></div>
-<div class="qa-c" onclick="go('emergency')"><div class="qi">🆘</div><div class="ql">Emergency</div></div>
-<div class="qa-c" onclick="go('history')"><div class="qi">📊</div><div class="ql">History</div></div>
-<div class="qa-c" onclick="speak('आपकी प्रेगनेंसी 30 हफ्ते की है। सब ठीक चल रहा है।')"><div class="qi">🔊</div><div class="ql">Voice Info</div></div>
-<div class="qa-c" onclick="go('settings')"><div class="qi">⚙️</div><div class="ql">Settings</div></div>
 </div>
-<div class="sh"><div class="sh-t">Today's Tip</div></div>
-<div class="card" style="border-left:4px solid var(--sage)"><div style="font-size:22px;margin-bottom:6px">🥬</div><div style="font-weight:700;font-size:14px">Eat iron-rich foods</div><div style="font-size:12px;color:var(--tx2);margin-top:3px">पालक, दाल, और गुड़ खाएं। हीमोग्लोबिन बढ़ाएं।</div><button class="btn btn-v btn-sm" style="margin-top:8px" onclick="speak('पालक, दाल, और गुड़ खाएं। इससे हीमोग्लोबिन बढ़ेगा।')">🔊</button></div>
+<button class="btn btn-gray" onclick="showScreen('scr-mother')" style="margin-top:24px">Continue as Sunita →</button>
 </div>
 
-<div id="symptoms" class="scr">
-<div class="tb"><div class="tb-t" onclick="go('mother')">← Log Symptoms</div><div class="tb-a"><div class="ap" id="ap2" onclick="togAP()"><span>✈️</span><div class="sw"></div></div></div></div>
-<p style="color:var(--tx2);margin:14px 0 10px;font-size:13px">Tap symptoms you feel today / आज आपको क्या महसूस हो रहा है?</p>
-<div class="sg" id="symG">
-<div class="sb2" data-s="swelling" onclick="togSym(this)"><div class="si2">🦶</div><div class="sl">Swollen Feet</div></div>
-<div class="sb2" data-s="headache" onclick="togSym(this)"><div class="si2">🤕</div><div class="sl">Headache</div></div>
-<div class="sb2" data-s="bleeding" onclick="togSym(this)"><div class="si2">🩸</div><div class="sl">Bleeding</div></div>
-<div class="sb2" data-s="fever" onclick="togSym(this)"><div class="si2">🌡️</div><div class="sl">Fever</div></div>
-<div class="sb2" data-s="vomiting" onclick="togSym(this)"><div class="si2">🤢</div><div class="sl">Vomiting</div></div>
-<div class="sb2" data-s="movement" onclick="togSym(this)"><div class="si2">👶</div><div class="sl">Less Movement</div></div>
-<div class="sb2" data-s="pain" onclick="togSym(this)"><div class="si2">😣</div><div class="sl">Stomach Pain</div></div>
-<div class="sb2" data-s="vision" onclick="togSym(this)"><div class="si2">👁️</div><div class="sl">Blurry Vision</div></div>
-<div class="sb2" data-s="breathing" onclick="togSym(this)"><div class="si2">😮‍💨</div><div class="sl">Breathless</div></div>
+<!-- MOTHER HOME -->
+<div id="scr-mother" class="screen">
+<div class="topbar">
+<h2>🤰 Sunita</h2>
+<div class="ap-toggle" id="ap1" onclick="toggleOffline()">
+<span>✈️</span><div class="dot"></div><span id="apLabel1">Online</span>
 </div>
-<div class="vr"><div class="vi"><label>BP Systolic</label><input type="number" id="bpS" value="120"><div class="vu">mmHg</div></div><div class="vi"><label>BP Diastolic</label><input type="number" id="bpD" value="80"><div class="vu">mmHg</div></div></div>
-<div class="vr"><div class="vi"><label>Temperature</label><input type="number" id="temp" value="98.6" step="0.1"><div class="vu">°F</div></div><div class="vi"><label>Heart Rate</label><input type="number" id="hr" value="82"><div class="vu">bpm</div></div></div>
-<button class="btn btn-p btn-b" style="margin-top:16px;font-size:17px" onclick="analyze()">🔍 Check Risk Level</button>
-<button class="btn btn-v btn-b" style="margin-top:8px" onclick="speak('अपने लक्षण चुनें और ब्लड प्रेशर डालें। फिर रिस्क चेक करें।')">🔊 सुनें</button>
 </div>
-
-<div id="result" class="scr">
-<div class="tb"><div class="tb-t" onclick="go('symptoms')">← Risk Result</div><div class="tb-a"><div class="ap" id="ap3" onclick="togAP()"><span>✈️</span><div class="sw"></div></div></div></div>
-<div class="rr" id="resC"></div>
+<div class="preg-circle"><div class="preg-inner"><div class="wk">30</div><div class="lbl">WEEKS</div></div></div>
+<p style="text-align:center;font-size:13px;color:#6B6560">3rd Trimester · Due: 15 Aug 2025</p>
+<p style="text-align:center;font-size:12px;color:#9B9590">Gopalpur Village · PHC Sonpur</p>
+<h3 style="margin-top:20px">Quick Actions</h3>
+<div class="quick-grid">
+<div class="quick-item" onclick="showScreen('scr-symptoms')"><div class="qi">📋</div><div class="ql">Log Symptoms</div></div>
+<div class="quick-item" onclick="showScreen('scr-chat')"><div class="qi">💬</div><div class="ql">AI Helper</div></div>
+<div class="quick-item" onclick="showScreen('scr-emergency')"><div class="qi">🆘</div><div class="ql">Emergency</div></div>
+<div class="quick-item" onclick="showScreen('scr-history')"><div class="qi">📊</div><div class="ql">History</div></div>
+<div class="quick-item" onclick="speak('आपकी प्रेगनेंसी 30 हफ्ते की है। सब ठीक है।')"><div class="qi">🔊</div><div class="ql">Voice Info</div></div>
+<div class="quick-item" onclick="toggleDark()"><div class="qi">🌙</div><div class="ql">Dark Mode</div></div>
 </div>
-
-<div id="dashboard" class="scr">
-<div class="tb"><div class="tb-t">👩‍⚕️ ASHA Dashboard</div><div class="tb-a"><div class="ap" id="ap4" onclick="togAP()"><span>✈️</span><div class="sw"></div></div></div></div>
-<div class="ds" id="dStats"></div>
-<div class="sh"><div class="sh-t">Patients</div><div class="sh-l" onclick="renderDash()">🔄 Refresh</div></div>
-<div class="pl2" id="pList"></div>
-</div>
-
-<div id="chat" class="scr">
-<div class="tb"><div class="tb-t" onclick="go('mother')">← 💬 AI Helper</div><div class="tb-a"><button class="btn btn-v btn-sm" onclick="speak('मैं आपकी मदद के लिए यहाँ हूँ। कुछ भी पूछें।')">🔊</button></div></div>
-<div class="cc"><div class="cm" id="chatM"><div class="cm-m b">Namaste Sunita! 🙏 Main aapki madad ke liye hoon. Pregnancy, nutrition, ya kisi bhi health topic pe pooch sakti hain. Bataiye, kya help chahiye? 😊</div></div><div class="ci"><input class="ci-i" id="chatI" placeholder="Type your question..." onkeydown="if(event.key==='Enter')sendChat()"><button class="btn btn-p" style="border-radius:99px;padding:11px 16px" onclick="sendChat()">➤</button></div></div>
-</div>
-
-<div id="emergency" class="scr">
-<div class="tb"><div class="tb-t" onclick="go('mother')">← Emergency</div></div>
-<div style="text-align:center;margin-top:16px"><h2 style="font-size:19px;font-weight:800">🆘 Emergency / Safe Word</h2><p style="color:var(--tx2);font-size:13px;margin-top:4px">Tap if you feel unsafe or need immediate help</p></div>
-<button class="swb" id="swBtn" onclick="trigSW()"><span class="swi">🛡️</span>SAFE WORD</button>
-<div id="eSteps" class="hidden"><div class="es"><div class="es-i"><div class="es-n">1</div><div class="es-t"><strong>Emergency logged silently.</strong> Location saved.</div></div><div class="es-i"><div class="es-n">2</div><div class="es-t"><strong>Alert sent to ASHA</strong> (Kamla Devi) & emergency contacts.</div></div><div class="es-i"><div class="es-n">3</div><div class="es-t"><strong>Call 108</strong> for ambulance. <a href="tel:108" style="color:var(--red);font-weight:700">Tap to call 108</a></div></div><div class="es-i"><div class="es-n">4</div><div class="es-t"><strong>Go to nearest PHC:</strong> PHC Sonpur (3.2 km)</div></div><div class="es-i"><div class="es-n">5</div><div class="es-t"><strong>You are not alone.</strong> Help is on the way. Stay calm. 🙏</div></div></div><button class="btn btn-v btn-b" style="margin-top:14px" onclick="speak('घबराएं नहीं। मदद आ रही है। 108 पर कॉल करें।')">🔊 सुनें</button></div>
-<div class="card" style="margin-top:16px"><div style="font-weight:700;margin-bottom:8px">📞 Emergency Contacts</div><div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;justify-content:space-between;align-items:center"><span>🚑 Ambulance</span><a href="tel:108" class="btn btn-sm btn-e">Call 108</a></div><div style="display:flex;justify-content:space-between;align-items:center"><span>👩‍⚕️ ASHA Kamla</span><a href="tel:9876543210" class="btn btn-sm btn-p">Call</a></div><div style="display:flex;justify-content:space-between;align-items:center"><span>🏥 PHC Sonpur</span><a href="tel:05622345678" class="btn btn-sm btn-s">Call</a></div></div></div>
-</div>
-
-<div id="history" class="scr">
-<div class="tb"><div class="tb-t" onclick="go('mother')">← Medical History</div></div>
-<div style="margin-top:14px"><div class="sh"><div class="sh-t">Sunita Sharma</div></div><p style="font-size:12px;color:var(--tx3)">Gopalpur · 30 weeks · G2P1</p><div class="tl" style="margin-top:14px"><div class="tl-i a"><div class="tl-d">Today, 10:30 AM</div><div class="tl-t">⚠️ Swollen feet + Headache</div><div class="tl-dc">BP: 138/88 · Flagged AMBER · Referred to PHC</div></div><div class="tl-i"><div class="tl-d">12 Jun 2025</div><div class="tl-t">✅ ANC Checkup #4</div><div class="tl-dc">BP: 118/76 · Hb: 10.8 · Weight: 62kg</div></div><div class="tl-i"><div class="tl-d">28 May 2025</div><div class="tl-t">💉 TT Injection #2</div><div class="tl-dc">Tetanus toxoid at PHC Sonpur</div></div><div class="tl-i"><div class="tl-d">15 May 2025</div><div class="tl-t">✅ ANC Checkup #3</div><div class="tl-dc">BP: 112/72 · Hb: 10.2 · Iron tablets</div></div><div class="tl-i"><div class="tl-d">10 Apr 2025</div><div class="tl-t">✅ ANC Checkup #2</div><div class="tl-dc">BP: 110/70 · USG: Normal</div></div><div class="tl-i"><div class="tl-d">15 Feb 2025</div><div class="tl-t">✅ Pregnancy Confirmed</div><div class="tl-dc">LMP: 10 Nov 2024 · EDD: 15 Aug 2025</div></div></div></div>
-</div>
-
-<div id="settings" class="scr">
-<div class="tb"><div class="tb-t" onclick="go('mother')">← Settings</div></div>
-<div style="margin-top:14px">
-<div class="sg2"><div class="sg2-t">Appearance</div><div class="si3"><div class="si3-l"><span>🌙</span> Dark Mode</div><div class="tg" id="dmT" onclick="togDM()"></div></div></div>
-<div class="sg2"><div class="sg2-t">Demo</div><div class="si3"><div class="si3-l"><span>🎬</span> Demo Walkthrough</div><div class="tg" id="demoT" onclick="togDemo()"></div></div><div class="si3"><div class="si3-l"><span>🔄</span> Reset Data</div><button class="btn btn-sm btn-s" onclick="resetAll()">Reset</button></div></div>
-<div class="sg2"><div class="sg2-t">About</div><div class="si3"><div class="si3-l"><span>📱</span> Version</div><span style="color:var(--tx3);font-size:13px">1.0.0</span></div><div class="si3"><div class="si3-l"><span>💾</span> Storage</div><span style="color:var(--tx3);font-size:13px">~2.1 MB</span></div><div class="si3"><div class="si3-l"><span>📶</span> Network</div><span style="font-size:13px;font-weight:600" id="netSt">Online</span></div></div>
-<div class="sg2"><div class="sg2-t">Disclaimer</div><div class="card" style="font-size:12px;color:var(--tx2);line-height:1.6">HerSetu <strong>flags symptoms for referral</strong>. It does not diagnose or replace medical advice. Risk engine uses WHO danger sign guidelines.</div></div>
+<div class="card" style="border-left:4px solid #7A9B8A">
+<div style="font-size:22px">🥬</div>
+<div style="font-weight:700;margin-top:6px">Eat iron-rich foods</div>
+<div style="font-size:13px;color:#6B6560;margin-top:4px">पालक, दाल, और गुड़ खाएं।</div>
+<button class="btn-voice" onclick="speak('पालक, दाल, और गुड़ खाएं। हीमोग्लोबिन बढ़ेगा।')">🔊</button>
 </div>
 </div>
 
-<div class="sb hidden" id="syncB"><span class="si">🔄</span><span id="syncN">3</span> pending sync</div>
+<!-- SYMPTOMS -->
+<div id="scr-symptoms" class="screen">
+<div class="topbar">
+<h2 onclick="showScreen('scr-mother')" style="cursor:pointer">← Log Symptoms</h2>
+<div class="ap-toggle" id="ap2" onclick="toggleOffline()"><span>✈️</span><div class="dot"></div><span id="apLabel2">Online</span></div>
+</div>
+<p style="color:#6B6560;font-size:13px;margin-bottom:12px">Tap what you feel today / आज क्या महसूस हो रहा है?</p>
+<div class="sym-grid">
+<div class="sym-btn" data-s="swelling" onclick="pickSym(this)"><div class="si">🦶</div><div class="sl">Swollen Feet</div></div>
+<div class="sym-btn" data-s="headache" onclick="pickSym(this)"><div class="si">🤕</div><div class="sl">Headache</div></div>
+<div class="sym-btn" data-s="bleeding" onclick="pickSym(this)"><div class="si">🩸</div><div class="sl">Bleeding</div></div>
+<div class="sym-btn" data-s="fever" onclick="pickSym(this)"><div class="si">🌡️</div><div class="sl">Fever</div></div>
+<div class="sym-btn" data-s="vomiting" onclick="pickSym(this)"><div class="si">🤢</div><div class="sl">Vomiting</div></div>
+<div class="sym-btn" data-s="movement" onclick="pickSym(this)"><div class="si">👶</div><div class="sl">Less Movement</div></div>
+<div class="sym-btn" data-s="pain" onclick="pickSym(this)"><div class="si">😣</div><div class="sl">Stomach Pain</div></div>
+<div class="sym-btn" data-s="vision" onclick="pickSym(this)"><div class="si">👁️</div><div class="sl">Blurry Vision</div></div>
+<div class="sym-btn" data-s="breathing" onclick="pickSym(this)"><div class="si">😮‍💨</div><div class="sl">Breathless</div></div>
+</div>
+<div class="vitals">
+<div class="vital-box"><label>BP Systolic</label><input type="number" id="bpS" value="120"><div style="font-size:10px;color:#9B9590">mmHg</div></div>
+<div class="vital-box"><label>BP Diastolic</label><input type="number" id="bpD" value="80"><div style="font-size:10px;color:#9B9590">mmHg</div></div>
+</div>
+<div class="vitals">
+<div class="vital-box"><label>Temperature</label><input type="number" id="temp" value="98.6" step="0.1"><div style="font-size:10px;color:#9B9590">°F</div></div>
+<div class="vital-box"><label>Heart Rate</label><input type="number" id="hr" value="82"><div style="font-size:10px;color:#9B9590">bpm</div></div>
+</div>
+<button class="btn btn-green" onclick="runRisk()">🔍 Check Risk Level</button>
+<button class="btn-voice" onclick="speak('लक्षण चुनें, ब्लड प्रेशर डालें, फिर रिस्क चेक करें।')">🔊</button>
+</div>
 
-<nav class="bn hidden" id="bNav">
-<button class="ni on" data-n="mother" onclick="go('mother')"><span class="ni-i">🏠</span>Home</button>
-<button class="ni" data-n="symptoms" onclick="go('symptoms')"><span class="ni-i">📋</span>Log</button>
-<button class="ni" data-n="dashboard" onclick="go('dashboard')"><span class="ni-i">👩‍⚕️</span>ASHA</button>
-<button class="ni" data-n="chat" onclick="go('chat')"><span class="ni-i">💬</span>AI</button>
-<button class="ni" data-n="emergency" onclick="go('emergency')"><span class="ni-i">🆘</span>SOS</button>
-</nav>
+<!-- RISK RESULT -->
+<div id="scr-result" class="screen">
+<div class="topbar"><h2 onclick="showScreen('scr-symptoms')" style="cursor:pointer">← Result</h2></div>
+<div id="riskOutput" class="risk-box"></div>
+</div>
 
-<div class="db hidden" id="demoB"><div class="db-t" id="demoT2">🎬 Demo: Turn on Airplane Mode ✈️ then log symptoms</div><button class="db-x" onclick="document.getElementById('demoB').classList.add('hidden')">✕</button></div>
+<!-- ASHA DASHBOARD -->
+<div id="scr-dash" class="screen">
+<div class="topbar">
+<h2>👩‍⚕️ ASHA Dashboard</h2>
+<div class="ap-toggle" id="ap3" onclick="toggleOffline()"><span>✈️</span><div class="dot"></div><span id="apLabel3">Online</span></div>
+</div>
+<div class="stats-row" id="statsRow"></div>
+<h3>Patients</h3>
+<div id="patientList" style="margin-top:10px"></div>
+</div>
+
+<!-- CHAT -->
+<div id="scr-chat" class="screen">
+<div class="topbar"><h2 onclick="showScreen('scr-mother')" style="cursor:pointer">← 💬 AI Helper</h2></div>
+<div class="chat-wrap">
+<div class="chat-msgs" id="chatMsgs">
+<div class="msg bot">Namaste Sunita! 🙏 Main aapki madad ke liye hoon. Pregnancy, nutrition, ya health se related kuch bhi poochho. Bataiye kya help chahiye? 😊</div>
+</div>
+<div class="chat-bar">
+<input id="chatIn" placeholder="Type your question..." onkeydown="if(event.key==='Enter')sendMsg()">
+<button onclick="sendMsg()">➤</button>
+</div>
+</div>
+</div>
+
+<!-- EMERGENCY -->
+<div id="scr-emergency" class="screen">
+<div class="topbar"><h2 onclick="showScreen('scr-mother')" style="cursor:pointer">← Emergency</h2></div>
+<h2 style="text-align:center">🆘 Safe Word</h2>
+<p style="text-align:center;color:#6B6560;font-size:13px">Tap if you feel unsafe</p>
+<button class="sos-btn" id="sosBtn" onclick="triggerSOS()">
+<span class="sos-icon">🛡️</span>SAFE WORD
+</button>
+<div id="sosSteps" class="hidden">
+<div class="em-steps">
+<div class="em-step"><div class="em-num">1</div><div><strong>Emergency logged.</strong> Location saved.</div></div>
+<div class="em-step"><div class="em-num">2</div><div><strong>Alert sent to ASHA</strong> Kamla Devi.</div></div>
+<div class="em-step"><div class="em-num">3</div><div><strong>Call 108</strong> ambulance. <a href="tel:108" style="color:#D4645A;font-weight:700">Tap to call</a></div></div>
+<div class="em-step"><div class="em-num">4</div><div><strong>Nearest PHC:</strong> PHC Sonpur (3.2 km)</div></div>
+<div class="em-step"><div class="em-num">5</div><div><strong>You are not alone.</strong> Help is coming. 🙏</div></div>
+</div>
+<button class="btn-voice" onclick="speak('घबराएं नहीं। मदद आ रही है। 108 पर कॉल करें।')">🔊</button>
+</div>
+<div class="card">
+<div style="font-weight:700;margin-bottom:8px">📞 Emergency Contacts</div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0"><span>🚑 Ambulance</span><a href="tel:108" class="btn btn-red" style="width:auto;padding:8px 16px;font-size:13px">Call 108</a></div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0"><span>👩‍⚕️ ASHA Kamla</span><a href="tel:9876543210" class="btn btn-green" style="width:auto;padding:8px 16px;font-size:13px">Call</a></div>
+</div>
+</div>
+
+<!-- HISTORY -->
+<div id="scr-history" class="screen">
+<div class="topbar"><h2 onclick="showScreen('scr-mother')" style="cursor:pointer">← History</h2></div>
+<h3>Sunita Sharma</h3>
+<p style="font-size:12px;color:#9B9590">Gopalpur · 30 weeks · G2P1</p>
+<div class="timeline">
+<div class="tl-item warn"><div class="tl-date">Today</div><div class="tl-title">⚠️ Swollen feet + Headache</div><div class="tl-desc">BP: 138/88 · AMBER · Referred</div></div>
+<div class="tl-item"><div class="tl-date">12 Jun 2025</div><div class="tl-title">✅ ANC Checkup #4</div><div class="tl-desc">BP: 118/76 · Hb: 10.8 · Wt: 62kg</div></div>
+<div class="tl-item"><div class="tl-date">28 May 2025</div><div class="tl-title">💉 TT Injection #2</div><div class="tl-desc">At PHC Sonpur</div></div>
+<div class="tl-item"><div class="tl-date">15 May 2025</div><div class="tl-title">✅ ANC Checkup #3</div><div class="tl-desc">BP: 112/72 · Hb: 10.2</div></div>
+<div class="tl-item"><div class="tl-date">15 Feb 2025</div><div class="tl-title">✅ Pregnancy Confirmed</div><div class="tl-desc">EDD: 15 Aug 2025</div></div>
+</div>
+</div>
+
+<!-- SYNC BADGE -->
+<div class="sync-badge hidden" id="syncBadge">🔄 <span id="syncNum">3</span> pending sync</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav hidden" id="bottomNav">
+<button class="nav-btn active" onclick="navTo('scr-mother',this)"><span class="ni">🏠</span>Home</button>
+<button class="nav-btn" onclick="navTo('scr-symptoms',this)"><span class="ni">📋</span>Log</button>
+<button class="nav-btn" onclick="navTo('scr-dash',this)"><span class="ni">👩‍⚕️</span>ASHA</button>
+<button class="nav-btn" onclick="navTo('scr-chat',this)"><span class="ni">💬</span>AI</button>
+<button class="nav-btn" onclick="navTo('scr-emergency',this)"><span class="ni">🆘</span>SOS</button>
+</div>
 
 <script>
-/* ============================================
-   HERSETU APP — Complete Logic
-   ============================================ */
+// ===== STATE =====
+let isOffline = false;
+let syncCount = 3;
+let pickedSymptoms = [];
 
-// --- STATE ---
-const S = {
-  scr: 'splash', offline: false, dark: false, demo: false,
-  syms: [], queue: 3, patients: []
-};
-
-// --- SEED DATA ---
-const PTS = [
-  {id:'meena',name:'Meena Yadav',age:31,village:'Sonpur',phc:'PHC Sonpur',weeks:36,risk:'r',bp:'152/98',syms:['swelling','headache','vision'],last:'18 Jun',av:'👩',note:'Severe pre-eclampsia. Immediate referral.',synced:true},
-  {id:'radha',name:'Radha Kumari',age:24,village:'Chandpur',phc:'PHC Chandpur',weeks:28,risk:'a',bp:'134/86',syms:['swelling','headache'],last:'16 Jun',av:'👩',note:'Mild hypertension. Monitor weekly.',synced:true},
-  {id:'sunita',name:'Sunita Sharma',age:26,village:'Gopalpur',phc:'PHC Sonpur',weeks:30,risk:'a',bp:'138/88',syms:['swelling','headache'],last:'Today',av:'🤰',note:'New symptoms logged today.',synced:false},
-  {id:'sushila',name:'Sushila Devi',age:28,village:'Rampur',phc:'PHC Rampur',weeks:32,risk:'g',bp:'116/74',syms:[],last:'14 Jun',av:'👩',note:'All vitals normal.',synced:true},
-  {id:'kavita',name:'Kavita Singh',age:22,village:'Madhopur',phc:'PHC Madhopur',weeks:24,risk:'g',bp:'110/70',syms:[],last:'12 Jun',av:'👩',note:'First pregnancy. Healthy.',synced:true},
-  {id:'geeta',name:'Geeta Bai',age:34,village:'Bhawanipur',phc:'PHC Sonpur',weeks:38,risk:'a',bp:'130/85',syms:['swelling'],last:'17 Jun',av:'👩',note:'Near term. Mild edema.',synced:true}
+// ===== PATIENTS DATA =====
+let patients = [
+  {name:"Meena Yadav",village:"Sonpur",weeks:36,bp:"152/98",risk:"r",av:"👩"},
+  {name:"Radha Kumari",village:"Chandpur",weeks:28,bp:"134/86",risk:"a",av:"👩"},
+  {name:"Sushila Devi",village:"Rampur",weeks:32,bp:"116/74",risk:"g",av:"👩"},
+  {name:"Kavita Singh",village:"Madhopur",weeks:24,bp:"110/70",risk:"g",av:"👩"},
+  {name:"Geeta Bai",village:"Bhawanipur",weeks:38,bp:"130/85",risk:"a",av:"👩"}
 ];
-S.patients = [...PTS];
 
-// --- INIT ---
-window.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => { go('role'); }, 2200);
-  loadSettings();
-  updateSyncBadge();
-});
+// ===== SPLASH =====
+setTimeout(function(){ showScreen('scr-role'); }, 2500);
 
-// --- NAVIGATION ---
-function go(id) {
-  document.querySelectorAll('.scr').forEach(s => s.classList.remove('on'));
-  const el = document.getElementById(id);
-  if (el) { el.classList.add('on'); S.scr = id; }
-  // Show/hide nav
-  const nav = document.getElementById('bNav');
-  if (['mother','symptoms','dashboard','chat','emergency','history','settings','result'].includes(id) && id !== 'splash' && id !== 'role') {
-    nav.classList.remove('hidden');
-  } else {
-    nav.classList.add('hidden');
+// ===== NAVIGATION =====
+function showScreen(id) {
+  var all = document.querySelectorAll('.screen');
+  for(var i=0;i<all.length;i++) all[i].classList.remove('active');
+  var el = document.getElementById(id);
+  if(el) el.classList.add('active');
+  var nav = document.getElementById('bottomNav');
+  if(id==='splash'||id==='scr-role') nav.classList.add('hidden');
+  else nav.classList.remove('hidden');
+  if(id==='scr-dash') renderDash();
+  syncAP();
+}
+
+function navTo(id, btn) {
+  showScreen(id);
+  var btns = document.querySelectorAll('.nav-btn');
+  for(var i=0;i<btns.length;i++) btns[i].classList.remove('active');
+  if(btn) btn.classList.add('active');
+}
+
+// ===== AIRPLANE MODE =====
+function toggleOffline() {
+  isOffline = !isOffline;
+  syncAP();
+  updateSync();
+  if(!isOffline) doSync();
+}
+
+function syncAP() {
+  var ids = ['ap1','ap2','ap3'];
+  for(var i=0;i<ids.length;i++){
+    var el = document.getElementById(ids[i]);
+    if(!el) continue;
+    if(isOffline) el.classList.add('offline');
+    else el.classList.remove('offline');
+    var lbl = el.querySelector('span:last-child');
+    if(lbl) lbl.textContent = isOffline ? 'Offline' : 'Online';
   }
-  // Active nav
-  document.querySelectorAll('.ni').forEach(n => {
-    n.classList.toggle('on', n.dataset.n === id);
-  });
-  // Render dashboard if needed
-  if (id === 'dashboard') renderDash();
-  // Update airplane toggles
-  syncAPToggles();
 }
 
-// --- AIRPLANE MODE ---
-function togAP() {
-  S.offline = !S.offline;
-  syncAPToggles();
-  updateSyncBadge();
-  document.getElementById('netSt').textContent = S.offline ? 'Offline ✈️' : 'Online';
-  document.getElementById('netSt').style.color = S.offline ? 'var(--red)' : 'var(--grn)';
-  if (!S.offline) simulateSync();
-}
-
-function syncAPToggles() {
-  ['ap1','ap2','ap3','ap4'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.toggle('off', S.offline);
-  });
-}
-
-// --- SYNC BADGE ---
-function updateSyncBadge() {
-  const b = document.getElementById('syncB');
-  const n = document.getElementById('syncN');
-  if (S.offline && S.queue > 0) {
-    b.classList.remove('hidden','ok');
-    n.textContent = S.queue;
-  } else if (!S.offline && S.queue > 0) {
-    simulateSync();
+// ===== SYNC BADGE =====
+function updateSync() {
+  var b = document.getElementById('syncBadge');
+  var n = document.getElementById('syncNum');
+  if(isOffline && syncCount > 0) {
+    b.classList.remove('hidden','done');
+    n.textContent = syncCount;
+  } else if(!isOffline && syncCount > 0) {
+    doSync();
   } else {
     b.classList.add('hidden');
   }
 }
 
-function simulateSync() {
-  const b = document.getElementById('syncB');
-  const n = document.getElementById('syncN');
-  b.classList.remove('hidden');
-  b.classList.remove('ok');
-  let count = S.queue;
-  const iv = setInterval(() => {
+function doSync() {
+  var b = document.getElementById('syncBadge');
+  var n = document.getElementById('syncNum');
+  b.classList.remove('hidden','done');
+  var count = syncCount;
+  var iv = setInterval(function(){
     count--;
     n.textContent = count;
-    if (count <= 0) {
+    if(count <= 0) {
       clearInterval(iv);
-      S.queue = 0;
-      b.classList.add('ok');
-      b.querySelector('.si').textContent = '✅';
-      n.textContent = 'All synced!';
-      setTimeout(() => { b.classList.add('hidden'); b.querySelector('.si').textContent = '🔄'; }, 2500);
-      // Add new patient to dashboard
-      if (!S.patients.find(p => p.id === 'sunita_new')) {
-        S.patients.unshift({id:'sunita_new',name:'Sunita Sharma ⚠️ NEW',age:26,village:'Gopalpur',phc:'PHC Sonpur',weeks:30,risk:'r',bp:'142/92',syms:['swelling','headache'],last:'Just now',av:'🤰',note:'⚡ NEW: Swollen feet + headache + high BP. URGENT.',synced:true});
-        if (S.scr === 'dashboard') renderDash();
-      }
+      syncCount = 0;
+      b.classList.add('done');
+      n.textContent = 'All synced! ✅';
+      // Add new patient
+      patients.unshift({name:"Sunita Sharma ⚠️ NEW",village:"Gopalpur",weeks:30,bp:"142/92",risk:"r",av:"🤰"});
+      renderDash();
+      setTimeout(function(){ b.classList.add('hidden'); }, 2500);
     }
-  }, 800);
+  }, 700);
 }
 
-// --- SYMPTOMS ---
-function togSym(el) {
-  el.classList.toggle('sel');
-  const s = el.dataset.s;
-  if (S.syms.includes(s)) S.syms = S.syms.filter(x => x !== s);
-  else S.syms.push(s);
+// ===== SYMPTOMS =====
+function pickSym(el) {
+  el.classList.toggle('picked');
+  var s = el.getAttribute('data-s');
+  var idx = pickedSymptoms.indexOf(s);
+  if(idx > -1) pickedSymptoms.splice(idx,1);
+  else pickedSymptoms.push(s);
 }
 
-// --- RISK ENGINE (WHO-based rules) ---
-function analyze() {
-  const bpS = parseInt(document.getElementById('bpS').value) || 120;
-  const bpD = parseInt(document.getElementById('bpD').value) || 80;
-  const temp = parseFloat(document.getElementById('temp').value) || 98.6;
-  const syms = S.syms;
+// ===== RISK ENGINE =====
+function runRisk() {
+  var bpS = parseInt(document.getElementById('bpS').value) || 120;
+  var bpD = parseInt(document.getElementById('bpD').value) || 80;
+  var score = 0;
+  var rules = [];
 
-  let score = 0;
-  let rules = [];
+  if(bpS >= 140 || bpD >= 90) { score += 3; rules.push({t:"BP ≥ 140/90 — hypertension danger",c:"#D4645A"}); }
+  else if(bpS >= 130 || bpD >= 85) { score += 1; rules.push({t:"BP elevated (130-139/85-89)",c:"#D4A843"}); }
+  else { rules.push({t:"BP normal",c:"#6BAF7A"}); }
 
-  // BP rules
-  if (bpS >= 140 || bpD >= 90) { score += 3; rules.push({t:'BP ≥ 140/90 — hypertension danger', c:'var(--red)'}); }
-  else if (bpS >= 130 || bpD >= 85) { score += 1; rules.push({t:'BP 130-139/85-89 — elevated', c:'var(--amb)'}); }
-  else { rules.push({t:'BP normal range', c:'var(--grn)'}); }
+  if(pickedSymptoms.indexOf('bleeding')>-1) { score+=4; rules.push({t:"Bleeding — emergency",c:"#D4645A"}); }
+  if(pickedSymptoms.indexOf('movement')>-1) { score+=3; rules.push({t:"Reduced fetal movement",c:"#D4645A"}); }
+  if(pickedSymptoms.indexOf('vision')>-1) { score+=3; rules.push({t:"Blurry vision — pre-eclampsia",c:"#D4645A"}); }
+  if(pickedSymptoms.indexOf('breathing')>-1) { score+=3; rules.push({t:"Breathlessness — urgent",c:"#D4645A"}); }
+  if(pickedSymptoms.indexOf('swelling')>-1) { score+=2; rules.push({t:"Swelling — possible pre-eclampsia",c:"#D4A843"}); }
+  if(pickedSymptoms.indexOf('headache')>-1) { score+=2; rules.push({t:"Headache — pre-eclampsia sign",c:"#D4A843"}); }
+  if(pickedSymptoms.indexOf('fever')>-1) { score+=2; rules.push({t:"Fever — infection risk",c:"#D4A843"}); }
+  if(pickedSymptoms.indexOf('pain')>-1) { score+=2; rules.push({t:"Abdominal pain",c:"#D4A843"}); }
+  if(pickedSymptoms.indexOf('vomiting')>-1) { score+=1; rules.push({t:"Vomiting",c:"#D4A843"}); }
 
-  // Symptom rules
-  if (syms.includes('bleeding')) { score += 4; rules.push({t:'Bleeding — emergency sign', c:'var(--red)'}); }
-  if (syms.includes('movement')) { score += 3; rules.push({t:'Reduced fetal movement — danger', c:'var(--red)'}); }
-  if (syms.includes('vision')) { score += 3; rules.push({t:'Blurry vision — pre-eclampsia sign', c:'var(--red)'}); }
-  if (syms.includes('breathing')) { score += 3; rules.push({t:'Breathlessness — urgent sign', c:'var(--red)'}); }
-  if (syms.includes('swelling')) { score += 2; rules.push({t:'Swelling — possible pre-eclampsia', c:'var(--amb)'}); }
-  if (syms.includes('headache')) { score += 2; rules.push({t:'Severe headache — pre-eclampsia sign', c:'var(--amb)'}); }
-  if (syms.includes('fever')) { score += 2; rules.push({t:'Fever — infection risk', c:'var(--amb)'}); }
-  if (syms.includes('vomiting')) { score += 1; rules.push({t:'Persistent vomiting', c:'var(--amb)'}); }
-  if (syms.includes('pain')) { score += 2; rules.push({t:'Abdominal pain — needs evaluation', c:'var(--amb)'}); }
-  if (temp >= 100.4) { score += 2; rules.push({t:'Temperature ≥ 100.4°F — fever', c:'var(--amb)'}); }
-
-  let risk, icon, msg, hindi;
-  if (score >= 5) {
-    risk = 'r'; icon = '🚨';
-    msg = 'HIGH RISK — Go to PHC today. Call 108 immediately.';
-    hindi = 'खतरा! आज ही पीएचसी जाएं। 108 पर कॉल करें।';
-  } else if (score >= 2) {
-    risk = 'a'; icon = '⚠️';
-    msg = 'WARNING — Visit ASHA worker within 24 hours for checkup.';
-    hindi = 'सावधानी! 24 घंटे में आशा दीदी से मिलें।';
+  var risk, icon, msg, hindi;
+  if(score >= 5) {
+    risk="RED"; icon="🚨";
+    msg="HIGH RISK — Go to PHC today. Call 108 immediately.";
+    hindi="खतरा! आज ही पीएचसी जाएं। 108 पर कॉल करें।";
+  } else if(score >= 2) {
+    risk="AMBER"; icon="⚠️";
+    msg="WARNING — Visit ASHA worker within 24 hours.";
+    hindi="सावधानी! 24 घंटे में आशा दीदी से मिलें।";
   } else {
-    risk = 'g'; icon = '✅';
-    msg = 'Looking good! Continue regular ANC visits and healthy diet.';
-    hindi = 'सब ठीक है! नियमित जांच कराएं और अच्छा खाएं।';
+    risk="GREEN"; icon="✅";
+    msg="Looking good! Continue regular ANC visits.";
+    hindi="सब ठीक है! नियमित जांच कराएं।";
   }
 
-  const c = document.getElementById('resC');
-  c.innerHTML = `
-    <div class="rg ${risk}"><div class="rg-i">${icon}</div></div>
-    <div class="rl ${risk}">${risk==='r'?'EMERGENCY':risk==='a'?'WARNING':'SAFE'}</div>
-    <div class="rm">${msg}</div>
-    <button class="btn btn-v" style="margin:16px auto" onclick="speak('${hindi}')">🔊 सुनें</button>
-    <div class="rrl">
-      <div style="font-size:13px;font-weight:700;margin-bottom:8px">📋 WHO Rule-Based Flags:</div>
-      ${rules.map(r => `<div class="rrl-i"><div class="rrl-d" style="background:${r.c}"></div>${r.t}</div>`).join('')}
-      <div style="font-size:11px;color:var(--tx3);margin-top:8px;font-style:italic">⚕️ This flags for referral — it does not diagnose.</div>
-    </div>
-    <button class="btn btn-p btn-b" style="margin-top:16px" onclick="saveRecord('${risk}')">💾 Save Record</button>
-  `;
+  var rulesHTML = '';
+  for(var i=0;i<rules.length;i++){
+    rulesHTML += '<div class="rule-item"><div class="rule-dot" style="background:'+rules[i].c+'"></div>'+rules[i].t+'</div>';
+  }
 
-  go('result');
+  document.getElementById('riskOutput').innerHTML =
+    '<div class="risk-circle '+risk+'">'+icon+'</div>'+
+    '<div class="risk-title '+risk+'">'+risk+'</div>'+
+    '<div class="risk-msg">'+msg+'</div>'+
+    '<button class="btn-voice" onclick="speak(\''+hindi+'\')">🔊 सुनें</button>'+
+    '<div class="rules-box"><div style="font-weight:700;margin-bottom:8px">📋 WHO Rule-Based Flags:</div>'+rulesHTML+
+    '<div style="font-size:11px;color:#9B9590;margin-top:8px;font-style:italic">⚕️ Flags for referral — does not diagnose.</div></div>'+
+    '<button class="btn btn-green" onclick="saveRec()">💾 Save Record</button>';
+
+  showScreen('scr-result');
   speak(hindi);
 }
 
-function saveRecord(risk) {
-  S.queue++;
-  if (S.offline) {
-    updateSyncBadge();
-  } else {
-    simulateSync();
-  }
+function saveRec() {
+  syncCount++;
+  updateSync();
   speak('रिकॉर्ड सेव हो गया।');
-  go('mother');
+  showScreen('scr-mother');
 }
 
-// --- DASHBOARD ---
+// ===== DASHBOARD =====
 function renderDash() {
-  const pts = S.patients;
-  const reds = pts.filter(p => p.risk === 'r').length;
-  const ambs = pts.filter(p => p.risk === 'a').length;
-  const grns = pts.filter(p => p.risk === 'g').length;
+  var r=0,a=0,g=0;
+  for(var i=0;i<patients.length;i++){
+    if(patients[i].risk==='r') r++;
+    else if(patients[i].risk==='a') a++;
+    else g++;
+  }
+  document.getElementById('statsRow').innerHTML =
+    '<div class="stat-box"><div class="stat-num r">'+r+'</div><div class="stat-lbl">🚨 High</div></div>'+
+    '<div class="stat-box"><div class="stat-num a">'+a+'</div><div class="stat-lbl">⚠️ Warn</div></div>'+
+    '<div class="stat-box"><div class="stat-num g">'+g+'</div><div class="stat-lbl">✅ Safe</div></div>';
 
-  document.getElementById('dStats').innerHTML = `
-    <div class="ds-c"><div class="ds-n r">${reds}</div><div class="ds-l">🚨 High Risk</div></div>
-    <div class="ds-c"><div class="ds-n a">${ambs}</div><div class="ds-l">⚠️ Warning</div></div>
-    <div class="ds-c"><div class="ds-n g">${grns}</div><div class="ds-l">✅ Safe</div></div>
-  `;
-
-  // Sort: red first, then amber, then green
-  const sorted = [...pts].sort((a, b) => {
-    const order = {r:0, a:1, g:2};
-    return order[a.risk] - order[b.risk];
+  var sorted = patients.slice().sort(function(x,y){
+    var o={r:0,a:1,g:2}; return o[x.risk]-o[y.risk];
   });
-
-  document.getElementById('pList').innerHTML = sorted.map(p => `
-    <div class="pc2 ${p.risk}">
-      <div class="pa">${p.av}</div>
-      <div class="pi">
-        <div class="pn">${p.name}</div>
-        <div class="pm"><span>${p.weeks}w</span><span>${p.village}</span><span>BP:${p.bp}</span></div>
-      </div>
-      <div class="prb ${p.risk}">${p.risk==='r'?'🚨 HIGH':p.risk==='a'?'⚠️ WARN':'✅ OK'}</div>
-    </div>
-  `).join('');
+  var html = '';
+  for(var i=0;i<sorted.length;i++){
+    var p = sorted[i];
+    var rl = p.risk==='r'?'🚨 HIGH':p.risk==='a'?'⚠️ WARN':'✅ OK';
+    html += '<div class="patient-card '+p.risk+'"><div class="av">'+p.av+'</div><div class="info"><div class="pname">'+p.name+'</div><div class="pmeta">'+p.weeks+'w · '+p.village+' · BP:'+p.bp+'</div></div><div class="badge '+p.risk+'">'+rl+'</div></div>';
+  }
+  document.getElementById('patientList').innerHTML = html;
 }
 
-// --- VOICE (Web Speech API) ---
+// ===== VOICE =====
 function speak(text) {
-  if (!('speechSynthesis' in window)) return;
+  if(!window.speechSynthesis) return;
   window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
+  var u = new SpeechSynthesisUtterance(text);
   u.lang = 'hi-IN';
   u.rate = 0.9;
-  u.pitch = 1.1;
-  // Try to find Hindi voice
-  const voices = window.speechSynthesis.getVoices();
-  const hiVoice = voices.find(v => v.lang.startsWith('hi'));
-  if (hiVoice) u.voice = hiVoice;
+  var voices = window.speechSynthesis.getVoices();
+  for(var i=0;i<voices.length;i++){
+    if(voices[i].lang.indexOf('hi')===0){ u.voice=voices[i]; break; }
+  }
   window.speechSynthesis.speak(u);
 }
-// Preload voices
-if ('speechSynthesis' in window) {
-  speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
+if(window.speechSynthesis) speechSynthesis.onvoiceschanged = function(){ speechSynthesis.getVoices(); };
+
+// ===== CHAT =====
+function sendMsg() {
+  var inp = document.getElementById('chatIn');
+  var txt = inp.value.trim();
+  if(!txt) return;
+  var box = document.getElementById('chatMsgs');
+  box.innerHTML += '<div class="msg user">'+txt+'</div>';
+  inp.value = '';
+  box.scrollTop = box.scrollHeight;
+
+  setTimeout(function(){
+    var low = txt.toLowerCase();
+    var resp = "I understand, Sunita. For any medical concern, please visit your ASHA worker or PHC. Main hamesha yahan hoon! 😊";
+    if(low.indexOf('swell')>-1) resp = "Swollen feet can be normal in 3rd trimester. But with headache + high BP, it could be pre-eclampsia. Visit ASHA didi. 🙏 पैरों में सूजन हो तो BP चेक कराएं।";
+    else if(low.indexOf('head')>-1) resp = "Headache with high BP needs attention. Rest, drink water, and if it continues — visit PHC today. सिरदर्द हो तो आराम करें, पानी पिएं।";
+    else if(low.indexOf('bleed')>-1) resp = "⚠️ Any bleeding is an emergency! Call 108 or go to hospital NOW. Do not wait. खून आना गंभीर है। तुरंत 108 पर कॉल करें।";
+    else if(low.indexOf('diet')>-1 || low.indexOf('eat')>-1 || low.indexOf('food')>-1) resp = "Eat dal, palak, gud, eggs, and fruits. Avoid raw papaya. दाल, पालक, गुड़, अंडे खाएं। 🥬";
+    else if(low.indexOf('move')>-1 || low.indexOf('kick')>-1) resp = "Baby should move 10+ times in 2 hours. If less, drink something sweet, lie on left side. If still less — go to PHC. बच्चा कम हिले तो पीएचसी जाएं।";
+    else if(low.indexOf('hello')>-1 || low.indexOf('hi')>-1 || low.indexOf('namaste')>-1) resp = "Namaste Sunita! 🙏 Kaise hain aap? Main aapki madad ke liye hoon! 😊";
+    else if(low.indexOf('thank')>-1 || low.indexOf('shukriya')>-1) resp = "Aapka swagat hai! 🙏 Apna khayal rakhein. 💕";
+    box.innerHTML += '<div class="msg bot">'+resp+'</div>';
+    box.scrollTop = box.scrollHeight;
+  }, 600);
 }
 
-// --- AI CHAT ---
-const AI_RESPONSES = {
-  'swelling': 'Swollen feet can be normal in 3rd trimester, Sunita. But if it\'s sudden or with headache, it could be pre-eclampsia. Please check your BP and visit ASHA didi. 🙏 पैरों में सूजन तीसरी तिमाही में सामान्य हो सकती है, लेकिन सिरदर्द के साथ हो तो BP चेक कराएं।',
-  'headache': 'Headache during pregnancy needs attention, especially with high BP. Take rest, drink water, and if it persists — visit PHC today. सिरदर्द हो तो आराम करें, पानी पिएं, और अगर बना रहे तो पीएचसी जाएं।',
-  'bleeding': '⚠️ Any bleeding during pregnancy is an emergency. Please call 108 or go to the nearest hospital immediately. Do not wait. खून आना गंभीर है। तुरंत 108 पर कॉल करें।',
-  'diet': 'Great question! Eat dal, palak, gud (jaggery), eggs, and seasonal fruits. Avoid raw papaya and excess tea. दाल, पालक, गुड़, अंडे और फल खाएं। कच्चा पपीता न खाएं। 🥬🍎',
-  'movement': 'Baby should move at least 10 times in 2 hours. If movements are less, drink something sweet, lie on your left side, and count again. If still less — go to PHC. बच्चा 2 घंटे में 10 बार हिलना चाहिए। कम हो तो पीएचसी जाएं।',
-  'default': 'I understand, Sunita. That sounds important. For any medical concern, please visit your ASHA worker or PHC. Main hamesha yahan hoon aapke liye! 😊 कोई भी चिंता हो, आशा दीदी या पीएचसी से मिलें।'
-};
-
-function sendChat() {
-  const input = document.getElementById('chatI');
-  const msg = input.value.trim();
-  if (!msg) return;
-
-  const cm = document.getElementById('chatM');
-  cm.innerHTML += `<div class="cm-m u">${msg}</div>`;
-  input.value = '';
-
-  setTimeout(() => {
-    const lower = msg.toLowerCase();
-    let resp = AI_RESPONSES.default;
-    for (const [key, val] of Object.entries(AI_RESPONSES)) {
-      if (key !== 'default' && lower.includes(key)) { resp = val; break; }
-    }
-    if (lower.includes('hello') || lower.includes('namaste') || lower.includes('hi')) {
-      resp = 'Namaste Sunita! 🙏 Kaise hain aap? Main aapki madad ke liye hoon. Bataiye kya poochna hai? 😊';
-    }
-    if (lower.includes('thank') || lower.includes('dhanyavad') || lower.includes('shukriya')) {
-      resp = 'Aapka swagat hai, Sunita! 🙏 Apna khayal rakhein. Main hamesha yahan hoon. Apna aur baby ka dhyan rakhein! 💕';
-    }
-    cm.innerHTML += `<div class="cm-m b">${resp}</div>`;
-    cm.scrollTop = cm.scrollHeight;
-    speak(resp.split('.')[0]);
-  }, 800);
-  cm.scrollTop = cm.scrollHeight;
-}
-
-// --- SAFE WORD ---
-function trigSW() {
-  document.getElementById('eSteps').classList.remove('hidden');
-  document.getElementById('swBtn').style.background = 'var(--grn)';
-  document.getElementById('swBtn').innerHTML = '<span class="swi">✅</span>ALERTED';
+// ===== SAFE WORD =====
+function triggerSOS() {
+  document.getElementById('sosSteps').classList.remove('hidden');
+  var btn = document.getElementById('sosBtn');
+  btn.style.background = '#6BAF7A';
+  btn.innerHTML = '<span class="sos-icon">✅</span>ALERTED';
   speak('घबराएं नहीं। मदद आ रही है। आप सुरक्षित हैं।');
-  S.queue++;
-  updateSyncBadge();
+  syncCount++;
+  updateSync();
 }
 
-// --- DARK MODE ---
-function togDM() {
-  S.dark = !S.dark;
-  document.documentElement.setAttribute('data-theme', S.dark ? 'dark' : '');
-  document.getElementById('dmT').classList.toggle('on', S.dark);
-  localStorage.setItem('hs_dark', S.dark);
-}
-
-// --- DEMO MODE ---
-function togDemo() {
-  S.demo = !S.demo;
-  document.getElementById('demoT').classList.toggle('on', S.demo);
-  document.getElementById('demoB').classList.toggle('hidden', !S.demo);
-}
-
-function resetAll() {
-  S.syms = [];
-  S.queue = 3;
-  S.patients = [...PTS];
-  document.querySelectorAll('.sb2').forEach(b => b.classList.remove('sel'));
-  document.getElementById('bpS').value = 120;
-  document.getElementById('bpD').value = 80;
-  document.getElementById('temp').value = 98.6;
-  document.getElementById('hr').value = 82;
-  document.getElementById('eSteps').classList.add('hidden');
-  document.getElementById('swBtn').style.background = 'var(--red)';
-  document.getElementById('swBtn').innerHTML = '<span class="swi">🛡️</span>SAFE WORD';
-  updateSyncBadge();
-  go('mother');
-}
-
-function loadSettings() {
-  if (localStorage.getItem('hs_dark') === 'true') togDM();
+// ===== DARK MODE =====
+function toggleDark() {
+  document.body.classList.toggle('dark');
 }
 </script>
 </body>
