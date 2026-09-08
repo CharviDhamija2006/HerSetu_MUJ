@@ -1,1233 +1,3050 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>HerSetu — A Calm Bridge for Mothers</title>
+<title>HerSetu — Bridge for Pregnant Women</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Serif+Devanagari:wght@500;600;700&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
-   HERSETU v2 — CALM, SOOTHING, TRUSTWORTHY
-   Sage #8BA888 · Terracotta #B87355 · Warm Amber #D4A76A
-   Cream #F7F2EA · Warm Dark #2D2420 · Soft Red #D95D4D
+   HERSETU — Refactored Dark Theme Design Tokens
+   Soothing, non-stimulating color palette optimized for
+   reduced visual fatigue during extended use
    ============================================================ */
-:root {
-  --bg: #F7F2EA;
-  --surface: #FDFCFA;
-  --card: rgba(255,255,255,0.70);
-  --card-border: rgba(45,36,32,0.06);
-  --ink: #2D2420;
-  --ink-soft: #6E6357;
-  --ink-faint: #A8A096;
-  --sage: #8BA888;
-  --sage-deep: #6B8A6B;
-  --terracotta: #B87355;
-  --terracotta-deep: #945C42;
-  --amber: #D4A76A;
-  --amber-deep: #B88A52;
-  --danger: #D95D4D;
-  --danger-soft: rgba(217,93,77,0.10);
-  --shadow: rgba(45,36,32,0.08);
-  --shadow-strong: rgba(45,36,32,0.15);
-  --radius: 24px;
-  --radius-sm: 16px;
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --font-body: 'Inter', 'Hind Siliguri', sans-serif;
-  --font-hindi: 'Noto Serif Devanagari', 'Hind Siliguri', serif;
-  --font-display: 'Noto Serif Devanagari', serif;
+:root{
+  /* Dark Theme Palette - Muted, calming colors */
+  --bg-primary: #0F141A;        /* Deep dark slate - main background */
+  --bg-secondary: #121A18;       /* Dark navy-green - secondary surfaces */
+  --bg-card: rgba(30, 45, 42, 0.55);  /* Glass-morphism card background */
+  --bg-card-hover: rgba(40, 58, 54, 0.65);
+  
+  /* Primary - Muted teal (less aggressive) */
+  --teal: #3D8B85;              /* Softer teal - primary actions */
+  --teal-dark: #2A6360;         /* Darker teal - hover states */
+  --teal-glow: rgba(61, 139, 133, 0.3);
+  
+  /* Secondary - Soft gold for highlights */
+  --gold: #D4A84B;              /* Muted gold - secondary accent */
+  --gold-soft: rgba(212, 168, 75, 0.15);
+  
+  /* Accent - Coral only for critical alerts */
+  --coral: #E07A68;             /* Coral - used sparingly */
+  --coral-soft: rgba(224, 122, 104, 0.15);
+  --coral-dark: #C46858;
+  
+  /* Danger/Status colors */
+  --danger: #D9534F;            /* Critical alerts only */
+  --danger-soft: rgba(217, 83, 79, 0.15);
+  --safe: #5BA88F;              /* Safe/positive states */
+  --safe-soft: rgba(91, 168, 143, 0.15);
+  
+  /* Text colors */
+  --text-primary: #E8E6E3;      /* Primary text - warm white */
+  --text-secondary: #9AA8A2;    /* Secondary text - muted gray */
+  --text-muted: #6B7B77;       /* Muted text */
+  
+  /* Borders and dividers */
+  --border-soft: rgba(255, 255, 255, 0.06);
+  --border-medium: rgba(255, 255, 255, 0.1);
+  
+  /* Shadows - subtle, not harsh */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.4);
+  
+  /* Spacing and sizing */
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  
+  /* Transitions - smooth easing */
+  --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 0.18s;
+  --duration-normal: 0.3s;
+  --duration-slow: 0.5s;
 }
 
-[data-theme="dark"] {
-  --bg: #1A1814;
-  --surface: #22201C;
-  --card: rgba(40,36,30,0.65);
-  --card-border: rgba(255,255,255,0.06);
-  --ink: #F0EBDD;
-  --ink-soft: #A8A096;
-  --ink-faint: #7A7568;
-  --sage: #9CB99C;
-  --sage-deep: #7D9A7D;
-  --terracotta: #C28E7A;
-  --terracotta-deep: #A87460;
-  --amber: #D4B88E;
-  --amber-deep: #BA9868;
-  --danger: #D95D4D;
-  --danger-soft: rgba(217,93,77,0.14);
-  --shadow: rgba(0,0,0,0.45);
-  --shadow-strong: rgba(0,0,0,0.60);
+/* ============================================================
+   Base Reset & Typography
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  margin: 0;
+  padding: 0;
 }
 
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; }
-html { scroll-behavior: smooth; }
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
-  margin: 0; padding: 0;
-  background: linear-gradient(160deg, #F5F0E6 0%, #F7F2EA 60%, #F2EBDF 100%);
-  color: var(--ink);
-  font-family: var(--font-body);
+  font-family: 'Poppins', 'Noto Sans Devanagari', -apple-system, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.devanagari { font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif; }
+
+/* ============================================================
+   Phone Shell Container
+   Optimized for mobile-first with hardware acceleration
+   ============================================================ */
+.phone {
+  position: relative;
+  width: 375px;
+  height: 780px;
+  max-height: 96vh;
+  margin: 0 auto;
+  background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+  border-radius: 44px;
+  box-shadow: 
+    var(--shadow-lg),
+    0 0 0 1px var(--border-soft),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+  isolation: isolate;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Notch styling */
+.notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 26px;
+  background: var(--bg-secondary);
+  border-radius: 0 0 18px 18px;
+  z-index: 50;
+}
+
+/* Status bar */
+.statusbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 26px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 22px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   Screen Transitions
+   GPU-accelerated with will-change optimization
+   ============================================================ */
+.screens {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(30px) scale(0.98);
+  will-change: opacity, transform;
+  transition: 
+    opacity var(--duration-normal) var(--ease-smooth),
+    transform var(--duration-normal) var(--ease-smooth);
+  padding-top: 26px;
+  overflow-y: auto;
   overflow-x: hidden;
-  line-height: 1.6;
+  -webkit-overflow-scrolling: touch;
 }
 
-[data-theme="dark"] body {
-  background: linear-gradient(160deg, #141210 0%, #1A1814 60%, #161412 100%);
+.screen::-webkit-scrollbar { width: 0; }
+
+.screen.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0) scale(1);
+  z-index: 10;
 }
 
-/* Typography */
-h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; margin: 0 0 0.35em; letter-spacing: -0.025em; font-weight: 700; }
-h1 { font-size: 1.9rem; font-weight: 800; }
-h2 { font-size: 1.3rem; font-weight: 700; }
-h3 { font-size: 1.05rem; font-weight: 600; }
-p { margin: 0; line-height: 1.6; color: var(--ink-soft); }
-.label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-faint); font-weight: 700; }
-
-.devanagari { font-family: var(--font-hindi); }
-
-/* App Shell */
-#app { max-width: 480px; margin: 0 auto; min-height: 100vh; position: relative; background: transparent; box-shadow: 0 0 80px rgba(45,36,32,0.10); }
-@media (min-width: 768px) {
-  #app {
-    border-radius: 32px; margin: 20px auto; min-height: calc(100vh - 40px);
-    overflow: hidden; border: 1px solid rgba(45,36,32,0.05);
-    box-shadow: 0 40px 120px rgba(45,36,32,0.18), 0 0 0 1px rgba(45,36,32,0.04);
-  }
-  body { display: flex; align-items: center; justify-content: center; }
+.screen.exit-left {
+  transform: translateX(-30px) scale(0.98);
+  opacity: 0;
 }
 
-/* Sticky Header */
-.top-bar {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(247,242,234,0.82);
-  backdrop-filter: blur(18px) saturate(1.2); -webkit-backdrop-filter: blur(18px) saturate(1.2);
-  border-bottom: 1px solid rgba(45,36,32,0.05);
-  padding: 16px 20px 10px;
-  display: flex; align-items: center; justify-content: space-between;
-  transition: background 0.35s;
-}
-[data-theme="dark"] .top-bar {
-  background: rgba(26,24,20,0.90);
-  border-bottom-color: rgba(255,255,255,0.05);
-}
+/* ============================================================
+   Shared Components
+   ============================================================ */
 
-.logo-row { display: flex; align-items: center; gap: 12px; }
-.logo-icon {
-  width: 40px; height: 40px;
-  background: linear-gradient(135deg, var(--sage) 0%, var(--terracotta) 100%);
-  border-radius: 14px; display: flex; align-items: center; justify-content: center;
-  color: #fff; font-weight: 900; font-size: 1.15rem;
-  box-shadow: 0 6px 18px rgba(139,168,139,0.35);
-}
-.logo-text h3 { margin-bottom: 1px; font-size: 1.05rem; }
-.logo-text span { font-size: 0.72rem; color: var(--ink-faint); font-weight: 500; letter-spacing: 0.02em; }
-
-.top-actions { display: flex; gap: 10px; align-items: center; }
-.btn-icon {
-  width: 44px; height: 44px; border-radius: 50%;
-  border: none; background: var(--surface);
-  color: var(--ink-soft); cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 3px 10px var(--shadow); transition: all 0.25s ease;
-}
-.btn-icon:hover { background: var(--sage); color: #fff; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(139,168,139,0.35); }
-
-.plane-toggle { display: flex; align-items: center; gap: 6px; background: var(--surface); border-radius: 999px; padding: 5px 10px 5px 5px; border: none; box-shadow: inset 0 0 0 1px rgba(45,36,32,0.06); cursor: pointer; transition: all 0.25s; }
-[data-theme="dark"] .plane-toggle { box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); }
-.plane-toggle .dot { width: 26px; height: 26px; border-radius: 50%; background: var(--ink-faint); transition: background 0.3s, transform 0.25s; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.75rem; }
-.plane-toggle.active .dot { background: var(--danger); transform: translateX(0); }
-.plane-toggle .label-tiny { font-size: 0.68rem; font-weight: 700; color: var(--ink-soft); }
-
-.sync-badge {
-  position: absolute; top: -4px; right: -4px;
-  background: var(--danger); color: #fff; font-size: 0.65rem; font-weight: 800;
-  width: 20px; height: 20px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 2px 8px rgba(217,93,77,0.35);
-  animation: pulse 2.4s infinite ease-in-out;
-}
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
-
-/* Sections */
-section { display: none; animation: fadeUp 0.45s var(--ease) both; padding: 16px 18px 110px; }
-section.active { display: block; }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-
-/* Cards */
+/* Glass-morphism card base */
 .card {
-  background: var(--card);
-  border: 1px solid var(--card-border);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border-radius: var(--radius);
-  box-shadow: 0 10px 32px var(--shadow);
-  padding: 22px;
-  margin-bottom: 18px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background: var(--bg-card);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: 
+    background var(--duration-fast) var(--ease-smooth),
+    transform var(--duration-fast) var(--ease-smooth),
+    box-shadow var(--duration-fast) var(--ease-smooth);
 }
-.card:hover { transform: translateY(-2px); box-shadow: 0 16px 40px var(--shadow-strong); }
-[data-theme="dark"] .card:hover { box-shadow: 0 16px 40px rgba(0,0,0,0.45); }
 
-/* Splash */
+.card:hover {
+  background: var(--bg-card-hover);
+}
+
+.card:active {
+  transform: scale(0.98);
+}
+
+/* Button base with ripple effect */
+.btn {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  transition: 
+    transform var(--duration-fast) var(--ease-smooth),
+    box-shadow var(--duration-fast) var(--ease-smooth),
+    filter var(--duration-fast) var(--ease-smooth);
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.btn:active { 
+  transform: scale(0.96) !important; 
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+  color: #fff;
+  padding: 15px 20px;
+  font-size: 15px;
+  box-shadow: 0 8px 20px var(--teal-glow);
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px var(--teal-glow);
+}
+
+.btn-coral {
+  background: linear-gradient(135deg, var(--coral), var(--coral-dark));
+  color: #fff;
+  padding: 15px 20px;
+  font-size: 15px;
+  box-shadow: 0 8px 20px var(--coral-soft);
+}
+
+.btn-coral:hover {
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  background: var(--teal-glow);
+  color: var(--teal);
+  padding: 12px 18px;
+  font-size: 13.5px;
+}
+
+/* Ripple effect element */
+.ripple-el {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(0);
+  animation: rippleAnim 0.6s ease-out forwards;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+@keyframes rippleAnim {
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* Badge component */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.badge-red {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.badge-green {
+  background: var(--safe-soft);
+  color: var(--safe);
+}
+
+.badge-gold {
+  background: var(--gold-soft);
+  color: var(--gold);
+}
+
+/* Pulse ring animation */
+.pulse-ring {
+  position: relative;
+}
+
+.pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  border: 2px solid currentColor;
+  opacity: 0.55;
+  animation: pulseRing 1.8s var(--ease-smooth) infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes pulseRing {
+  0% { transform: scale(0.92); opacity: 0.7; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+/* ============================================================
+   Navigation Components
+   ============================================================ */
+
+/* Top header with greeting */
+.top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 22px 6px;
+  flex-shrink: 0;
+}
+
+.greet-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.greet-sub {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* Avatar/Role indicator */
+.avatar-role {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--gold), var(--coral));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: var(--shadow-md);
+  flex-shrink: 0;
+}
+
+/* Bottom navigation */
+.bottom-nav {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 10px calc(14px + env(safe-area-inset-bottom));
+  background: rgba(18, 26, 24, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border-soft);
+  flex-shrink: 0;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  transition: 
+    color var(--duration-fast) var(--ease-smooth),
+    background var(--duration-fast) var(--ease-smooth),
+    transform var(--duration-fast) var(--ease-smooth);
+}
+
+.nav-item .nav-ic {
+  font-size: 18px;
+  transition: transform var(--duration-fast) var(--ease-smooth);
+}
+
+.nav-item.active {
+  color: var(--teal);
+  background: var(--teal-glow);
+}
+
+.nav-item.active .nav-ic {
+  transform: translateY(-2px) scale(1.1);
+}
+
+/* Floating Action Button */
+.fab {
+  position: absolute;
+  right: 20px;
+  bottom: 88px;
+  z-index: 30;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--coral), var(--gold));
+  color: #fff;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  border: none;
+  animation: fabPulse 2.2s ease-in-out infinite;
+  will-change: box-shadow;
+}
+
+@keyframes fabPulse {
+  0%, 100% { box-shadow: var(--shadow-md), 0 0 0 0 var(--coral-soft); }
+  50% { box-shadow: var(--shadow-lg), 0 0 0 12px transparent; }
+}
+
+/* Section labels */
+.section-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 18px 22px 8px;
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   Splash Screen
+   Polished animation with branded feel
+   ============================================================ */
 #screen-splash {
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  text-align: center; min-height: 100vh; padding: 30px;
-  background: linear-gradient(170deg, #1A1814 0%, #2D3428 50%, #3D2E26 100%);
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(160deg, var(--bg-secondary) 0%, var(--teal-dark) 40%, var(--teal) 100%);
+  gap: 18px;
+}
+
+.logo-mark {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  animation: floatY 3.4s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.logo-ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  animation: rippleOut 2.4s var(--ease-smooth) infinite;
+}
+
+.logo-ripple.d2 { animation-delay: 0.8s; }
+
+@keyframes rippleOut {
+  0% { transform: scale(0.7); opacity: 0.9; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+.splash-title {
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  margin-top: 6px;
   color: #fff;
 }
-[data-theme="dark"] #screen-splash {
-  background: linear-gradient(170deg, #1A1814 0%, #2D3428 50%, #3D2E26 100%);
-}
-.splash-mark { font-size: 5.5rem; animation: floatGentle 4s ease-in-out infinite; line-height: 1; }
-@keyframes floatGentle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-.splash-title { font-family: var(--font-display); font-size: 2.6rem; font-weight: 900; margin-top: 12px; letter-spacing: -0.03em; }
-.splash-sub { font-size: 1.05rem; font-weight: 300; opacity: 0.92; letter-spacing: 0.02em; margin-top: 10px; line-height: 1.5; }
-.splash-hindi { font-family: var(--font-hindi); font-size: 1.1rem; opacity: 0.85; margin-top: 6px; }
-.splash-loader { margin-top: 36px; width: 140px; height: 5px; border-radius: 3px; background: rgba(255,255,255,0.15); overflow: hidden; position: relative; }
-.splash-loader::after { content:''; position: absolute; left: 0; top: 0; bottom: 0; width: 35%; border-radius: 3px; background: linear-gradient(90deg, var(--amber), var(--sage), var(--terracotta), var(--amber)); background-size: 300% 100%; animation: shimmerSlide 2.8s ease infinite; }
-@keyframes shimmerSlide { 0% { background-position: 100% 0; } 100% { background-position: 0% 0; } }
 
-/* Role Selector */
-.role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+.splash-tag {
+  font-size: 13.5px;
+  font-weight: 400;
+  opacity: 0.85;
+  letter-spacing: 0.3px;
+  color: var(--text-secondary);
+}
+
+.splash-loader {
+  margin-top: 26px;
+  width: 120px;
+  height: 4px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+
+.splash-loader::after {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 40%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--teal), var(--gold));
+  animation: loaderslide 1.1s ease-in-out infinite;
+}
+
+@keyframes loaderslide {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(150%); }
+  100% { transform: translateX(280%); }
+}
+
+/* ============================================================
+   Login Screen
+   Clean role-based entry with visual distinction
+   ============================================================ */
+#screen-login {
+  justify-content: center;
+  align-items: center;
+  gap: 26px;
+  text-align: center;
+}
+
+.login-mark {
+  font-size: 44px;
+}
+
 .role-card {
-  background: var(--card); border-radius: var(--radius); padding: 24px 14px;
-  text-align: center; box-shadow: 0 8px 28px var(--shadow); border: 2px solid transparent;
-  cursor: pointer; transition: all 0.3s ease;
+  width: 280px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  text-align: left;
+  border-radius: var(--radius-md);
 }
-.role-card:hover { border-color: var(--sage); transform: translateY(-3px); box-shadow: 0 14px 36px var(--shadow-strong); }
-.role-card .emoji { font-size: 2.6rem; margin-bottom: 12px; display: block; }
-.role-card h3 { font-size: 1.05rem; margin-bottom: 6px; color: var(--ink); }
-.role-card p { font-size: 0.85rem; color: var(--ink-soft); }
 
-/* Buttons */
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  width: 100%; padding: 18px 22px;
-  border: none; border-radius: 18px; font-family: var(--font-body); font-weight: 700; font-size: 1.05rem;
-  cursor: pointer; transition: all 0.2s ease; box-shadow: 0 8px 24px rgba(45,36,32,0.08);
-  letter-spacing: 0.01em; line-height: 1.4;
-  min-height: 54px;
+.role-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
 }
-.btn:hover { filter: brightness(1.05); box-shadow: 0 10px 28px rgba(45,36,32,0.14); transform: translateY(-1px); }
-.btn:active { transform: translateY(0) scale(0.995); }
 
-.btn-primary { background: linear-gradient(135deg, var(--sage-deep), var(--sage)); color: #fff; box-shadow: 0 10px 28px rgba(107,138,107,0.30); }
-.btn-primary:hover { box-shadow: 0 14px 34px rgba(107,138,107,0.40); }
+.role-ic {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
 
-.btn-terracotta { background: linear-gradient(135deg, var(--terracotta-deep), var(--terracotta)); color: #fff; box-shadow: 0 10px 28px rgba(148,92,66,0.30); }
-.btn-terracotta:hover { box-shadow: 0 14px 34px rgba(148,92,66,0.40); }
+.role-ic.asha {
+  background: var(--teal-glow);
+  color: var(--teal);
+}
 
-.btn-outline { background: var(--surface); color: var(--ink); border: 1.5px solid rgba(45,36,32,0.08); }
-.btn-sm { padding: 12px 16px; font-size: 0.92rem; border-radius: 14px; width: auto; min-height: 44px; }
+.role-ic.mother {
+  background: var(--coral-soft);
+  color: var(--coral);
+}
 
-/* Stats */
-.stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.stat-pill { background: var(--surface); border-radius: 18px; padding: 16px 8px; text-align: center; border: 1px solid rgba(45,36,32,0.04); transition: all 0.2s ease; }
-.stat-pill:hover { transform: translateY(-2px); }
-.stat-pill h4 { font-family: var(--font-display); font-size: 1.35rem; margin-bottom: 4px; }
-.stat-pill span { font-size: 0.75rem; color: var(--ink-faint); font-weight: 700; letter-spacing: 0.04em; }
+.role-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text-primary);
+}
 
-/* Patient Rows */
-.patient-row { display: flex; align-items: center; gap: 14px; padding: 16px 14px; border-radius: 18px; cursor: pointer; transition: all 0.2s ease; margin-bottom: 10px; }
-.patient-row:hover { transform: translateX(4px); background: rgba(45,36,32,0.02); }
-.patient-row:last-child { margin-bottom: 0; }
-.avatar { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--sage), var(--terracotta)); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; box-shadow: 0 6px 16px rgba(139,168,139,0.25); flex-shrink: 0; }
-.patient-info { flex: 1; min-width: 0; }
-.patient-info h4 { font-size: 1rem; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.patient-info .meta { font-size: 0.82rem; color: var(--ink-faint); }
-.badge { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; letter-spacing: 0.05em; white-space: nowrap; transition: all 0.2s; }
-.badge-red { background: var(--danger-soft); color: var(--danger); border: 1px solid rgba(217,93,77,0.1); }
-.badge-amber { background: rgba(212,167,106,0.15); color: var(--amber-deep); border: 1px solid rgba(212,167,106,0.15); }
-.badge-green { background: rgba(139,168,139,0.14); color: var(--sage-deep); border: 1px solid rgba(139,168,139,0.15); }
+.role-sub {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  margin-top: 1px;
+}
 
-/* Voice Input */
-.voice-stage { text-align: center; padding: 24px 0 16px; }
+/* ============================================================
+   ASHA Dashboard
+   Improved stat cards with visual hierarchy
+   ============================================================ */
+.stat-row {
+  display: flex;
+  gap: 10px;
+  padding: 14px 22px 4px;
+}
+
+.stat-card {
+  flex: 1;
+  padding: 14px 12px;
+  text-align: center;
+  border-radius: var(--radius-md);
+}
+
+.stat-num {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.stat-label {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.stat-critical .stat-num {
+  color: var(--danger);
+  animation: critBlink 1.6s ease-in-out infinite;
+}
+
+@keyframes critBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.stat-high .stat-num { color: var(--coral); }
+.stat-done .stat-num { color: var(--safe); }
+
+/* Patient list with risk indicators */
+.patient-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  margin: 0 22px 10px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-smooth);
+}
+
+.patient-row:hover {
+  transform: translateX(3px);
+}
+
+.patient-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.patient-dot.high { background: var(--coral); }
+.patient-dot.crit {
+  background: var(--danger);
+  box-shadow: 0 0 0 4px var(--danger-soft);
+  animation: critBlink 1.4s ease-in-out infinite;
+}
+.patient-dot.ok { background: var(--safe); }
+
+.patient-name {
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--text-primary);
+  display: inline-block;
+}
+
+.patient-meta {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   Voice Input Screen
+   Responsive mic with clear visual feedback
+   ============================================================ */
+#screen-voice {
+  align-items: center;
+  text-align: center;
+  justify-content: flex-start;
+  padding-top: 44px;
+}
+
+.mic-wrap {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin: 40px auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mic-ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--teal);
+  opacity: 0;
+}
+
+.mic-ripple.animate {
+  animation: micRipple 2s var(--ease-smooth) infinite;
+}
+
+@keyframes micRipple {
+  0% { transform: scale(0.6); opacity: 0.6; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
 .mic-btn {
-  width: 130px; height: 130px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--terracotta), var(--terracotta-deep));
-  border: none; color: #fff; font-size: 2.4rem;
-  display: inline-flex; align-items: center; justify-content: center;
-  box-shadow: 0 16px 45px rgba(184,115,85,0.35), 0 0 0 14px rgba(184,115,85,0.08);
-  cursor: pointer; transition: all 0.25s ease;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+  color: #fff;
+  font-size: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-lg);
+  z-index: 2;
+  transition: transform var(--duration-fast) var(--ease-smooth);
+  will-change: transform;
 }
-.mic-btn:hover { transform: scale(1.03); box-shadow: 0 20px 50px rgba(184,115,85,0.45), 0 0 0 18px rgba(184,115,85,0.06); }
-.mic-btn:active { transform: scale(0.96); }
-.mic-btn.recording { background: linear-gradient(135deg, var(--danger), #B5433A); animation: micPulse 1.2s ease infinite; }
-@keyframes micPulse { 0%, 100% { box-shadow: 0 16px 45px rgba(217,93,77,0.35), 0 0 0 14px rgba(217,93,77,0.08); } 50% { box-shadow: 0 16px 60px rgba(217,93,77,0.5), 0 0 0 22px rgba(217,93,77,0.05); } }
 
-.mic-ring { animation: ringExpand 2.4s ease-in-out infinite; }
-@keyframes ringExpand { 0% { box-shadow: 0 0 0 0 rgba(184,115,85,0.45); } 60% { box-shadow: 0 0 0 28px rgba(184,115,85,0); } 100% { box-shadow: 0 0 0 0 rgba(184,115,85,0); } }
+.mic-btn.recording {
+  background: linear-gradient(135deg, var(--coral), var(--coral-dark));
+  transform: scale(1.05);
+}
 
-.wave-bars { display: flex; gap: 6px; align-items: flex-end; height: 40px; margin: 16px auto 0; justify-content: center; }
-.wave-bars span { display: none; width: 7px; border-radius: 4px; background: linear-gradient(180deg, var(--terracotta), var(--amber)); }
-.wave-bars.animate span { display: block; animation: waveBounce 0.8s ease-in-out infinite alternate; }
-.wave-bars span:nth-child(1) { animation-delay: 0s; height: 12px; }
-.wave-bars span:nth-child(2) { animation-delay: 0.1s; height: 20px; }
-.wave-bars span:nth-child(3) { animation-delay: 0.2s; height: 28px; }
-.wave-bars span:nth-child(4) { animation-delay: 0.3s; height: 16px; }
-.wave-bars span:nth-child(5) { animation-delay: 0.4s; height: 24px; }
-@keyframes waveBounce { from { transform: scaleY(0.5); opacity: 0.5; } to { transform: scaleY(1.2); opacity: 1; } }
+/* Wave animation bars */
+.wave-bars {
+  display: flex;
+  gap: 5px;
+  align-items: flex-end;
+  height: 36px;
+  margin: 14px auto 0;
+  justify-content: center;
+}
 
-/* Vital Cards */
-.vital-card { display: flex; align-items: center; gap: 16px; padding: 16px 18px; background: var(--surface); border-radius: 18px; margin-bottom: 12px; border: 1px solid rgba(45,36,32,0.04); transition: all 0.2s ease; }
-.vital-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px var(--shadow); }
-.vital-icon { width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, var(--sage), var(--sage-deep)); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.25rem; box-shadow: 0 4px 12px rgba(139,168,139,0.2); flex-shrink: 0; }
-.vital-body { flex: 1; }
-.vital-body h4 { font-size: 1rem; margin-bottom: 2px; display: flex; align-items: center; gap: 8px; }
-.vital-body p { font-size: 0.95rem; font-weight: 700; color: var(--ink); }
-.vital-play { background: transparent; border: none; color: var(--ink-faint); font-size: 1.1rem; cursor: pointer; transition: color 0.2s; }
-.vital-play:hover { color: var(--terracotta); }
+.wave-bars span {
+  display: none;
+  width: 6px;
+  border-radius: 4px;
+  background: var(--coral);
+  will-change: height;
+}
 
-/* Risk Gauge */
-.gauge-wrap { position: relative; width: 240px; height: 240px; margin: 10px auto 8px; }
+.wave-bars.animate span {
+  display: block;
+  animation: waveMove 0.9s ease-in-out infinite;
+}
+
+.wave-bars span:nth-child(1) { animation-delay: 0s; }
+.wave-bars span:nth-child(2) { animation-delay: 0.15s; }
+.wave-bars span:nth-child(3) { animation-delay: 0.3s; }
+.wave-bars span:nth-child(4) { animation-delay: 0.45s; }
+.wave-bars span:nth-child(5) { animation-delay: 0.6s; }
+
+@keyframes waveMove {
+  0%, 100% { height: 8px; }
+  50% { height: 34px; }
+}
+
+/* Vitals form with staggered reveal */
+.vitals-form {
+  width: 100%;
+  padding: 18px 22px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vital-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: 
+    opacity var(--duration-normal) var(--ease-smooth),
+    transform var(--duration-normal) var(--ease-smooth);
+  will-change: opacity, transform;
+}
+
+.vital-field.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.vital-key {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.vital-val {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.vital-val.flag { color: var(--danger); }
+
+/* ============================================================
+   Risk Prediction Screen
+   Smooth gauge with sequential action reveal
+   ============================================================ */
+#screen-risk {
+  align-items: center;
+  text-align: center;
+  padding-top: 30px;
+}
+
+.gauge-wrap {
+  position: relative;
+  width: 210px;
+  height: 210px;
+  margin: 10px auto 6px;
+}
+
 .gauge-wrap svg { transform: rotate(-90deg); }
-.gauge-track { fill: none; stroke: rgba(45,36,32,0.06); stroke-width: 16; }
+
+.gauge-track {
+  fill: none;
+  stroke: var(--teal-glow);
+  stroke-width: 16;
+}
+
 .gauge-fill {
-  fill: none; stroke: url(#gaugeGrad); stroke-width: 16; stroke-linecap: round;
-  stroke-dasharray: 565; stroke-dashoffset: 565; transition: stroke-dashoffset 1.8s var(--ease);
+  fill: none;
+  stroke: url(#gaugeGrad);
+  stroke-width: 16;
+  stroke-linecap: round;
+  stroke-dasharray: 565;
+  stroke-dashoffset: 565;
+  transition: stroke-dashoffset 1.6s var(--ease-smooth);
+  will-change: stroke-dashoffset;
 }
-.gauge-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(90deg); text-align: center; pointer-events: none; }
-.gauge-text h2 { font-family: var(--font-display); font-size: 2.6rem; font-weight: 900; color: var(--danger); line-height: 1; letter-spacing: -0.03em; }
-.gauge-text span { font-size: 0.85rem; color: var(--ink-faint); font-weight: 600; letter-spacing: 0.04em; }
 
-.action-line { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px dashed rgba(45,36,32,0.08); animation: slideUp 0.35s ease; }
-.action-line:last-of-type { border-bottom: none; }
+.gauge-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.gauge-pct {
+  font-size: 38px;
+  font-weight: 800;
+  color: var(--danger);
+}
+
+.gauge-lbl {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: -2px;
+}
+
+.status-pill {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 20px;
+  border-radius: 999px;
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 1px;
+  visibility: hidden;
+  transition: visibility var(--duration-normal);
+}
+
+.status-pill.visible {
+  visibility: visible;
+  animation: critBlink 1.4s ease-in-out infinite;
+}
+
+.status-pill .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--danger);
+}
+
+/* Action list with sequential reveal */
+.action-list {
+  width: 100%;
+  padding: 16px 22px 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  opacity: 0.35;
+  transform: translateX(-8px);
+  transition: 
+    opacity var(--duration-normal) var(--ease-smooth),
+    transform var(--duration-normal) var(--ease-smooth);
+  will-change: opacity, transform;
+}
+
+.action-item.done {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 .action-check {
-  width: 36px; height: 36px; border-radius: 50%; background: var(--sage); color: #fff;
-  display: flex; align-items: center; justify-content: center; font-weight: 700;
-  box-shadow: 0 6px 14px rgba(139,168,139,0.3); flex-shrink: 0;
-  animation: checkPop 0.55s ease both;
-}
-.action-check.delay-1 { animation-delay: 0.2s; }
-.action-check.delay-2 { animation-delay: 0.4s; }
-.action-check.delay-3 { animation-delay: 0.6s; }
-@keyframes checkPop { 0% { transform: scale(0); opacity: 0; } 60% { transform: scale(1.25); opacity: 1; } 100% { transform: scale(1); } }
-.action-body h4 { font-size: 0.95rem; margin-bottom: 2px; }
-.action-body p { font-size: 0.8rem; }
-
-/* Chat */
-.chat-window { height: 380px; overflow-y: auto; padding: 6px 0; -ms-overflow-style: none; scrollbar-width: none; }
-.chat-window::-webkit-scrollbar { display: none; }
-.bubble { max-width: 82%; padding: 14px 16px; border-radius: 20px; margin-bottom: 12px; font-size: 0.95rem; line-height: 1.55; animation: bubbleIn 0.35s ease both; box-shadow: 0 3px 10px var(--shadow); }
-@keyframes bubbleIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-.bubble-user { background: linear-gradient(135deg, var(--terracotta), var(--terracotta-deep)); color: #fff; margin-left: auto; border-bottom-right-radius: 4px; }
-.bubble-bot { background: var(--card); color: var(--ink); margin-right: auto; border-bottom-left-radius: 4px; border: 1px solid var(--card-border); }
-.bubble-bot strong { color: var(--ink); font-weight: 700; display: block; margin-bottom: 6px; font-size: 0.85rem; letter-spacing: 0.02em; }
-.chat-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
-.chip { padding: 9px 14px; border-radius: 999px; background: var(--surface); border: 1.5px solid rgba(45,36,32,0.06); font-size: 0.82rem; font-weight: 600; color: var(--ink-soft); cursor: pointer; transition: all 0.2s ease; }
-.chip:hover { background: var(--sage); color: #fff; border-color: var(--sage); transform: translateY(-1px); }
-.chat-input-row { display: flex; gap: 10px; padding-top: 12px; align-items: center; }
-.chat-input { flex: 1; border: 1.5px solid rgba(45,36,32,0.08); border-radius: 16px; padding: 12px 16px; font-size: 0.95rem; background: var(--surface); color: var(--ink); outline: none; font-family: inherit; transition: border-color 0.2s; }
-.chat-input:focus { border-color: var(--sage); }
-
-.chat-send { width: 48px; height: 48px; border-radius: 50%; border: none; background: linear-gradient(135deg, var(--terracotta), var(--terracotta-deep)); color: #fff; font-size: 1.2rem; cursor: pointer; box-shadow: 0 6px 16px rgba(184,115,85,0.35); transition: all 0.2s ease; }
-.chat-send:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(184,115,85,0.45); }
-
-/* Pregnancy Tracker */
-.tracker-bar { height: 28px; border-radius: 14px; background: var(--surface); position: relative; overflow: hidden; margin: 16px 0; border: 1px solid rgba(45,36,32,0.04); }
-.tracker-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--amber), var(--terracotta), var(--sage)); border-radius: 14px; position: relative; transition: width 1.6s var(--ease); animation: trackerBreathing 4s ease-in-out infinite; }
-@keyframes trackerBreathing { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.08); } }
-.tracker-fill::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 8px; background: rgba(255,255,255,0.4); border-radius: 0 14px 14px 0; }
-.tracker-labels { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--ink-faint); font-weight: 600; letter-spacing: 0.04em; margin-top: 8px; }
-
-/* Safe Word */
-.safe-word-panel { text-align: center; padding: 18px 0; }
-.safe-word-btn {
-  width: 150px; height: 150px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--danger), #B5433A);
-  color: #fff; border: none; box-shadow: 0 16px 45px rgba(217,93,77,0.35);
-  font-family: var(--font-display); font-size: 1.15rem; font-weight: 900;
-  letter-spacing: 0.1em; cursor: pointer; transition: all 0.25s ease;
-  display: inline-flex; align-items: center; justify-content: center; text-align: center; line-height: 1.3;
-}
-.safe-word-btn:hover { transform: scale(1.03); box-shadow: 0 20px 55px rgba(217,93,77,0.45); }
-.safe-word-btn:active { transform: scale(0.96); }
-
-/* Banner / Toast */
-.banner {
-  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-  background: var(--ink); color: #fff; padding: 16px 22px; border-radius: 18px;
-  font-size: 0.92rem; font-weight: 600; z-index: 300; box-shadow: 0 16px 40px rgba(0,0,0,0.3);
-  display: none; animation: slideUp 0.4s var(--ease) both; max-width: 90%; text-align: center; line-height: 1.45;
-}
-.banner.show { display: block; }
-.banner.green { background: var(--sage-deep); }
-
-/* Bottom Nav */
-.bottom-nav {
-  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px;
-  display: flex; justify-content: space-around; align-items: center;
-  padding: 14px 14px calc(20px + env(safe-area-inset-bottom));
-  background: rgba(247,242,234,0.88); backdrop-filter: blur(20px) saturate(1.3); -webkit-backdrop-filter: blur(20px) saturate(1.3);
-  border-top: 1px solid rgba(45,36,32,0.06); z-index: 90;
-}
-[data-theme="dark"] .bottom-nav {
-  background: rgba(26,24,20,0.92); border-top-color: rgba(255,255,255,0.05);
-}
-.nav-item {
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
-  font-size: 0.72rem; font-weight: 700; color: var(--ink-faint); cursor: pointer;
-  padding: 8px 14px; border-radius: 14px; transition: all 0.3s ease;
-}
-.nav-item .nav-ic { font-size: 1.1rem; transition: transform 0.3s ease; }
-.nav-item.active { color: var(--sage); background: rgba(139,168,139,0.12); }
-.nav-item.active .nav-ic { transform: translateY(-2px) scale(1.15); }
-
-/* FAB */
-.fab {
-  position: fixed; right: 22px; bottom: 100px; z-index: 30;
-  width: 60px; height: 60px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--terracotta), var(--amber));
-  color: #fff; font-size: 1.4rem; display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 14px 36px rgba(184,115,85,0.4); cursor: pointer; border: none;
-  transition: all 0.2s ease;
-}
-.fab:hover { transform: scale(1.08) rotate(-4deg); box-shadow: 0 18px 45px rgba(184,115,85,0.55); }
-.fab:active { transform: scale(0.96); }
-
-/* Dark Overrides for Core Elements */
-[data-theme="dark"] .btn-outline { border-color: rgba(255,255,255,0.1); color: var(--ink); }
-[data-theme="dark"] .chip { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.08); color: var(--ink-soft); }
-[data-theme="dark"] .chip:hover { background: var(--sage); color: #fff; }
-[data-theme="dark"] .chat-input { background: #2A2620; border-color: rgba(255,255,255,0.1); color: var(--ink); }
-
-/* Micro decorative shapes */
-.soft-blob {
-  position: absolute; width: 320px; height: 320px; background: radial-gradient(circle, rgba(139,168,139,0.10) 0%, transparent 70%); border-radius: 50%; z-index: -1; pointer-events: none; opacity: 0.6;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--teal-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #fff;
+  flex-shrink: 0;
+  transition: 
+    background var(--duration-normal) var(--ease-smooth),
+    border-color var(--duration-normal) var(--ease-smooth);
 }
 
-/* Small Utilities */
-.hidden { display: none !important; }
-.text-center { text-align: center; }
-.mt-10 { margin-top: 10px; }
-.mb-10 { margin-bottom: 10px; }
-
-@media (max-width: 420px) {
-  .phone { width: 100vw; height: 100vh; max-height: 100vh; border-radius: 0; box-shadow: none; border: none; }
+.action-item.done .action-check {
+  background: var(--safe);
+  border-color: var(--safe);
 }
 
-/* Confetti */
-.confetti-layer { position: absolute; inset: 0; pointer-events: none; z-index: 70; overflow: hidden; }
+.action-text {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  color: var(--text-primary);
+}
+
+/* Confetti layer */
+.confetti-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 70;
+  overflow: hidden;
+}
+
 .confetti-piece {
-  position: absolute; top: -10px; width: 8px; height: 14px; opacity: 0; border-radius: 3px;
-  animation: confettiFall 2.2s ease-in forwards;
+  position: absolute;
+  top: -10px;
+  width: 8px;
+  height: 14px;
+  opacity: 0;
+  border-radius: 2px;
+  will-change: transform, opacity;
 }
-@keyframes confettiFall {
-  0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
-  60% { opacity: 1; }
-  100% { transform: translateY(640px) rotate(720deg); opacity: 0; }
+
+.note-line {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 10px 30px 2px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   AI Chat Assistant
+   Conversational UI with message bubbles
+   ============================================================ */
+#screen-chat {
+  padding-top: 26px;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px 10px;
+  flex-shrink: 0;
+}
+
+.chat-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-lock {
+  font-size: 11px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chat-body {
+  flex: 1;
+  padding: 6px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+/* Message bubbles */
+.msg {
+  max-width: 78%;
+  padding: 11px 14px;
+  border-radius: 18px;
+  font-size: 13px;
+  line-height: 1.45;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: msgIn 0.45s var(--ease-smooth) forwards;
+  will-change: opacity, transform;
+}
+
+@keyframes msgIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.msg.her {
+  align-self: flex-start;
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-soft);
+  border-bottom-left-radius: 6px;
+}
+
+.msg.ai {
+  align-self: flex-end;
+  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+  color: #fff;
+  border-bottom-right-radius: 6px;
+}
+
+/* Typing indicator */
+.msg-typing {
+  align-self: flex-start;
+  background: var(--bg-card);
+  padding: 14px 18px;
+  border-radius: 18px;
+  border-bottom-left-radius: 6px;
+}
+
+.typing-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.typing-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  animation: typingBounce 1.4s ease-in-out infinite;
+}
+
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+
+/* Chat input row */
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 10px 16px calc(14px + env(safe-area-inset-bottom));
+  background: rgba(18, 26, 24, 0.85);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border-soft);
+  flex-shrink: 0;
+}
+
+.chat-input {
+  flex: 1;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 16px;
+  font-size: 12.5px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: inset 0 0 0 1px var(--border-medium);
+  font-family: inherit;
+  outline: none;
+  transition: box-shadow var(--duration-fast);
+}
+
+.chat-input::placeholder {
+  color: var(--text-muted);
+}
+
+.chat-input:focus {
+  box-shadow: inset 0 0 0 2px var(--teal);
+}
+
+.chat-send {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: var(--coral);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--duration-fast);
+}
+
+.chat-send:active {
+  transform: scale(0.9);
+}
+
+/* ============================================================
+   Mother Dashboard
+   Warm, supportive feel with progress tracking
+   ============================================================ */
+.preg-card {
+  margin: 14px 22px;
+  padding: 20px;
+}
+
+.preg-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 10px;
+}
+
+.preg-weeks {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.preg-bar-track {
+  height: 10px;
+  border-radius: 6px;
+  background: var(--teal-glow);
+  overflow: hidden;
+}
+
+.preg-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--gold), var(--coral));
+  width: 0%;
+  transition: width 1.4s var(--ease-smooth);
+  will-change: width;
+}
+
+.preg-sub {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+}
+
+/* Quick action cards */
+.quick-actions {
+  display: flex;
+  gap: 10px;
+  padding: 4px 22px 6px;
+}
+
+.qa-card {
+  flex: 1;
+  padding: 16px 8px;
+  text-align: center;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: transform var(--duration-fast) var(--ease-smooth);
+}
+
+.qa-card:hover {
+  transform: translateY(-3px);
+}
+
+.qa-ic {
+  font-size: 22px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.qa-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* Safe word button */
+.safeword-btn {
+  margin: 14px auto 8px;
+  display: block;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 11px;
+  text-decoration: underline;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity var(--duration-fast);
+}
+
+.safeword-btn:hover {
+  opacity: 1;
+}
+
+/* ============================================================
+   Emergency Contacts Screen
+   ============================================================ */
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  margin: 0 22px 10px;
+  border-radius: var(--radius-md);
+}
+
+.contact-ic {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+  background: var(--coral-soft);
+  color: var(--coral);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+}
+
+.contact-name {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--text-primary);
+}
+
+.contact-meta {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 1px;
+}
+
+.contact-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  background: var(--teal-glow);
+  color: var(--teal);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--duration-fast);
+}
+
+.icon-btn.danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.icon-btn:active {
+  transform: scale(0.9);
+}
+
+/* Contact form */
+.contact-form {
+  margin: 0 22px 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-form input {
+  width: 100%;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 11px 13px;
+  font-size: 13px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: inset 0 0 0 1px var(--border-medium);
+  font-family: inherit;
+  outline: none;
+}
+
+.contact-form input::placeholder {
+  color: var(--text-muted);
+}
+
+.contact-form input:focus {
+  box-shadow: inset 0 0 0 2px var(--teal);
+}
+
+.contact-form-row {
+  display: flex;
+  gap: 8px;
+}
+
+.contact-form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 2px;
+}
+
+.contact-form-actions .btn {
+  flex: 1;
+  padding: 11px;
+  font-size: 13px;
+}
+
+.add-contact-btn {
+  margin: 6px 22px 18px;
+  width: calc(100% - 44px);
+}
+
+/* ============================================================
+   Medical History Screen
+   Clean timeline view with high-risk flags
+   ============================================================ */
+.history-patient-card {
+  margin: 14px 22px;
+  padding: 18px;
+  text-align: center;
+}
+
+.history-patient-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.history-patient-meta {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+
+/* Timeline component */
+.timeline {
+  padding: 6px 22px 10px;
+  position: relative;
+}
+
+.timeline-item {
+  position: relative;
+  padding: 0 0 20px 26px;
+  border-left: 2px solid var(--teal-glow);
+  margin-left: 6px;
+}
+
+.timeline-item:last-child {
+  border-color: transparent;
+  padding-bottom: 2px;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -7px;
+  top: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 0 4px var(--teal-glow);
+}
+
+.timeline-item.flag .timeline-dot {
+  background: var(--danger);
+  box-shadow: 0 0 0 4px var(--danger-soft);
+}
+
+.timeline-date {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.timeline-note {
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 2px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  backdrop-filter: blur(10px);
+}
+
+/* Add entry form */
+.add-entry-form {
+  margin: 4px 22px 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add-entry-form input,
+.add-entry-form textarea {
+  width: 100%;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 11px 13px;
+  font-size: 13px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: inset 0 0 0 1px var(--border-medium);
+  font-family: inherit;
+  resize: none;
+  outline: none;
+}
+
+.add-entry-form input::placeholder,
+.add-entry-form textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.add-entry-form input:focus,
+.add-entry-form textarea:focus {
+  box-shadow: inset 0 0 0 2px var(--teal);
+}
+
+.add-entry-form textarea {
+  min-height: 60px;
+}
+
+/* ============================================================
+   Control Bar & Overlays
+   ============================================================ */
+.control-bar {
+  position: absolute;
+  top: 30px;
+  right: 14px;
+  z-index: 56;
+  display: flex;
+  gap: 6px;
+}
+
+.ctrl-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  background: rgba(30, 45, 42, 0.8);
+  backdrop-filter: blur(8px);
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  transition: 
+    background var(--duration-fast),
+    color var(--duration-fast);
+  color: var(--text-secondary);
+}
+
+.ctrl-btn.on {
+  background: var(--teal);
+  color: #fff;
+}
+
+/* Offline badge */
+.offline-badge {
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-60px);
+  z-index: 55;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: var(--shadow-md);
+  transition: 
+    transform var(--duration-normal) var(--ease-smooth),
+    opacity var(--duration-normal);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.offline-badge.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.offline-badge .blip {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: critBlink 1.2s ease-in-out infinite;
+}
+
+/* Demo overlay */
+.demo-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+}
+
+.demo-tooltip {
+  position: absolute;
+  bottom: 100px;
+  left: 22px;
+  right: 22px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-radius: var(--radius-lg);
+  padding: 14px 16px;
+  box-shadow: var(--shadow-lg);
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: 
+    opacity var(--duration-normal) var(--ease-smooth),
+    transform var(--duration-normal) var(--ease-smooth);
+  border: 1px solid var(--border-soft);
+}
+
+.demo-tooltip.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.demo-step {
+  font-size: 10px;
+  color: var(--gold);
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.demo-text {
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.demo-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Toast notification */
+.toast {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0;
+  transition: 
+    opacity var(--duration-normal) var(--ease-smooth),
+    transform var(--duration-normal) var(--ease-smooth);
+  z-index: 90;
+  pointer-events: none;
+  text-align: center;
+  max-width: 85%;
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--border-soft);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Safe word emergency modal */
+.sw-modal-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 95;
+  background: rgba(10, 15, 18, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-normal) var(--ease-smooth);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.sw-modal-veil.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sw-modal {
+  width: 100%;
+  max-width: 300px;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: 22px 20px 20px;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  transform: translateY(16px) scale(0.96);
+  opacity: 0;
+  transition: 
+    transform var(--duration-normal) var(--ease-smooth),
+    opacity var(--duration-normal) var(--ease-smooth);
+  border: 1px solid var(--border-soft);
+}
+
+.sw-modal-veil.show .sw-modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.sw-modal-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--danger);
+  letter-spacing: 0.3px;
+  animation: critBlink 1.4s ease-in-out infinite;
+}
+
+.sw-modal-sub {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  margin-bottom: 14px;
+}
+
+.sw-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  text-align: left;
+}
+
+.sw-close-btn {
+  margin-top: 16px;
+  width: 100%;
+  background: var(--teal-glow);
+  color: var(--teal);
+  border: none;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: 
+    opacity var(--duration-normal) var(--ease-smooth),
+    transform var(--duration-normal) var(--ease-smooth);
+}
+
+.sw-close-btn.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sw-success {
+  margin-top: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--safe);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: 
+    opacity var(--duration-normal) var(--ease-smooth),
+    transform var(--duration-normal) var(--ease-smooth);
+}
+
+.sw-success.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Footer credit */
+footer.credit {
+  position: fixed;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: var(--text-muted);
+  opacity: 0.5;
+  letter-spacing: 0.3px;
+}
+
+/* ============================================================
+   Responsive Adjustments
+   ============================================================ */
+@media (max-width: 400px) {
+  .phone {
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  
+  footer.credit {
+    display: none;
+  }
 }
 </style>
 </head>
 <body>
 
-<div id="app" data-theme="light">
-
-<!-- Sticky Header -->
-<header class="top-bar" id="mainHeader">
-  <div class="logo-row">
-    <div class="logo-icon" aria-label="HerSetu">H</div>
-    <div class="logo-text">
-      <h3>HerSetu</h3>
-      <span id="headerSubtitle">मातृ स्वास्थ्य / Maternal Health</span>
-    </div>
+<div class="phone" id="phone">
+  <div class="notch"></div>
+  <div class="statusbar">
+    <span>9:41</span>
+    <span>●●● HerSetu</span>
+    <span>🔋 82%</span>
   </div>
-  <div class="top-actions">
-    <button class="plane-toggle" id="planeToggle" onclick="toggleAirplane()" aria-label="Toggle Airplane Mode">
-      <span class="dot">✈</span>
-      <span class="label-tiny" id="planeLabel">Online</span>
-    </button>
-    <div style="position:relative;">
-      <button class="btn-icon" onclick="showScreen('asha-dash')" aria-label="Sync" title="Sync">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21v-5h5"/></svg>
+
+  <!-- Control bar for demo features -->
+  <div class="control-bar">
+    <button class="ctrl-btn" id="offlineToggle" title="Toggle offline mode" aria-label="Toggle offline mode">📶</button>
+    <button class="ctrl-btn" id="darkToggle" title="Light mode" aria-label="Toggle light mode">☀️</button>
+    <button class="ctrl-btn" id="demoToggle" title="Demo walkthrough" aria-label="Toggle demo mode">✨</button>
+  </div>
+
+  <div class="offline-badge" id="offlineBadge" role="alert">
+    <span class="blip" aria-hidden="true"></span>
+    Data saved locally · Synced via mesh · <span id="meshCount">3</span> ASHAs nearby
+  </div>
+
+  <div class="screens" id="screens">
+
+    <!-- ============================================================
+         SCREEN 1: SPLASH
+         Polished branded intro with smooth animation
+         ============================================================ -->
+    <section class="screen active" id="screen-splash" aria-label="Splash screen">
+      <div class="logo-mark" aria-hidden="true">
+        <div class="logo-ripple"></div>
+        <div class="logo-ripple d2"></div>
+        <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">
+          <defs>
+            <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#3D8B85"/>
+              <stop offset="100%" stop-color="#D4A84B"/>
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="60" r="46" fill="rgba(255,255,255,0.08)"/>
+          <path d="M30 66 Q60 40 90 66" stroke="#D4A84B" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <circle cx="60" cy="46" r="12" fill="rgba(255,255,255,0.9)"/>
+          <path d="M42 84 Q60 62 78 84 Q60 96 42 84 Z" fill="rgba(255,255,255,0.9)"/>
+          <circle cx="52" cy="45" r="2.4" fill="#3D8B85"/>
+          <circle cx="68" cy="45" r="2.4" fill="#3D8B85"/>
+        </svg>
+      </div>
+      <h1 class="splash-title">HerSetu <span class="devanagari">हेरसेतु</span></h1>
+      <p class="splash-tag">Bridge for Pregnant Women</p>
+      <div class="splash-loader" aria-hidden="true"></div>
+    </section>
+
+    <!-- ============================================================
+         SCREEN 2: LOGIN
+         Clean role-based entry with visual distinction
+         ============================================================ -->
+    <section class="screen" id="screen-login" aria-label="Login">
+      <div class="login-mark" aria-hidden="true">🌉</div>
+      <div>
+        <h2 style="font-size:20px;font-weight:800;">Welcome to HerSetu</h2>
+        <p style="font-size:12.5px;color:var(--text-muted);margin-top:4px;" class="devanagari">आप कौन हैं?</p>
+      </div>
+      <div class="role-card card" role="button" tabindex="0" onclick="goTo('screen-asha')" aria-label="Login as ASHA Worker">
+        <div class="role-ic asha" aria-hidden="true">🩺</div>
+        <div>
+          <div class="role-title">ASHA Worker</div>
+          <div class="role-sub">Frontline health worker</div>
+        </div>
+      </div>
+      <div class="role-card card" role="button" tabindex="0" onclick="goTo('screen-mother')" aria-label="Login as Mother">
+        <div class="role-ic mother" aria-hidden="true">💗</div>
+        <div>
+          <div class="role-title">Mother</div>
+          <div class="role-sub">Pregnant / new mother</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SCREEN 3: ASHA DASHBOARD
+         Improved stat cards, patient list with visual hierarchy
+         ============================================================ -->
+    <section class="screen" id="screen-asha" aria-label="ASHA Dashboard">
+      <header class="top-header">
+        <div>
+          <h1 class="greet-title devanagari">Namaste, Sunita! 🙏</h1>
+          <p class="greet-sub">8 patients to visit today</p>
+        </div>
+        <div class="avatar-role" aria-hidden="true">👩🏽‍⚕️</div>
+      </header>
+
+      <div class="stat-row">
+        <div class="card stat-card stat-high">
+          <div class="stat-num">2</div>
+          <div class="stat-label">HIGH RISK</div>
+        </div>
+        <div class="card stat-card stat-critical">
+          <div class="stat-num">1</div>
+          <div class="stat-label">CRITICAL</div>
+        </div>
+        <div class="card stat-card stat-done">
+          <div class="stat-num">3/8</div>
+          <div class="stat-label">VISITS DONE</div>
+        </div>
+      </div>
+
+      <h2 class="section-label">Today's Patients</h2>
+      
+      <div class="patient-row card" role="button" tabindex="0" onclick="goTo('screen-voice')">
+        <div class="patient-dot crit" aria-hidden="true"></div>
+        <div style="flex:1">
+          <span class="patient-name" onclick="openPatientHistory(event,'Sushila Devi','8 months · Critical risk')">Sushila Devi</span>
+          <p class="patient-meta">8 months · Last visit 3 days ago</p>
+        </div>
+        <span class="badge badge-red">Critical</span>
+      </div>
+      
+      <div class="patient-row card" role="button" tabindex="0">
+        <div class="patient-dot high" aria-hidden="true"></div>
+        <div style="flex:1">
+          <span class="patient-name" onclick="openPatientHistory(event,'Radha Kumari','6 months · High risk')">Radha Kumari</span>
+          <p class="patient-meta">6 months · BP elevated</p>
+        </div>
+        <span class="badge badge-gold">High</span>
+      </div>
+      
+      <div class="patient-row card" role="button" tabindex="0">
+        <div class="patient-dot ok" aria-hidden="true"></div>
+        <div style="flex:1">
+          <span class="patient-name" onclick="openPatientHistory(event,'Meena Yadav','4 months · Stable')">Meena Yadav</span>
+          <p class="patient-meta">4 months · Routine</p>
+        </div>
+        <span class="badge badge-green">Stable</span>
+      </div>
+
+      <button class="fab pulse-ring" style="color:#fff" onclick="goTo('screen-voice')" title="Start Visit" aria-label="Start voice visit">
+        🎙️
       </button>
-      <span class="sync-badge hidden" id="syncBadge">0</span>
-    </div>
-    <button class="btn-icon" onclick="toggleDark()" aria-label="Dark Mode" title="Dark Mode">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-    </button>
-  </div>
-</header>
 
-<!-- ===== SPLASH ===== -->
-<section id="splash" class="active text-center">
-  <div class="soft-blob" style="top:-80px; right:-80px;"></div>
-  <div class="splash-mark">🌸</div>
-  <h1 class="splash-title">HerSetu <span class="devanagari" style="font-size:0.85em;">हेरसेतु</span></h1>
-  <p class="splash-sub">Offline-first maternal health for every village.</p>
-  <p class="splash-hindi">गाँव का स्वास्थ्य, हर माँ का अधिकार</p>
-  <div class="splash-loader"></div>
-  <div style="margin-top:28px;">
-    <button class="btn btn-primary" onclick="navigate('role')" style="max-width:300px; margin:0 auto;">Continue →</button>
-  </div>
-  <p style="margin-top:22px; font-size:0.75rem; color:var(--ink-faint); opacity:0.9;">Built for ASHA workers & mothers · Works without internet</p>
-</section>
+      <nav class="bottom-nav" aria-label="Main navigation">
+        <div class="nav-item active" role="button" tabindex="0">
+          <span class="nav-ic" aria-hidden="true">🏠</span>
+          <span>Home</span>
+        </div>
+        <div class="nav-item" role="button" tabindex="0">
+          <span class="nav-ic" aria-hidden="true">👥</span>
+          <span>Patients</span>
+        </div>
+        <div class="nav-item" onclick="goTo('screen-voice')" role="button" tabindex="0">
+          <span class="nav-ic" aria-hidden="true">🎙️</span>
+          <span>Voice</span>
+        </div>
+        <div class="nav-item" role="button" tabindex="0">
+          <span class="nav-ic" aria-hidden="true">🔔</span>
+          <span>Alerts</span>
+        </div>
+      </nav>
+    </section>
 
-<!-- ===== ROLE SELECT ===== -->
-<section id="role" class="text-center">
-  <h2>Who are you today?</h2>
-  <p style="margin-bottom:4px;">Select your role to continue</p>
-  <div class="role-grid">
-    <button class="role-card" onclick="enterRole('asha')" aria-label="ASHA Worker">
-      <span class="emoji">👩‍⚕️</span>
-      <h3>ASHA Worker</h3>
-      <p>Sunita Devi — Visit patients, capture vitals with voice, trigger emergency actions.</p>
-    </button>
-    <button class="role-card" onclick="enterRole('mother')" aria-label="Mother">
-      <span class="emoji">🤰</span>
-      <h3>Mother</h3>
-      <p>Sushila Devi — Talk privately to AI, trigger safe word, get transport support.</p>
-    </button>
-  </div>
-  <div style="margin-top:22px;">
-    <button class="btn btn-outline btn-sm" onclick="startDemo()">🎬 Demo Walkthrough</button>
-  </div>
-</section>
+    <!-- ============================================================
+         SCREEN 4: VOICE INPUT
+         Responsive mic with clear visual feedback
+         ============================================================ -->
+    <section class="screen" id="screen-voice" aria-label="Voice Input">
+      <header class="top-header" style="justify-content:flex-start;gap:10px;">
+        <button onclick="goTo('screen-asha')" style="background:none;border:none;color:var(--text-primary);font-size:18px;cursor:pointer;" aria-label="Go back">←</button>
+        <h1 class="greet-title" style="font-size:16px;">Patient Vitals</h1>
+      </header>
+      
+      <p style="font-size:13px;color:var(--text-muted);margin-top:14px;" class="devanagari">अपनी भाषा में बोलें</p>
+      <p style="font-size:13px;color:var(--text-muted);">Speak vitals in your language</p>
 
-<!-- ===== ASHA LOGIN ===== -->
-<section id="asha-login">
-  <h2>Welcome, Sunita</h2>
-  <p>PHC Rampur · 8 patients assigned</p>
-  <div class="card" style="margin-top:14px;">
-    <div style="display:flex;align-items:center;gap:16px;">
-      <div class="avatar" style="width:64px;height:64px;font-size:1.6rem;">SD</div>
-      <div>
-        <h3>Sunita Devi</h3>
-        <p>ASHA Worker · 6 years experience</p>
-        <p style="font-size:0.85rem;margin-top:4px;color:var(--ink-faint);">Village: Rampur · Block: Kosi</p>
+      <div class="mic-wrap">
+        <div class="mic-ripple" id="micRipple" aria-hidden="true"></div>
+        <button class="mic-btn" id="micBtn" onclick="startRecording()" aria-label="Start recording">
+          🎤
+        </button>
       </div>
-    </div>
-    <button class="btn btn-primary mt-10" onclick="showScreen('asha-dash')" aria-label="Continue to Dashboard">Continue as Sunita → Dashboard</button>
-  </div>
-</section>
-
-<!-- ===== ASHA DASHBOARD ===== -->
-<section id="asha-dash">
-  <h2>Today's Queue</h2>
-  <p>Prioritized by risk. Speak vitals — no typing needed.</p>
-
-  <div class="stat-row">
-    <div class="stat-pill">
-      <h4>8</h4>
-      <span>Assigned</span>
-    </div>
-    <div class="stat-pill">
-      <h4 style="color:var(--amber-deep);">2</h4>
-      <span>High Risk</span>
-    </div>
-    <div class="stat-pill">
-      <h4 style="color:var(--danger);">1</h4>
-      <span>Critical</span>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3 style="margin-bottom:14px;">Patients</h3>
-
-    <div class="patient-row" onclick="startVisit(1)" aria-label="Sushila Devi visit">
-      <div class="avatar">SD</div>
-      <div class="patient-info">
-        <h4>Sushila Devi <span class="badge badge-red">Critical</span></h4>
-        <p class="meta">8 months · BP 160/100 · Rampur</p>
+      
+      <div class="wave-bars" id="waveBars" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
       </div>
-      <span style="font-size:1.3rem; color:var(--ink-faint);">→</span>
-    </div>
+      
+      <p style="font-size:12px;color:var(--text-muted);margin-top:10px;" id="micStatus" aria-live="polite">Tap mic to begin</p>
 
-    <div class="patient-row" onclick="startVisit(2)" aria-label="Radha Kumari visit">
-      <div class="avatar" style="background: linear-gradient(135deg, var(--amber), var(--amber-deep));">RK</div>
-      <div class="patient-info">
-        <h4>Radha Kumari <span class="badge badge-amber">High</span></h4>
-        <p class="meta">6 months · BP 140/90 · Rampur</p>
+      <div class="vitals-form" id="vitalsForm">
+        <div class="card vital-field" data-idx="0">
+          <span class="vital-key">Patient Name</span>
+          <span class="vital-val">Sushila Devi</span>
+        </div>
+        <div class="card vital-field" data-idx="1">
+          <span class="vital-key">Blood Pressure</span>
+          <span class="vital-val flag">160/100</span>
+        </div>
+        <div class="card vital-field" data-idx="2">
+          <span class="vital-key">Weight</span>
+          <span class="vital-val">55 kg</span>
+        </div>
+        <div class="card vital-field" data-idx="3">
+          <span class="vital-key">Gestational Age</span>
+          <span class="vital-val">8 months</span>
+        </div>
+        <div class="card vital-field" data-idx="4">
+          <span class="vital-key">Last Visit</span>
+          <span class="vital-val">3 days ago</span>
+        </div>
       </div>
-      <span style="font-size:1.3rem; color:var(--ink-faint);">→</span>
-    </div>
+      
+      <div style="padding:14px 22px 22px;" id="confirmWrap"></div>
+    </section>
 
-    <div class="patient-row" onclick="startVisit(3)" aria-label="Meena Yadav visit">
-      <div class="avatar" style="background: linear-gradient(135deg, var(--sage), #6B8C6B);">MY</div>
-      <div class="patient-info">
-        <h4>Meena Yadav <span class="badge badge-green">Stable</span></h4>
-        <p class="meta">5 months · BP 110/70 · Rampur</p>
+    <!-- ============================================================
+         SCREEN 5: RISK PREDICTION
+         Smooth gauge with sequential action reveal
+         ============================================================ -->
+    <section class="screen" id="screen-risk" aria-label="Risk Prediction">
+      <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+      
+      <p style="font-size:13px;color:var(--text-muted);margin-top:14px;font-weight:600;">AI RISK PREDICTION</p>
+      
+      <div class="gauge-wrap">
+        <svg width="210" height="210" viewBox="0 0 210 210" aria-hidden="true">
+          <defs>
+            <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#D4A84B"/>
+              <stop offset="100%" stop-color="#D9534F"/>
+            </linearGradient>
+          </defs>
+          <circle class="gauge-track" cx="105" cy="105" r="90"/>
+          <circle class="gauge-fill" id="gaugeFill" cx="105" cy="105" r="90"/>
+        </svg>
+        <div class="gauge-center">
+          <div class="gauge-pct" id="gaugePct">0%</div>
+          <div class="gauge-lbl">RISK SCORE</div>
+        </div>
       </div>
-      <span style="font-size:1.3rem; color:var(--ink-faint);">→</span>
-    </div>
-  </div>
-
-  <div class="card" style="background: linear-gradient(160deg, var(--surface), #F5EFEA);">
-    <h3>Visit Reminder</h3>
-    <p style="margin-top:6px;">Next visit due for <strong>Sushila Devi</strong> at <strong>Rampur</strong> — <span style="color:var(--danger);font-weight:700;">Overdue by 1 day</span></p>
-    <button class="btn btn-terracotta mt-10" onclick="startVisit(1)" aria-label="Start visit for Sushila">📍 Start Visit — Speak Vitals</button>
-  </div>
-</section>
-
-<!-- ===== ASHA VISIT / VOICE ===== -->
-<section id="asha-visit">
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-    <button class="btn-sm btn-outline" onclick="showScreen('asha-dash')" aria-label="Back">← Back</button>
-    <h3 style="margin:0;">Visit: Sushila Devi</h3>
-  </div>
-  <p style="font-size:0.88rem;">Voice-first: Speak clearly. No typing needed.</p>
-
-  <div class="voice-stage">
-    <button class="mic-btn" id="micBtn" onclick="simulateVoiceCapture()" aria-label="Speak vitals" title="Speak vitals">
-      <span>🎤</span>
-    </button>
-    <p class="label mt-10" id="micStatus">Tap mic · बोलिए / Speak vitals</p>
-    <p style="font-size:0.85rem;color:var(--ink-faint);margin-top:6px;line-height:1.5;">"ब्लड प्रेशर 160/100 है, वज़न 55 किलोग्राम, आठ महीने"</p>
-  </div>
-
-  <div id="vitalsCaptured" class="hidden">
-    <h3>Captured Vitals</h3>
-    <p style="font-size:0.85rem;color:var(--ink-faint);margin-bottom:14px;">Auto-logged from voice. Confirm to predict risk.</p>
-
-    <div class="vital-card">
-      <div class="vital-icon">❤️</div>
-      <div class="vital-body">
-        <h4>Blood Pressure <button class="vital-play" onclick="speakHindi('ब्लड प्रेशर एक सौ साठ बटा एक सौ')" aria-label="Play Hindi">🔊</button></h4>
-        <p>160 / 100 mmHg</p>
+      
+      <div class="status-pill" id="statusPill">
+        <span class="dot" aria-hidden="true"></span>
+        <span>CRITICAL</span>
       </div>
-    </div>
 
-    <div class="vital-card">
-      <div class="vital-icon">⚖️</div>
-      <div class="vital-body">
-        <h4>Weight <button class="vital-play" onclick="speakHindi('वज़न पचपन किलोग्राम')" aria-label="Play Hindi">🔊</button></h4>
-        <p>55 kg</p>
+      <div class="action-list" id="actionList" role="list">
+        <div class="action-item card" role="listitem">
+          <div class="action-check" aria-hidden="true">✓</div>
+          <div class="action-text">Ambulance Booked (108)</div>
+        </div>
+        <div class="action-item card" role="listitem">
+          <div class="action-check" aria-hidden="true">✓</div>
+          <div class="action-text">Bed Reserved — EmOC Hospital</div>
+        </div>
+        <div class="action-item card" role="listitem">
+          <div class="action-check" aria-hidden="true">✓</div>
+          <div class="action-text">₹500 Credited via UPI</div>
+        </div>
+        <div class="action-item card" role="listitem">
+          <div class="action-check" aria-hidden="true">✓</div>
+          <div class="action-text">Husband Alerted (Voice Call)</div>
+        </div>
       </div>
-    </div>
 
-    <div class="vital-card">
-      <div class="vital-icon">👶</div>
-      <div class="vital-body">
-        <h4>Gestation <button class="vital-play" onclick="speakHindi('आठ महीने')" aria-label="Play Hindi">🔊</button></h4>
-        <p>8 months (32 weeks)</p>
+      <p class="note-line">✅ Visit logged automatically. No paperwork needed.</p>
+      
+      <div style="padding:16px 22px 26px;">
+        <button class="btn btn-primary" style="width:100%;" onclick="goTo('screen-chat')">
+          View Follow-up →
+        </button>
       </div>
-    </div>
+    </section>
 
-    <div style="display:flex;gap:10px;margin-top:16px;">
-      <button class="btn btn-terracotta" onclick="predictRisk()" aria-label="Confirm and predict risk">Confirm Vitals → Predict Risk</button>
-    </div>
-    <p style="font-size:0.78rem;color:var(--ink-faint);margin-top:10px;">Auto-logged. Saves 2-3 hours of paperwork daily.</p>
-  </div>
-</section>
-
-<!-- ===== RISK PREDICTION ===== -->
-<section id="asha-risk">
-  <h2>Risk Prediction</h2>
-  <p>Rule-based engine (WHO danger signs). Not a diagnosis — flags for referral.</p>
-
-  <div class="card">
-    <div class="gauge-wrap">
-      <svg width="240" height="240" viewBox="0 0 240 240">
-        <defs>
-          <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#D4A76A" />
-            <stop offset="60%" stop-color="#D95D4D" />
-            <stop offset="100%" stop-color="#C8453A" />
-          </linearGradient>
-        </defs>
-        <circle cx="120" cy="120" r="95" class="gauge-track" />
-        <circle cx="120" cy="120" r="95" class="gauge-fill" id="gaugeFill" />
-      </svg>
-      <div class="gauge-text">
-        <h2 id="riskPercent">0%</h2>
-        <span id="riskLabel">Analyzing...</span>
+    <!-- ============================================================
+         SCREEN 6: AI ASSISTANT CHAT
+         Conversational AI with keyword-based branching logic
+         ============================================================ -->
+    <section class="screen" id="screen-chat" aria-label="AI Assistant">
+      <header class="chat-header">
+        <div class="chat-title">
+          <div class="avatar-role" style="width:38px;height:38px;font-size:16px;" aria-hidden="true">💗</div>
+          <div>
+            <h2 style="font-weight:700;font-size:14px;">AI Assistant</h2>
+            <div class="chat-lock">
+              <span aria-hidden="true">🔒</span>
+              <span>Private &amp; encrypted</span>
+            </div>
+          </div>
+        </div>
+        <button class="badge badge-gold" onclick="triggerSafeWord()" style="cursor:pointer;border:none;" aria-label="Trigger safe word emergency">
+          🛟 Safe Word
+        </button>
+      </header>
+      
+      <div class="chat-body" id="chatBody" role="log" aria-live="polite" aria-label="Chat messages"></div>
+      
+      <div class="chat-input-row">
+        <input 
+          type="text" 
+          class="chat-input" 
+          id="chatInput"
+          placeholder="Type or speak a message…" 
+          aria-label="Chat message input"
+          onkeydown="handleChatKeydown(event)"
+        />
+        <button class="chat-send" onclick="sendChatMessage()" aria-label="Send message">
+          ➤
+        </button>
       </div>
-    </div>
+    </section>
 
-    <div style="text-align:center;margin-top:8px;">
-      <div class="badge badge-red" id="statusPill" style="display:inline-flex;animation:pulse 1.4s ease infinite;"><span class="dot" style="width:8px;height:8px;border-radius:50%;background:var(--danger);"></span> Critical — Immediate Referral</div>
-    </div>
+    <!-- ============================================================
+         SCREEN 7: MOTHER DASHBOARD
+         Warm, supportive feel with progress tracking
+         ============================================================ -->
+    <section class="screen" id="screen-mother" aria-label="Mother Dashboard">
+      <header class="top-header">
+        <div>
+          <h1 class="greet-title devanagari">Namaste, Sushila</h1>
+          <p class="greet-sub">Take care of yourself today 💐</p>
+        </div>
+        <div class="avatar-role" aria-hidden="true">💗</div>
+      </header>
 
-    <div class="card" style="margin-top:14px;padding:16px 18px;">
-      <h3 style="margin-bottom:14px;">Auto-Triggered Actions</h3>
-      <div class="action-line">
-        <div class="action-check">✓</div>
-        <div class="action-body"><h4>Ambulance Booked</h4><p>108 Emergency — ETA 18 min</p></div>
+      <div class="card preg-card">
+        <div class="preg-top">
+          <div class="preg-weeks">8 months, 2 weeks</div>
+          <span class="badge badge-gold">Trimester 3</span>
+        </div>
+        <div class="preg-bar-track" role="progressbar" aria-valuenow="83" aria-valuemin="0" aria-valuemax="100">
+          <div class="preg-bar-fill" id="pregBar"></div>
+        </div>
+        <p class="preg-sub">🍼 Estimated due date in 3–4 weeks</p>
       </div>
-      <div class="action-line">
-        <div class="action-check delay-1">✓</div>
-        <div class="action-body"><h4>Bed Reserved</h4><p>EmOC Hospital — Rampur PHC</p></div>
+
+      <h2 class="section-label">Quick Actions</h2>
+      <div class="quick-actions">
+        <div class="card qa-card" role="button" tabindex="0">
+          <span class="qa-ic" aria-hidden="true">📝</span>
+          <span class="qa-label">Track Symptoms</span>
+        </div>
+        <div class="card qa-card" onclick="goTo('screen-contacts')" role="button" tabindex="0">
+          <span class="qa-ic" aria-hidden="true">📞</span>
+          <span class="qa-label">Emergency Contact</span>
+        </div>
+        <div class="card qa-card" role="button" tabindex="0">
+          <span class="qa-ic" aria-hidden="true">🏥</span>
+          <span class="qa-label">Hospital Info</span>
+        </div>
       </div>
-      <div class="action-line">
-        <div class="action-check delay-2">✓</div>
-        <div class="action-body"><h4>₹500 Transport Credit</h4><p>Auto-credited via UPI to mother</p></div>
+
+      <button class="fab pulse-ring" style="color:#fff;font-size:22px;" onclick="goTo('screen-chat')" title="Talk to AI Assistant" aria-label="Open AI Assistant">
+        💬
+      </button>
+
+      <button class="safeword-btn" onclick="triggerSafeWord()" aria-label="Trigger safe word emergency">
+        🛟 Safe Word
+      </button>
+
+      <nav class="bottom-nav" aria-label="Main navigation">
+        <div class="nav-item active" role="button" tabindex="0">
+          <span class="nav-ic" aria-hidden="true">🏠</span>
+          <span>Home</span>
+        </div>
+        <div class="nav-item" onclick="goTo('screen-chat')" role="button" tabindex="0">
+          <span class="nav-ic" aria-hidden="true">💬</span>
+          <span>Assistant</span>
+        </div>
+        <div class="nav-item" role="button" tabindex="0">
+          <span class="nav-ic" aria-hidden="true">📅</span>
+          <span>Visits</span>
+        </div>
+        <div class="nav-item" onclick="goTo('screen-login')" role="button" tabindex="0">
+          <span class="nav-ic" aria-hidden="true">👤</span>
+          <span>Profile</span>
+        </div>
+      </nav>
+    </section>
+
+    <!-- ============================================================
+         SCREEN 8: EMERGENCY CONTACTS
+         CRUD functionality with improved UI
+         ============================================================ -->
+    <section class="screen" id="screen-contacts" aria-label="Emergency Contacts">
+      <header class="top-header" style="justify-content:flex-start;gap:10px;">
+        <button onclick="goTo('screen-mother')" style="background:none;border:none;color:var(--text-primary);font-size:18px;cursor:pointer;" aria-label="Go back">←</button>
+        <h1 class="greet-title" style="font-size:16px;">Emergency Contacts</h1>
+      </header>
+      
+      <p style="font-size:12px;color:var(--text-muted);padding:2px 22px 10px;">
+        These contacts are alerted when you use your Safe Word.
+      </p>
+
+      <div id="contactsList" role="list" aria-label="Emergency contacts list"></div>
+
+      <div class="card contact-form" id="contactForm" style="display:none;" aria-label="Add/Edit contact form">
+        <div class="contact-form-row">
+          <input type="text" id="cfName" placeholder="Name" aria-label="Contact name">
+          <input type="text" id="cfRelation" placeholder="Relationship" aria-label="Relationship">
+        </div>
+        <input type="tel" id="cfPhone" placeholder="Phone Number" aria-label="Phone number">
+        <div class="contact-form-actions">
+          <button class="btn btn-ghost" onclick="hideContactForm()">Cancel</button>
+          <button class="btn btn-primary" onclick="saveContactForm()">Save Contact</button>
+        </div>
       </div>
-      <div class="action-line">
-        <div class="action-check delay-3">✓</div>
-        <div class="action-body"><h4>Husband Alerted</h4><p>Voice call placed to family member</p></div>
+
+      <button class="btn btn-coral add-contact-btn" onclick="showContactForm()" aria-label="Add new contact">
+        ➕ Add Contact
+      </button>
+    </section>
+
+    <!-- ============================================================
+         SCREEN 9: PATIENT MEDICAL HISTORY
+         Clean timeline view with high-risk flags
+         ============================================================ -->
+    <section class="screen" id="screen-history" aria-label="Medical History">
+      <header class="top-header" style="justify-content:flex-start;gap:10px;">
+        <button onclick="goTo('screen-asha')" style="background:none;border:none;color:var(--text-primary);font-size:18px;cursor:pointer;" aria-label="Go back">←</button>
+        <h1 class="greet-title" style="font-size:16px;">Medical History</h1>
+      </header>
+
+      <div class="card history-patient-card">
+        <h2 class="history-patient-name" id="histPatientName">Sushila Devi</h2>
+        <p class="history-patient-meta" id="histPatientMeta">8 months · Critical risk</p>
       </div>
-    </div>
 
-    <div style="margin-top:14px;">
-      <button class="btn btn-primary" onclick="completeVisit()" aria-label="Done">Done — Return to Dashboard</button>
-    </div>
-    <p style="font-size:0.78rem;color:var(--ink-faint);margin-top:10px;line-height:1.5;">✅ Visit logged automatically. No paperwork needed.</p>
-  </div>
-  <div class="confetti-layer" id="confettiLayer"></div>
-</section>
+      <h2 class="section-label" style="padding-top:4px;">Last 2–3 Months</h2>
+      <div class="timeline" id="historyTimeline" role="list" aria-label="Medical history timeline"></div>
 
-<!-- ===== AI ASSISTANT CHAT ===== -->
-<section id="mother-ai">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-    <button class="btn-sm btn-outline" onclick="showScreen('mother-dash')" aria-label="Back">← Back</button>
-    <h3 style="margin:0;">Private Assistant</h3>
-    <span style="font-size:0.7rem;color:var(--ink-faint);margin-left:auto;">Encrypted · Offline</span>
-  </div>
-
-  <div class="card" style="padding:0; overflow:hidden;">
-    <div class="chat-window" id="chatWindow"></div>
-    <div style="padding:12px 16px; border-top:1px solid rgba(45,36,32,0.05); background:var(--surface);">
-      <div class="chat-chips">
-        <button class="chip" onclick="sendQuick('Pain in belly')" aria-label="Quick reply">😰 Pain in belly</button>
-        <button class="chip" onclick="sendQuick('Feeling sad / afraid')" aria-label="Quick reply">😔 Feeling sad</button>
-        <button class="chip" onclick="sendQuick('Baby not moving')" aria-label="Quick reply">👶 Baby not moving</button>
-        <button class="chip" onclick="sendQuick('Safe word help')" aria-label="Quick reply">🛟 Safe word help</button>
+      <div class="card add-entry-form" id="historyForm" style="display:none;" aria-label="Add medical entry form">
+        <input type="text" id="hfDate" placeholder="Date (e.g. July 20, 2026)" aria-label="Entry date">
+        <textarea id="hfNote" rows="2" placeholder="Note (e.g. Follow-up visit, BP normal)" aria-label="Medical note"></textarea>
+        <label style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted);cursor:pointer;">
+          <input type="checkbox" id="hfFlag" style="width:auto;box-shadow:none;" aria-label="Flag as high-risk">
+          Flag as high-risk entry
+        </label>
+        <div class="contact-form-actions">
+          <button class="btn btn-ghost" onclick="hideHistoryForm()">Cancel</button>
+          <button class="btn btn-primary" onclick="saveHistoryEntry()">Save Entry</button>
+        </div>
       </div>
-      <div class="chat-input-row" style="padding-top:10px;">
-        <input class="chat-input" id="aiInput" placeholder="Type or speak..." onkeydown="if(event.key==='Enter'){ sendAI(); event.preventDefault(); }" aria-label="Chat message" />
-        <button class="btn-icon" onclick="recordAI()" aria-label="Voice input" title="Speak">🎤</button>
-        <button class="chat-send" onclick="sendAI()" aria-label="Send">➤</button>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ===== MOTHER LOGIN ===== -->
-<section id="mother-login">
-  <h2>Welcome, Sushila</h2>
-  <p>8 months pregnant · 2 weeks left · Safe & private</p>
-  <div class="card" style="margin-top:14px;">
-    <div style="display:flex;align-items:center;gap:16px;">
-      <div class="avatar" style="background: linear-gradient(135deg, var(--terracotta), var(--terracotta-deep));">SD</div>
-      <div>
-        <h3>Sushila Devi</h3>
-        <p>Mother · Rampur Village</p>
-        <p style="font-size:0.85rem;margin-top:4px;color:var(--ink-faint);">Due date: ~3-4 weeks</p>
-      </div>
-    </div>
-    <button class="btn btn-terracotta mt-10" onclick="showScreen('mother-dash')" aria-label="Continue to Mother Dashboard">Continue as Sushila →</button>
-  </div>
-</section>
+      <button class="btn btn-coral add-contact-btn" onclick="showHistoryForm()" aria-label="Add medical entry">
+        ➕ Add Entry
+      </button>
+    </section>
 
-<!-- ===== MOTHER DASHBOARD ===== -->
-<section id="mother-dash">
-  <h2>Hello Sushila 🌸</h2>
-  <p style="font-size:0.92rem;">Your private health space. Everything is encrypted offline.</p>
-
-  <div class="card">
-    <h3>Pregnancy Progress</h3>
-    <div class="tracker-bar">
-      <div class="tracker-fill" id="pregBar"></div>
-    </div>
-    <div class="tracker-labels">
-      <span>Start</span>
-      <span>Now (32w)</span>
-      <span>Due</span>
-    </div>
-    <p style="margin-top:12px; font-size:1.05rem; font-weight:700;">8 months · 32 weeks · Due in ~3-4 weeks</p>
-    <p style="font-size:0.82rem; color:var(--ink-faint); margin-top:4px;">Next check-up: ASHA Sunita Devi will visit tomorrow.</p>
   </div>
 
-  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
-    <button class="btn btn-primary" onclick="showScreen('mother-ai')" style="font-size:0.88rem; padding:16px 8px;">
-      💬 Talk to Her (Private AI)
-    </button>
-    <button class="btn btn-outline" onclick="showScreen('mother-safe')" style="font-size:0.88rem; padding:16px 8px;">
-      🛟 Safe Word
-    </button>
-  </div>
-
-  <div class="card" style="padding:16px;">
-    <h3>Quick Actions</h3>
-    <div style="display:flex; gap:10px; margin-top:12px;">
-      <button class="btn btn-sm btn-outline" onclick="showScreen('mother-ai')" aria-label="Track symptoms">😰 Track Symptoms</button>
-      <button class="btn btn-sm btn-outline" onclick="showScreen('contacts')" aria-label="Emergency contacts">📞 Emergency</button>
-    </div>
-  </div>
-
-  <div class="card" style="background: linear-gradient(160deg, #FDF6F0, #FAF3E8);">
-    <h3>Transport Support</h3>
-    <p style="margin-top:8px;">If you need to go to hospital: <strong style="color:var(--sage-deep);">₹500 is ready</strong> for your travel. Auto-booked when needed.</p>
-  </div>
-</section>
-
-<!-- ===== SAFE WORD ===== -->
-<section id="mother-safe">
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-    <button class="btn-sm btn-outline" onclick="showScreen('mother-dash')" aria-label="Back">← Back</button>
-    <h3 style="margin:0;">Safe Word</h3>
-  </div>
-
-  <div class="card text-center">
-    <div style="font-size:3.5rem;">🛡️</div>
-    <h3>Secret Emergency Code</h3>
-    <p style="margin-top:8px; line-height:1.55;">If someone stops you from going to hospital, type your safe word. Help will come quietly — no loud alarm. Your ASHA worker and family will be alerted discreetly.</p>
-    
-    <div class="safe-word-panel">
-      <input type="password" id="safeInput" placeholder="Type safe word..." class="chat-input" style="text-align:center; letter-spacing:6px; max-width:240px; margin:0 auto;" onkeydown="if(event.key==='Enter'){ triggerSafeWord(); event.preventDefault(); }" aria-label="Safe word input" />
-      <p style="font-size:0.8rem; color:var(--ink-faint); margin-top:10px;">Your word: <strong style="color:var(--terracotta);">SURYA</strong></p>
-      <button class="safe-word-btn mt-10" onclick="triggerSafeWord()" aria-label="Activate safe word">ACTIVATE</button>
-    </div>
-  </div>
-
-  <div class="card" id="safeConfirm" style="display:none; background: linear-gradient(160deg, #EAF2ED, #E0F0E8);">
-    <h3 style="color:var(--sage-deep);">Help is on the way</h3>
-    <p>We alerted ASHA Sunita quietly. Stay calm — support and ambulance are being arranged. <strong>₹500 credit activated.</strong></p>
-  </div>
-</section>
-
-<!-- ===== EMERGENCY CONTACTS ===== -->
-<section id="contacts">
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-    <button class="btn-sm btn-outline" onclick="showScreen('mother-dash')" aria-label="Back">← Back</button>
-    <h3 style="margin:0;">Emergency Contacts</h3>
-  </div>
-  <p style="font-size:0.85rem;">These contacts are alerted when you use your Safe Word.</p>
-
-  <div id="contactsList" style="margin-top:10px;"></div>
-
-  <div class="card" id="contactForm" style="display:none;">
-    <div style="display:flex; flex-direction:column; gap:10px;">
-      <div style="display:flex; gap:10px;">
-        <input type="text" id="cfName" placeholder="Name" aria-label="Contact name" style="flex:1;">
-        <input type="text" id="cfRelation" placeholder="Relationship" aria-label="Relationship" style="flex:1;">
-      </div>
-      <input type="tel" id="cfPhone" placeholder="Phone Number" aria-label="Phone number">
-      <div style="display:flex; gap:10px;">
-        <button class="btn btn-outline" onclick="hideContactForm()" aria-label="Cancel">Cancel</button>
-        <button class="btn btn-primary" onclick="saveContactForm()" aria-label="Save contact">Save Contact</button>
-      </div>
-    </div>
-  </div>
-
-  <button class="btn btn-terracotta" onclick="showContactForm()" aria-label="Add contact" style="margin-top:4px;">➕ Add Contact</button>
-</section>
-
-<!-- ===== PATIENT MEDICAL HISTORY ===== -->
-<section id="screen-history">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-    <button class="btn-sm btn-outline" onclick="showScreen('asha-dash')" aria-label="Back">← Back</button>
-    <h3 style="margin:0;">Medical History</h3>
-  </div>
-
-  <div class="card" style="text-align:center;">
-    <div style="font-size:1.4rem;font-weight:900;" id="histPatientName">Sushila Devi</div>
-    <div style="font-size:0.85rem;color:var(--ink-faint);" id="histPatientMeta">8 months · Critical risk</div>
-  </div>
-
-  <div class="label">Last 2–3 Months</div>
-  <div id="historyTimeline" style="margin-top:10px;"></div>
-
-  <div class="card" id="historyForm" style="display:none;">
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <input type="text" id="hfDate" placeholder="Date (e.g. July 20, 2026)" aria-label="Entry date" />
-      <textarea id="hfNote" rows="2" placeholder="Note (e.g. Follow-up visit, BP normal)" aria-label="Note" style="width:100%; border:none; border-radius:14px; padding:12px; font-family:inherit; font-size:0.9rem; background:var(--surface); resize:none; border:1.5px solid rgba(45,36,32,0.06);" ></textarea>
-      <label style="display:flex;align-items:center;gap:8px;font-size:0.85rem;color:var(--ink-soft);">
-        <input type="checkbox" id="hfFlag" aria-label="Flag as high risk" style="width:18px;height:18px;"> Flag as high-risk entry
-      </label>
-      <div style="display:flex;gap:10px;">
-        <button class="btn btn-outline" onclick="hideHistoryForm()" aria-label="Cancel">Cancel</button>
-        <button class="btn btn-primary" onclick="saveHistoryEntry()" aria-label="Save entry">Save Entry</button>
-      </div>
+  <!-- Demo Mode Overlay -->
+  <div class="demo-overlay" id="demoOverlay">
+    <div class="demo-tooltip" id="demoTooltip" role="dialog" aria-label="Demo walkthrough">
+      <button class="demo-close" onclick="toggleDemo()" aria-label="Close demo">✕</button>
+      <div class="demo-step" id="demoStepLbl">STEP 1/8</div>
+      <div class="demo-text" id="demoText">Welcome to HerSetu — watch the splash screen bridge into the app.</div>
     </div>
   </div>
 
-  <button class="btn btn-terracotta" onclick="showHistoryForm()" aria-label="Add entry" style="margin-top:4px;">➕ Add Entry</button>
-</section>
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="alert" aria-live="assertive"></div>
 
-<!-- Banner Toast -->
-<div class="banner" id="banner"></div>
-
-<!-- Safe Word Emergency Modal -->
-<div class="sw-modal-veil" id="swVeil" role="dialog" aria-modal="true" aria-label="Emergency triggered">
-  <div class="sw-modal">
-    <div class="sw-modal-title">🚨 EMERGENCY TRIGGERED</div>
-    <div class="sw-modal-sub">Silent alert activated. Help is being arranged now.</div>
-    <div class="sw-actions" id="swActions">
-      <div class="action-line card">
-        <div class="action-check">✓</div>
-        <div class="action-body"><h4>108 Ambulance Dispatched</h4><p>ETA under 20 minutes</p></div>
+  <!-- Safe Word Emergency Modal -->
+  <div class="sw-modal-veil" id="swVeil" role="dialog" aria-modal="true" aria-labelledby="swModalTitle">
+    <div class="sw-modal">
+      <h2 class="sw-modal-title" id="swModalTitle">🚨 EMERGENCY TRIGGERED</h2>
+      <p class="sw-modal-sub">Silent alert activated. Help is being arranged now.</p>
+      <div class="sw-actions" id="swActions" role="list">
+        <div class="action-item card" role="listitem">
+          <div class="action-check" aria-hidden="true">✓</div>
+          <div class="action-text">108 Ambulance Dispatched</div>
+        </div>
+        <div class="action-item card" role="listitem">
+          <div class="action-check" aria-hidden="true">✓</div>
+          <div class="action-text">Husband Alerted</div>
+        </div>
+        <div class="action-item card" role="listitem">
+          <div class="action-check" aria-hidden="true">✓</div>
+          <div class="action-text">₹500 Emergency Funds Released</div>
+        </div>
       </div>
-      <div class="action-line card">
-        <div class="action-check">✓</div>
-        <div class="action-body"><h4>ASHA Worker Alerted</h4><p>Sunita Devi notified discreetly</p></div>
-      </div>
-      <div class="action-line card">
-        <div class="action-check">✓</div>
-        <div class="action-body"><h4>₹500 Funds Released</h4><p>Transport support activated</p></div>
-      </div>
-      <div class="action-line card">
-        <div class="action-check">✓</div>
-        <div class="action-body"><h4>Family Notified Quietly</h4><p>Husband alerted via voice call</p></div>
-      </div>
+      <p class="sw-success" id="swSuccess">
+        ✅ You are safe. Your ASHA worker &amp; emergency contacts have been notified.
+      </p>
+      <button class="sw-close-btn" id="swCloseBtn" onclick="closeSafeWordModal()">Close</button>
     </div>
-    <div class="sw-success" id="swSuccess">✅ You are safe. Your ASHA worker & emergency contacts have been quietly notified. Support is on the way.</div>
-    <button class="sw-close-btn" id="swCloseBtn" onclick="closeSafeWordModal()" aria-label="Close emergency modal">Close</button>
   </div>
 </div>
 
-</div>
-
-<footer class="label" style="position:fixed; bottom:8px; left:50%; transform:translateX(-50%); opacity:0.45; letter-spacing:0.04em; z-index:0;">HerSetu Prototype · All data simulated · Offline-first design</footer>
+<footer class="credit">HerSetu Prototype · Demo build, all data simulated</footer>
 
 <script>
 /* ============================================================
-   HERSETU v2 — STATE
+   HERSETU - Refactored JavaScript
+   Optimized for performance with efficient DOM manipulation,
+   requestAnimationFrame usage, and cached selectors
    ============================================================ */
-let state = {
-  role: null,
-  airplane: false,
-  pendingSync: 3,
-  currentVisitId: null,
-  currentHistoryPatient: null
+
+/* ============================================================
+   State Management
+   ============================================================ */
+let currentScreen = 'screen-splash';
+let demoMode = false;
+let demoStep = 0;
+let demoIdleTimer = null;
+let offline = false;
+let isLightMode = true; // Default is dark, so this tracks if we're in light mode
+
+// AI Chat state machine
+const chatState = {
+  conversationHistory: [],
+  isTyping: false,
+  lastIntent: null
+};
+
+// Demo walkthrough script
+const demoScript = [
+  { screen: 'screen-splash', text: 'Welcome to HerSetu — a voice-first platform bridging ASHA workers and pregnant mothers.' },
+  { screen: 'screen-login', text: 'Choose a role: ASHA Worker for field staff, or Mother for the patient-facing app.' },
+  { screen: 'screen-asha', text: "The ASHA dashboard surfaces today's workload — critical cases are flagged instantly." },
+  { screen: 'screen-voice', text: 'Tap the mic — ASHA workers speak vitals aloud, no typing needed in the field.' },
+  { screen: 'screen-risk', text: 'The AI predicts risk in real time and auto-triggers emergency response — ambulance, bed, funds, family.' },
+  { screen: 'screen-chat', text: 'Mothers can privately confide in the AI Assistant — try typing about bleeding, pain, or dizziness.' },
+  { screen: 'screen-mother', text: "The Mother's home view tracks pregnancy progress and puts help one tap away." },
+  { screen: 'screen-asha', text: 'Even offline, data syncs later via mesh network between nearby ASHA phones. Demo complete!' }
+];
+
+/* ============================================================
+   Cached DOM Selectors
+   Performance optimization - cache frequently accessed elements
+   ============================================================ */
+const DOM = {
+  screens: document.getElementById('screens'),
+  chatBody: document.getElementById('chatBody'),
+  chatInput: document.getElementById('chatInput'),
+  micBtn: document.getElementById('micBtn'),
+  micRipple: document.getElementById('micRipple'),
+  waveBars: document.getElementById('waveBars'),
+  micStatus: document.getElementById('micStatus'),
+  vitalsForm: document.getElementById('vitalsForm'),
+  confirmWrap: document.getElementById('confirmWrap'),
+  gaugeFill: document.getElementById('gaugeFill'),
+  gaugePct: document.getElementById('gaugePct'),
+  statusPill: document.getElementById('statusPill'),
+  actionList: document.getElementById('actionList'),
+  confettiLayer: document.getElementById('confettiLayer'),
+  pregBar: document.getElementById('pregBar'),
+  contactsList: document.getElementById('contactsList'),
+  historyTimeline: document.getElementById('historyTimeline'),
+  toast: document.getElementById('toast'),
+  offlineBadge: document.getElementById('offlineBadge'),
+  meshCount: document.getElementById('meshCount'),
+  demoTooltip: document.getElementById('demoTooltip'),
+  demoStepLbl: document.getElementById('demoStepLbl'),
+  demoText: document.getElementById('demoText'),
+  swVeil: document.getElementById('swVeil'),
+  swActions: document.getElementById('swActions'),
+  swSuccess: document.getElementById('swSuccess'),
+  swCloseBtn: document.getElementById('swCloseBtn')
 };
 
 /* ============================================================
-   NAVIGATION
+   Navigation System
+   GPU-accelerated transitions with requestAnimationFrame
    ============================================================ */
-function navigate(id) {
-  document.querySelectorAll('#app > section').forEach(s => s.classList.remove('active'));
-  const target = document.getElementById(id);
-  if (target) {
-    target.classList.add('active');
-    window.scrollTo(0, 0);
-  }
-  // Update header subtitle
-  if (id === 'asha-dash') document.getElementById('headerSubtitle').textContent = 'ASHA Dashboard · Sunita Devi';
-  if (id === 'mother-dash') document.getElementById('headerSubtitle').textContent = 'Mother Dashboard · Sushila Devi';
-  if (id === 'asha-visit') document.getElementById('headerSubtitle').textContent = 'ASHA Visit · Voice Input';
-  updateSyncUI();
-}
+function goTo(id) {
+  if (id === currentScreen || !id) return;
 
-function showScreen(id) {
-  navigate(id);
-  if (id === 'mother-dash') animatePregBar();
-  if (id === 'contacts') renderContacts();
-  if (id === 'screen-history') renderHistory();
-}
+  const prev = document.getElementById(currentScreen);
+  const next = document.getElementById(id);
 
-/* ============================================================
-   AIRPLANE MODE
-   ============================================================ */
-function toggleAirplane() {
-  state.airplane = !state.airplane;
-  const btn = document.getElementById('planeToggle');
-  const label = document.getElementById('planeLabel');
-  btn.classList.toggle('active', state.airplane);
-  label.textContent = state.airplane ? 'Offline' : 'Online';
+  if (!prev || !next) return;
 
-  if (!state.airplane) {
-    showBanner('Syncing data... please wait.', 'green');
+  // Use requestAnimationFrame for smooth transitions
+  requestAnimationFrame(() => {
+    prev.classList.remove('active');
+    prev.classList.add('exit-left');
+    next.classList.add('active');
+    
+    // Update current screen
+    currentScreen = id;
+    
+    // Update navigation active states
+    updateNav(id);
+    
+    // Handle screen-specific logic
+    onScreenEnter(id);
+
+    // Clean up exit animation class after transition
     setTimeout(() => {
-      state.pendingSync = 0;
-      updateSyncUI();
-      showBanner('All records synced successfully.', 'green');
-    }, 1400);
-  } else {
-    showBanner('Airplane Mode ON — Working fully offline.', 'green');
-    state.pendingSync = 3;
-    updateSyncUI();
-  }
+      prev.classList.remove('exit-left');
+    }, 300);
+  });
+
+  resetIdleTimer();
 }
 
-function updateSyncUI() {
-  const badge = document.getElementById('syncBadge');
-  if (state.pendingSync > 0) {
-    badge.textContent = state.pendingSync;
-    badge.classList.remove('hidden');
-  } else {
-    badge.classList.add('hidden');
-  }
-}
-
-/* ============================================================
-   DARK MODE
-   ============================================================ */
-function toggleDark() {
-  const app = document.getElementById('app');
-  const isDark = app.getAttribute('data-theme') === 'dark';
-  app.setAttribute('data-theme', isDark ? 'light' : 'dark');
-}
-
-/* ============================================================
-   ROLE ENTRY
-   ============================================================ */
-function enterRole(role) {
-  state.role = role;
-  if (role === 'asha') navigate('asha-login');
-  else navigate('mother-login');
-}
-
-/* ============================================================
-   ASHA VISIT FLOW
-   ============================================================ */
-function startVisit(id) {
-  state.currentVisitId = id;
-  navigate('asha-visit');
-  document.getElementById('micStatus').textContent = 'Tap mic · बोलिए / Speak vitals';
-  document.getElementById('vitalsCaptured').classList.add('hidden');
-  document.getElementById('micBtn').classList.remove('recording');
-  document.getElementById('micBtn').classList.remove('mic-ring');
-  document.querySelector('.wave-bars')?.classList.remove('animate');
-}
-
-function simulateVoiceCapture() {
-  const btn = document.getElementById('micBtn');
-  const status = document.getElementById('micStatus');
-  const ring = document.createElement('span');
-  ring.className = 'mic-btn mic-ring';
-  ring.style.position = 'absolute';
-  ring.style.inset = '0';
-  ring.style.borderRadius = '50%';
-  btn.parentElement.appendChild(ring);
-  setTimeout(() => ring.remove(), 2500);
-
-  btn.classList.add('recording');
-  btn.querySelector('span').textContent = '🎙️';
-  document.getElementById('micStatus').textContent = 'Listening... बोल रही हूँ';
-  document.querySelector('.wave-bars')?.classList.add('animate');
-
-  setTimeout(() => {
-    btn.classList.remove('recording');
-    btn.querySelector('span').textContent = '🎤';
-    document.getElementById('micStatus').textContent = '✅ Voice captured';
-    document.getElementById('vitalsCaptured').classList.remove('hidden');
-    document.querySelector('.wave-bars')?.classList.remove('animate');
-    if (state.airplane) {
-      state.pendingSync++;
-      updateSyncUI();
-      showBanner('Visit saved offline.', 'green');
-    }
-  }, 2400);
-}
-
-function predictRisk() {
-  const risk = 89;
-  document.getElementById('riskPercent').textContent = risk + '%';
-  document.getElementById('riskLabel').textContent = 'Critical — Immediate Referral';
-  const fill = document.getElementById('gaugeFill');
-  fill.style.strokeDashoffset = 565 - (565 * risk / 100);
-
-  navigate('asha-risk');
-  document.getElementById('statusPill').style.display = 'inline-flex';
-
-  if (state.airplane) {
-    state.pendingSync += 4;
-    updateSyncUI();
-  }
-
-  // Confetti delay
-  setTimeout(fireConfetti, 2000);
-  // Actions animation
-  setTimeout(() => {
-    document.querySelectorAll('.action-check').forEach((el, i) => {
-      setTimeout(() => el.style.animation = 'checkPop 0.6s ease both', i * 180);
-    });
-  }, 600);
-}
-
-function completeVisit() {
-  showBanner('Visit completed. Sushila alerted.', 'green');
-  navigate('asha-dash');
-  document.getElementById('vitalsCaptured').classList.add('hidden');
-}
-
-/* ============================================================
-   AI CHAT
-   ============================================================ */
-const chatScript = [
-  { who: 'her', text: 'मुझे 2 दिन से खून बह रहा है पर मैं किसी को बताने से डरती हूँ…' },
-  { who: 'ai', text: "I'm here for you, and this is completely private. Bleeding for two days needs care — can I quietly connect you to Sunita ASHA right now?" },
-  { who: 'her', text: 'I feel very weak and dizzy.' },
-  { who: 'ai', text: "Please sit and drink water if you can. I'm alerting your ASHA worker discreetly — help is on the way. You don't have to face this alone." },
-  { who: 'her', text: "My husband doesn't let me go to the hospital." },
-  { who: 'ai', text: "You deserve safe care. I've quietly notified your ASHA worker — she'll reach out in a way that keeps you safe. Would you like me to trigger the Safe Word?" },
-  { who: 'her', text: "Kya mein santra kha sakti hu?" },
-  { who: 'ai', text: "Ji bilkul! Santra mein vitamin C hota hai jo aapki immunity badhata hai. Lekin dhyan rakhein — din mein 1-2 se zyada na khayein, kyunki isme natural sugar bhi hoti hai." }
-];
-
-function initChat() {
-  const body = document.getElementById('chatWindow');
-  if (!body) return;
-  body.innerHTML = '';
-  chatScript.forEach((m, i) => {
-    setTimeout(() => {
-      const div = document.createElement('div');
-      div.className = 'bubble ' + (m.who === 'her' ? 'bubble-user' : 'bubble-bot');
-      div.innerHTML = m.who === 'bot' ? `<strong>HerSetu Assistant</strong>${m.text}` : m.text;
-      body.appendChild(div);
-      body.scrollTop = body.scrollHeight;
-    }, i * 900);
+function updateNav(id) {
+  // Find bottom nav within current screen and update active states
+  const screen = document.getElementById(id);
+  if (!screen) return;
+  
+  const navItems = screen.querySelectorAll('.nav-item');
+  navItems.forEach((n, i) => {
+    n.classList.toggle('active', i === 0);
   });
 }
 
-function sendQuick(msg) {
-  addBubble(msg, 'user');
-  const responses = {
-    "Pain in belly": "Pain is important to share. Where exactly — lower or upper? I'm quietly alerting Sunita ASHA for you. <br><span class='devanagari' style='font-size:0.9rem;'>दर्द कहाँ है? मैं सुनिता को चुपचाप बता रही हूँ।</span>",
-    "Feeling sad / afraid": "You are not alone, Sushila. Talking helps. Would you like me to alert your ASHA quietly? <br><span class='devanagari' style='font-size:0.9rem;'>आप अकेली नहीं हैं। मदद पास है।</span>",
-    "Baby not moving": "When did you last feel movement? Try eating something sweet and lying on your left side. I'm alerting help quietly. <br><span class='devanagari' style='font-size:0.9rem;'>बच्चा कब हिला था? मदद आ रही है।</span>",
-    "Safe word help": "Your safe word is SURYA. Type it if you are stopped from leaving. I'll call ASHA and ambulance silently. <br><span class='devanagari' style='font-size:0.9rem;'>सुरक्षा शब्द: सूर्य।</span>"
-  };
-  setTimeout(() => addBubble(responses[msg] || "I'm here with you, Sushila. What do you need right now?", 'bot'), 700);
-
-  if (msg.includes("sad") || msg.includes("afraid") || msg.includes("Baby not moving") || msg.includes("Safe word")) {
-    setTimeout(() => {
-      showBanner("ASHA alerted quietly.", 'green');
-      if (state.airplane) { state.pendingSync++; updateSyncUI(); }
-    }, 1300);
+function onScreenEnter(id) {
+  switch(id) {
+    case 'screen-voice':
+      resetVoiceScreen();
+      break;
+    case 'screen-risk':
+      runRiskSequence();
+      break;
+    case 'screen-chat':
+      initChat();
+      break;
+    case 'screen-mother':
+      animatePregBar();
+      break;
+    case 'screen-contacts':
+      renderContacts();
+      break;
   }
 }
 
-function sendAI() {
-  const input = document.getElementById('aiInput');
-  const text = input.value.trim();
-  if (!text) return;
-  addBubble(text, 'user');
-  input.value = '';
-  setTimeout(() => addBubble("I'm listening, Sushila. Help is close. <br><span class='devanagari' style='font-size:0.9rem;'>मैं सुन रही हूँ। मदद पास है।</span>", 'bot'), 700);
+// Auto transition from splash to login after delay
+setTimeout(() => {
+  if (currentScreen === 'screen-splash') {
+    goTo('screen-login');
+  }
+}, 3500);
+
+/* ============================================================
+   Ripple Effect System
+   Efficient click feedback with pooled animations
+   ============================================================ */
+function rippleEffect(e) {
+  const btn = e.currentTarget || e.target;
+  if (!btn) return;
+  
+  const rect = btn.getBoundingClientRect();
+  const circle = document.createElement('span');
+  const size = Math.max(rect.width, rect.height);
+  
+  circle.className = 'ripple-el';
+  circle.style.width = circle.style.height = size + 'px';
+  circle.style.left = (e.clientX - rect.left - size / 2) + 'px';
+  circle.style.top = (e.clientY - rect.top - size / 2) + 'px';
+  
+  btn.style.position = btn.style.position || 'relative';
+  btn.style.overflow = 'hidden';
+  btn.appendChild(circle);
+  
+  // Clean up after animation
+  setTimeout(() => circle.remove(), 600);
 }
 
-function recordAI() {
-  showBanner("Listening... बोलिए", 'green');
-  setTimeout(() => sendQuick("Feeling worried"), 1600);
+// Delegate click events for ripple effect
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('.btn, .fab, .role-card, .patient-row, .qa-card, .nav-item');
+  if (btn) {
+    rippleEffect({ currentTarget: btn, clientX: e.clientX, clientY: e.clientY });
+  }
+});
+
+/* ============================================================
+   Voice Input System
+   Responsive mic with visual feedback states
+   ============================================================ */
+function resetVoiceScreen() {
+  DOM.micBtn.classList.remove('recording');
+  DOM.micRipple.classList.remove('animate');
+  DOM.waveBars.classList.remove('animate');
+  DOM.micStatus.textContent = 'Tap mic to begin';
+  DOM.micStatus.style.color = '';
+  
+  // Reset vital fields
+  const fields = DOM.vitalsForm.querySelectorAll('.vital-field');
+  fields.forEach(f => f.classList.remove('show'));
+  
+  DOM.confirmWrap.innerHTML = '';
 }
 
-function addBubble(text, sender) {
-  const windowEl = document.getElementById('chatWindow');
-  if (!windowEl) return;
-  const bubble = document.createElement('div');
-  bubble.className = 'bubble ' + (sender === 'user' ? 'bubble-user' : 'bubble-bot');
-  bubble.innerHTML = sender === 'bot' ? `<strong>HerSetu Assistant</strong>${text}` : text;
-  windowEl.appendChild(bubble);
-  windowEl.scrollTop = windowEl.scrollHeight;
+function startRecording() {
+  if (DOM.micBtn.classList.contains('recording')) return;
+
+  // Start recording state
+  DOM.micBtn.classList.add('recording');
+  DOM.micRipple.classList.add('animate');
+  DOM.waveBars.classList.add('animate');
+  DOM.micStatus.textContent = '🎙️ Listening… "मरीज़ का ब्लड प्रेशर 160/100 है"';
+  DOM.micStatus.style.color = '';
+
+  // Simulate recording duration
+  setTimeout(() => {
+    // Stop recording state
+    DOM.micBtn.classList.remove('recording');
+    DOM.micRipple.classList.remove('animate');
+    DOM.waveBars.classList.remove('animate');
+    DOM.micStatus.textContent = '✅ Vitals captured successfully';
+    DOM.micStatus.style.color = 'var(--safe)';
+
+    // Reveal vitals with staggered animation
+    const fields = DOM.vitalsForm.querySelectorAll('.vital-field');
+    fields.forEach((f, i) => {
+      requestAnimationFrame(() => {
+        setTimeout(() => f.classList.add('show'), i * 160);
+      });
+    });
+
+    // Show confirm button after vitals are revealed
+    setTimeout(() => {
+      DOM.confirmWrap.innerHTML = `
+        <button class="btn btn-primary" style="width:100%;" onclick="goTo('screen-risk')">
+          Confirm ✓
+        </button>
+      `;
+    }, fields.length * 160 + 200);
+  }, 2500);
 }
 
 /* ============================================================
-   PREGNANCY TRACKER
+   Risk Prediction Animation Sequence
+   Smooth gauge with GPU-accelerated animations
+   ============================================================ */
+function runRiskSequence() {
+  // Reset state
+  DOM.gaugeFill.style.transition = 'none';
+  DOM.gaugeFill.style.strokeDashoffset = 565;
+  DOM.gaugePct.textContent = '0%';
+  DOM.statusPill.classList.remove('visible');
+  
+  const actions = DOM.actionList.querySelectorAll('.action-item');
+  actions.forEach(a => a.classList.remove('done'));
+  DOM.confettiLayer.innerHTML = '';
+
+  // Animate gauge with requestAnimationFrame
+  requestAnimationFrame(() => {
+    DOM.gaugeFill.style.transition = 'stroke-dashoffset 1.6s cubic-bezier(0.25, 0.1, 0.25, 1)';
+    const target = 565 - (565 * 0.89);
+    DOM.gaugeFill.style.strokeDashoffset = target;
+  });
+
+  // Counter animation
+  let count = 0;
+  const targetCount = 89;
+  const counterDuration = 1600;
+  const counterInterval = counterDuration / targetCount;
+  
+  const counter = setInterval(() => {
+    count += 1;
+    if (count >= targetCount) {
+      count = targetCount;
+      clearInterval(counter);
+    }
+    DOM.gaugePct.textContent = count + '%';
+  }, counterInterval);
+
+  // Show status pill after animation
+  setTimeout(() => {
+    DOM.statusPill.classList.add('visible');
+  }, 1700);
+
+  // Sequential action reveal
+  actions.forEach((action, i) => {
+    setTimeout(() => {
+      action.classList.add('done');
+    }, 2000 + i * 450);
+  });
+
+  // Fire confetti after actions complete
+  setTimeout(fireConfetti, 2000 + actions.length * 450 + 200);
+}
+
+function fireConfetti() {
+  const colors = ['#D4A84B', '#E07A68', '#3D8B85', '#ffffff', '#5BA88F'];
+  const layer = DOM.confettiLayer;
+  
+  // Create confetti pieces
+  for (let i = 0; i < 50; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+    p.style.animation = `confettiFall ${1.6 + Math.random() * 1.2}s ease-in ${Math.random() * 0.3}s forwards`;
+    p.style.transform = `rotate(${Math.random() * 360}deg)`;
+    layer.appendChild(p);
+  }
+
+  // Inject keyframes if not already present
+  if (!document.getElementById('confetti-style')) {
+    const style = document.createElement('style');
+    style.id = 'confetti-style';
+    style.textContent = `
+      @keyframes confettiFall {
+        0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(640px) rotate(480deg); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  // Clean up after animation
+  setTimeout(() => {
+    layer.innerHTML = '';
+  }, 3500);
+}
+
+/* ============================================================
+   AI Chat Assistant - Conversational State Machine
+   Keyword-based intent recognition with branching logic
+   ============================================================ */
+
+// AI Response knowledge base with branching logic
+const aiKnowledge = {
+  // Emergency keywords - highest priority
+  emergency: {
+    keywords: ['bleeding', 'रक्त', 'खून', 'blood', 'hemorrhage'],
+    response: "I understand you're experiencing bleeding. This needs immediate attention. I'm quietly alerting your ASHA worker Sunita — she'll reach out to help you safely. Please try to rest and stay calm. Is there someone nearby who can stay with you?",
+    escalation: 'alert_asha',
+    urgency: 'high'
+  },
+  
+  // Pain-related concerns
+  pain: {
+    keywords: ['pain', 'dard', 'दर्द', 'ache', 'hurt', 'stomach pain', 'पेट दर्द'],
+    response: "I hear you — pain can be worrying. Can you tell me where it hurts? Is it mild, moderate, or severe? For now, try to rest in a comfortable position. If the pain becomes severe or doesn't stop, please let me know right away.",
+    followUp: "Where exactly do you feel the pain? Is it constant or does it come and go?",
+    urgency: 'medium'
+  },
+  
+  // Dizziness and weakness
+  dizziness: {
+    keywords: ['dizzy', 'dizziness', 'chakkar', 'चक्कर', 'weak', 'weakness', 'thakan', 'थकान', 'sick', 'nauseous'],
+    response: "Feeling dizzy or weak is common during pregnancy. Please sit or lie down slowly, and drink some water if you can. Try not to stand up quickly. If you feel very weak or faint, please tell someone near you to stay with you.",
+    followUp: "Have you eaten anything today? Sometimes low blood sugar can make you feel dizzy.",
+    urgency: 'medium'
+  },
+  
+  // Headache
+  headache: {
+    keywords: ['headache', 'sir dard', 'सिर दर्द', 'migraine', 'sensitivity to light'],
+    response: "Headaches can be normal during pregnancy, but they can also signal high blood pressure. Are you also seeing any spots or changes in your vision? Try resting in a quiet, dark room. Please mention this to your ASHA worker during the next visit.",
+    followUp: "How long have you had the headache? Is it on one side or all over your head?",
+    urgency: 'medium'
+  },
+  
+  // Fever and infection
+  fever: {
+    keywords: ['fever', 'bukhar', 'बुखार', 'temperature', 'hot', 'sweating', 'infection'],
+    response: "A fever during pregnancy should be monitored carefully. Please check your temperature if you have a thermometer. Try to rest, drink plenty of fluids, and keep yourself cool. If your fever is above 100°F or doesn't go down, please contact your ASHA worker immediately.",
+    followUp: "Do you have any chills, body aches, or other symptoms along with the fever?",
+    urgency: 'high'
+  },
+  
+  // Swelling concerns
+  swelling: {
+    keywords: ['swelling', 'swell', 'uphla', 'उबला', 'edema', 'swollen', 'hands', 'feet', 'face'],
+    response: "Some swelling in feet and ankles is common, especially in later pregnancy. Try resting with your feet elevated. However, sudden swelling in your face or hands, or severe swelling, should be reported to your ASHA worker right away.",
+    followUp: "Is the swelling in both feet or just one? Does it go away when you rest?",
+    urgency: 'medium'
+  },
+  
+  // Contractions and labor signs
+  contractions: {
+    keywords: ['contraction', 'contractions', 'sankoch', 'संकुचन', 'labor', 'painful cramps', 'tightening'],
+    response: "If you're experiencing contractions before your due date, this could be serious. How far apart are they? Try to time them. If they're regular and getting stronger, or if you feel pressure in your pelvis, please contact your ASHA worker or go to the hospital right away.",
+    followUp: "Are the contractions regular? How many have you had in the last hour?",
+    urgency: 'high'
+  },
+  
+  // Nutrition - Oranges
+  santra: {
+    keywords: ['santra', 'orange', 'narangi', 'नारंगी', 'vitamin c', 'citrus'],
+    response: "Ji bilkul! Oranges are excellent during pregnancy. They're rich in Vitamin C which helps your body absorb iron and supports your immune system. One to two oranges a day is a good amount. However, if you have gestational diabetes, speak with your ASHA about portion sizes.",
+    followUp: null,
+    urgency: 'low'
+  },
+  
+  // General nutrition
+  nutrition: {
+    keywords: ['khana', 'खाना', 'food', 'diet', 'nutrition', 'eat', 'healthy', 'iron', 'calcium', 'protein'],
+    response: "Good nutrition is very important during pregnancy. Try to eat plenty of vegetables, dal, milk, and fruits. Iron-rich foods like spinach and lentils are especially helpful. Don't forget to take your iron and calcium supplements as advised by your ASHA worker.",
+    followUp: "Have you been taking your prenatal vitamins and supplements regularly?",
+    urgency: 'low'
+  },
+  
+  // Emotional support
+  emotional: {
+    keywords: ['sad', 'depressed', 'upset', 'worried', 'stress', 'anxious', 'rona', 'रोना', 'cry', 'scared', 'dar'],
+    response: "It's completely normal to feel emotional during pregnancy. Your feelings are valid. Remember that you're not alone — I'm here to listen. Taking care of your emotional health is just as important as physical health. Is there something specific on your mind?",
+    followUp: "Would you like to talk about what's worrying you? Sometimes sharing can help.",
+    urgency: 'medium'
+  },
+  
+  // Husband/family concerns (domestic issues)
+  family: {
+    keywords: ['husband', 'patni', 'पति', 'family', 'home', 'in-laws', 'saas', 'sas', 'relations'],
+    response: "Family dynamics can be challenging during pregnancy. Your health and your baby's health are the most important things right now. If you ever feel unsafe or need support, your ASHA worker is there to help you. You deserve to be treated with care and respect.",
+    followUp: "Is everything okay at home? You can talk to me openly — this conversation is private.",
+    urgency: 'medium'
+  },
+  
+  // Medication and treatment
+  medicine: {
+    keywords: ['medicine', 'medicine', 'दवा', 'tablet', 'capsule', 'injection', 'treatment', 'doctor'],
+    response: "It's important to take any medicines prescribed by your doctor or ASHA worker exactly as directed. Don't stop taking iron or calcium supplements without consulting them first. If you're experiencing any side effects, please let your ASHA know.",
+    followUp: "Are you currently taking any medicines or supplements?",
+    urgency: 'low'
+  },
+  
+  // Water and hydration
+  water: {
+    keywords: ['pani', 'पानी', 'water', 'drink', 'hydration', 'thirst'],
+    response: "Staying hydrated is very important during pregnancy. Try to drink at least 8-10 glasses of water throughout the day. If it's hot, drink more. Signs of dehydration include dark urine, dizziness, or dry mouth. Are you drinking enough water?",
+    followUp: "How much water do you drink in a day? Try to keep a water container near you.",
+    urgency: 'low'
+  },
+  
+  // Rest and sleep
+  rest: {
+    keywords: ['sleep', 'sone', 'सोना', 'rest', 'thakav', ' थकावट', 'tired', 'nap'],
+    response: "Getting enough rest is essential during pregnancy. Try to sleep at least 8 hours at night, and take short naps during the day if possible. Rest on your left side, especially in later pregnancy — this improves blood flow to your baby.",
+    followUp: "How are you sleeping at night? Are you having trouble falling asleep or staying asleep?",
+    urgency: 'low'
+  },
+  
+  // Hospital and delivery planning
+  hospital: {
+    keywords: ['hospital', 'aspatal', 'अस्पताल', 'delivery', 'janam', 'जन्म', 'birth', 'doctor appointment'],
+    response: "It's good that you're thinking about delivery planning. Your ASHA worker can help you register at the nearest hospital that has delivery facilities. Try to plan how you'll get to the hospital when the time comes. Do you know which hospital you'll go to?",
+    followUp: "How far is the hospital from your home? Do you have transportation arranged?",
+    urgency: 'medium'
+  }
+};
+
+// Intent recognition function
+function recognizeIntent(message) {
+  const normalizedMessage = message.toLowerCase().trim();
+  
+  // Check each category for keyword matches
+  for (const [intent, data] of Object.entries(aiKnowledge)) {
+    for (const keyword of data.keywords) {
+      if (normalizedMessage.includes(keyword)) {
+        return { intent, ...data };
+      }
+    }
+  }
+  
+  return null;
+}
+
+// Generate AI response based on intent
+function generateResponse(intent, conversationHistory) {
+  const response = intent.response;
+  
+  // Check for follow-up context from previous messages
+  if (intent.followUp && conversationHistory.length > 2) {
+    // 50% chance to ask follow-up to make conversation more natural
+    if (Math.random() > 0.5) {
+      return response + '\n\n' + intent.followUp;
+    }
+  }
+  
+  return response;
+}
+
+// Fallback response for unrecognized queries
+function generateFallbackResponse(message) {
+  const fallbacks = [
+    "I understand. Could you tell me more about how you're feeling? Your ASHA worker is also available to help with any questions.",
+    "That's a good question. I want to make sure I help you correctly — could you describe what you're experiencing in more detail?",
+    "I hear you. While I'm not a replacement for medical advice, your ASHA worker Sunita can help with most concerns. Would you like me to note this for her?",
+    "Thank you for sharing. Taking care of yourself during pregnancy is so important. Is there something specific I can help you with today?",
+    "I appreciate you telling me. Every pregnancy is different, and your ASHA worker knows your situation best. Shall I ask her to check on you?"
+  ];
+  
+  return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+}
+
+// Initialize chat
+function initChat() {
+  // Only initialize if chat body is empty
+  if (DOM.chatBody.children.length === 0) {
+    // Welcome message
+    setTimeout(() => {
+      addMessage('ai', "Namaste! 🙏 I'm your AI assistant, here to support you privately and safely. How are you feeling today? You can talk to me about any health concerns, nutrition, or just share how you're doing.");
+    }, 500);
+  }
+}
+
+// Add message to chat
+function addMessage(sender, text, isHtml = false) {
+  const msgDiv = document.createElement('div');
+  msgDiv.className = `msg ${sender === 'ai' ? 'ai' : 'her'}`;
+  
+  if (isHtml) {
+    msgDiv.innerHTML = text;
+  } else {
+    msgDiv.textContent = text;
+  }
+  
+  DOM.chatBody.appendChild(msgDiv);
+  
+  // Scroll to bottom
+  requestAnimationFrame(() => {
+    DOM.chatBody.scrollTop = DOM.chatBody.scrollHeight;
+  });
+  
+  return msgDiv;
+}
+
+// Add typing indicator
+function addTypingIndicator() {
+  const typing = document.createElement('div');
+  typing.className = 'msg-typing';
+  typing.id = 'typingIndicator';
+  typing.innerHTML = `
+    <div class="typing-dots">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  `;
+  DOM.chatBody.appendChild(typing);
+  DOM.chatBody.scrollTop = DOM.chatBody.scrollHeight;
+}
+
+// Remove typing indicator
+function removeTypingIndicator() {
+  const typing = document.getElementById('typingIndicator');
+  if (typing) {
+    typing.remove();
+  }
+}
+
+// Send chat message handler
+function sendChatMessage() {
+  const input = DOM.chatInput;
+  const message = input.value.trim();
+  
+  if (!message || chatState.isTyping) return;
+  
+  // Add user message
+  addMessage('her', message);
+  
+  // Add to conversation history
+  chatState.conversationHistory.push({ role: 'user', content: message });
+  
+  // Clear input
+  input.value = '';
+  
+  // Process with AI
+  processWithAI(message);
+}
+
+// Handle Enter key in chat input
+function handleChatKeydown(event) {
+  if (event.key === 'Enter' && !event.shiftKey) {
+    event.preventDefault();
+    sendChatMessage();
+  }
+}
+
+// Process message with AI
+function processWithAI(message) {
+  chatState.isTyping = true;
+  
+  // Show typing indicator
+  addTypingIndicator();
+  
+  // Recognize intent
+  const intent = recognizeIntent(message);
+  
+  // Determine response delay based on message length and intent
+  const baseDelay = 800;
+  const variableDelay = Math.random() * 1000 + 500; // 500-1500ms
+  const totalDelay = baseDelay + variableDelay;
+  
+  setTimeout(() => {
+    removeTypingIndicator();
+    
+    let response;
+    
+    if (intent) {
+      response = generateResponse(intent, chatState.conversationHistory);
+      chatState.lastIntent = intent.intent;
+      
+      // Special handling for high urgency
+      if (intent.urgency === 'high') {
+        // Additional supportive message for emergencies
+        setTimeout(() => {
+          addMessage('ai', "Please remember — you're not alone. Your ASHA worker is there to help you, and this conversation is completely private. 🙏");
+        }, 2000);
+      }
+    } else {
+      response = generateFallbackResponse(message);
+    }
+    
+    addMessage('ai', response);
+    
+    // Add to conversation history
+    chatState.conversationHistory.push({ role: 'assistant', content: response });
+    
+    chatState.isTyping = false;
+    
+  }, totalDelay);
+}
+
+/* ============================================================
+   Mother Dashboard - Pregnancy Progress
    ============================================================ */
 function animatePregBar() {
-  const bar = document.getElementById('pregBar');
+  const bar = DOM.pregBar;
   if (!bar) return;
+  
+  // Reset and animate
   bar.style.width = '0%';
   requestAnimationFrame(() => {
-    setTimeout(() => { bar.style.width = '83%'; }, 100);
+    setTimeout(() => {
+      bar.style.width = '83%';
+    }, 60);
   });
 }
 
 /* ============================================================
-   SAFE WORD
+   Offline Toggle System
+   ============================================================ */
+function toggleOffline() {
+  offline = !offline;
+  const btn = document.getElementById('offlineToggle');
+  const badge = DOM.offlineBadge;
+  
+  btn.classList.toggle('on', offline);
+  btn.textContent = offline ? '🚫' : '📶';
+  badge.classList.toggle('show', offline);
+  
+  if (offline) {
+    DOM.meshCount.textContent = Math.floor(Math.random() * 3) + 2;
+  }
+}
+
+/* ============================================================
+   Dark/Light Mode Toggle
+   ============================================================ */
+function toggleDark() {
+  isLightMode = !isLightMode;
+  const btn = document.getElementById('darkToggle');
+  
+  if (isLightMode) {
+    // Switch to light mode (original theme)
+    document.body.style.background = '#F5F0EB';
+    document.querySelector('.phone').style.background = '#F5F0EB';
+    btn.textContent = '☀️';
+    btn.classList.remove('on');
+    btn.title = 'Dark mode';
+  } else {
+    // Switch to dark mode
+    document.body.style.background = 'var(--bg-primary)';
+    document.querySelector('.phone').style.background = 'linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%)';
+    btn.textContent = '🌙';
+    btn.classList.add('on');
+    btn.title = 'Light mode';
+  }
+}
+
+/* ============================================================
+   Safe Word Emergency System
+   Discreet emergency trigger with reassuring modal flow
    ============================================================ */
 function triggerSafeWord() {
-  const val = document.getElementById('safeInput')?.value?.trim() || '';
-  if (val.toUpperCase() === 'SURYA') {
-    document.getElementById('safeConfirm').style.display = 'block';
-    document.getElementById('swVeil').classList.add('show');
-    showBanner('Silent alert sent. Stay calm.', 'green');
-    if (state.airplane) { state.pendingSync++; updateSyncUI(); }
-
-    // Animate modal actions
+  const items = DOM.swActions.querySelectorAll('.action-item');
+  
+  // Reset state
+  items.forEach(i => i.classList.remove('done'));
+  DOM.swSuccess.classList.remove('show');
+  DOM.swCloseBtn.classList.remove('show');
+  
+  // Show modal
+  DOM.swVeil.classList.add('show');
+  
+  // Sequential action reveal
+  items.forEach((item, i) => {
     setTimeout(() => {
-      document.querySelectorAll('#swActions .action-check').forEach((el, i) => {
-        setTimeout(() => {
-          el.style.animation = 'checkPop 0.6s ease both';
-        }, i * 250);
-      });
-      setTimeout(() => {
-        document.getElementById('swSuccess').style.opacity = '1';
-        document.getElementById('swSuccess').style.transform = 'translateY(0)';
-      }, 1400);
-      document.getElementById('swCloseBtn').style.opacity = '1';
-      document.getElementById('swCloseBtn').style.transform = 'translateY(0)';
-    }, 400);
-  } else {
-    showBanner('Incorrect word. Try again.', 'green');
-  }
+      item.classList.add('done');
+    }, 500 + i * 900);
+  });
+  
+  // Show success and close button
+  const totalDelay = 500 + items.length * 900;
+  setTimeout(() => {
+    DOM.swSuccess.classList.add('show');
+    DOM.swCloseBtn.classList.add('show');
+  }, totalDelay + 200);
+  
+  // Show toast notification
+  showToast('🛟 Silent alert sent to your ASHA worker. Stay calm — help is coming.');
 }
 
 function closeSafeWordModal() {
-  document.getElementById('swVeil').classList.remove('show');
-  document.getElementById('safeConfirm').style.display = 'none';
-  document.getElementById('swSuccess').style.opacity = '0';
-  document.getElementById('swCloseBtn').style.opacity = '0';
+  DOM.swVeil.classList.remove('show');
 }
 
 /* ============================================================
-   SPEECH SYNTHESIS (Hindi)
+   Toast Notification System
    ============================================================ */
-function speakHindi(text) {
-  if ('speechSynthesis' in window) {
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = 'hi-IN';
-    utter.rate = 0.85;
-    utter.pitch = 0.95;
-    try { window.speechSynthesis.cancel(); } catch(e) {}
-    window.speechSynthesis.speak(utter);
-  }
+function showToast(message, duration = 3200) {
+  DOM.toast.textContent = message;
+  DOM.toast.classList.add('show');
+  
+  setTimeout(() => {
+    DOM.toast.classList.remove('show');
+  }, duration);
 }
 
 /* ============================================================
-   DEMO WALKTHROUGH
+   Demo Mode Walkthrough
    ============================================================ */
-const demoScript = [
-  { screen: 'splash', text: 'Welcome to HerSetu — a calm, voice-first bridge for pregnant women and ASHA workers.' },
-  { screen: 'role', text: 'Choose a role: ASHA Worker for frontline staff, or Mother for the private patient experience.' },
-  { screen: 'asha-dash', text: "The ASHA dashboard prioritizes critical cases — everything is visible at a glance." },
-  { screen: 'asha-visit', text: 'Tap the mic. ASHA workers speak vitals aloud — no typing, no paperwork.' },
-  { screen: 'asha-risk', text: 'The AI predicts risk in real time and automatically triggers ambulance, bed, funds, and family alert.' },
-  { screen: 'mother-ai', text: 'Mothers talk privately to the AI Assistant. It listens, guides, and alerts ASHA quietly if serious.' },
-  { screen: 'mother-dash', text: "The Mother's home tracks pregnancy progress and puts help one calm tap away." },
-  { screen: 'asha-dash', text: 'Even offline, data syncs via mesh between nearby ASHA phones. That completes the loop.' }
-];
-
-let demoMode = false;
-let demoStep = 0;
-let demoTimer = null;
-
-function startDemo() {
-  demoMode = true;
-  demoStep = 0;
-  showDemoStep();
-}
-
 function toggleDemo() {
   demoMode = !demoMode;
   const btn = document.getElementById('demoToggle');
-  // Not used in this version; kept simple
-  if (!demoMode) {
-    clearTimeout(demoTimer);
+  
+  btn.classList.toggle('on', demoMode);
+  
+  if (demoMode) {
+    demoStep = 0;
+    showDemoStep();
+  } else {
+    DOM.demoTooltip.classList.remove('show');
+    clearTimeout(demoIdleTimer);
   }
 }
 
 function showDemoStep() {
   if (!demoMode || demoStep >= demoScript.length) {
-    demoMode = false;
-    showBanner('Demo complete. Thank you.', 'green');
+    if (demoMode) {
+      demoMode = false;
+      document.getElementById('demoToggle').classList.remove('on');
+      DOM.demoTooltip.classList.remove('show');
+    }
     return;
   }
+  
   const step = demoScript[demoStep];
-  navigate(step.screen);
-  showBanner(`Step ${demoStep + 1}/${demoScript.length}: ${step.text}`, 'green');
+  goTo(step.screen);
+  
+  DOM.demoStepLbl.textContent = `STEP ${demoStep + 1}/${demoScript.length}`;
+  DOM.demoText.textContent = step.text;
+  
+  setTimeout(() => {
+    DOM.demoTooltip.classList.add('show');
+  }, 250);
+  
   demoStep++;
-  demoTimer = setTimeout(showDemoStep, 8000);
+  resetIdleTimer();
+}
+
+function resetIdleTimer() {
+  if (!demoMode) return;
+  
+  clearTimeout(demoIdleTimer);
+  demoIdleTimer = setTimeout(showDemoStep, 10000);
 }
 
 /* ============================================================
-   CONTACTS MANAGEMENT (localStorage)
+   Emergency Contacts (localStorage CRUD)
    ============================================================ */
-const CONTACTS_KEY = 'hersetu_contacts_v2';
+const CONTACTS_KEY = 'hersetu_contacts';
 const defaultContacts = [
   { id: 'c1', name: 'Ramesh Kumar', relation: 'Husband', phone: '+91 98765 43210', icon: '🧑' },
   { id: 'c2', name: 'Sunita Devi', relation: 'ASHA Worker', phone: '+91 91234 56780', icon: '🩺' },
   { id: 'c3', name: 'Kamla Devi', relation: 'Mother-in-Law', phone: '+91 99887 66554', icon: '👵' }
 ];
 
+let editingContactId = null;
+
 function loadContacts() {
   try {
     const raw = localStorage.getItem(CONTACTS_KEY);
     if (raw) return JSON.parse(raw);
   } catch (e) {}
+  
   localStorage.setItem(CONTACTS_KEY, JSON.stringify(defaultContacts));
   return defaultContacts.slice();
 }
@@ -1238,89 +3055,110 @@ function saveContacts(list) {
 
 function renderContacts() {
   const list = loadContacts();
-  const wrap = document.getElementById('contactsList');
-  if (!wrap) return;
+  const wrap = DOM.contactsList;
   wrap.innerHTML = '';
+  
   if (list.length === 0) {
-    wrap.innerHTML = '<p style="padding:16px; color:var(--ink-faint); font-size:0.9rem;">No contacts yet. Add one below.</p>';
+    wrap.innerHTML = `
+      <div style="padding:20px 22px;color:var(--text-muted);font-size:12.5px;text-align:center;">
+        No contacts yet. Add one below.
+      </div>
+    `;
     return;
   }
+  
   list.forEach(c => {
     const row = document.createElement('div');
-    row.className = 'card';
-    row.style.padding = '14px 16px';
+    row.className = 'card contact-row';
     row.innerHTML = `
-      <div style="display:flex;align-items:center;gap:12px;">
-        <div style="width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--terracotta),var(--sage));color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">${c.icon || '👤'}</div>
-        <div style="flex:1;">
-          <div style="font-weight:700;font-size:1rem;">${escapeHtml(c.name)}</div>
-          <div style="font-size:0.82rem;color:var(--ink-faint);">${escapeHtml(c.relation)} · ${escapeHtml(c.phone)}</div>
-        </div>
-        <button onclick="editContact('${c.id}')" style="background:none;border:none;color:var(--ink-soft);font-size:1.1rem;cursor:pointer;" aria-label="Edit">✏️</button>
-        <button onclick="deleteContact('${c.id}')" style="background:none;border:none;color:var(--danger);font-size:1.1rem;cursor:pointer;" aria-label="Delete">🗑️</button>
-      </div>`;
+      <div class="contact-ic" aria-hidden="true">${c.icon || '👤'}</div>
+      <div style="flex:1">
+        <div class="contact-name">${escapeHtml(c.name)}</div>
+        <div class="contact-meta">${escapeHtml(c.relation)} · ${escapeHtml(c.phone)}</div>
+      </div>
+      <div class="contact-actions">
+        <button class="icon-btn" onclick="editContact('${c.id}')" title="Edit" aria-label="Edit ${c.name}">✏️</button>
+        <button class="icon-btn danger" onclick="deleteContact('${c.id}')" title="Delete" aria-label="Delete ${c.name}">🗑️</button>
+      </div>
+    `;
     wrap.appendChild(row);
   });
 }
 
+function escapeHtml(str) {
+  if (str == null) return '';
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
 function showContactForm() {
+  editingContactId = null;
   document.getElementById('cfName').value = '';
   document.getElementById('cfRelation').value = '';
   document.getElementById('cfPhone').value = '';
-  document.getElementById('contactForm').style.display = 'block';
+  document.getElementById('contactForm').style.display = 'flex';
+  document.getElementById('cfName').focus();
 }
 
 function hideContactForm() {
   document.getElementById('contactForm').style.display = 'none';
+  editingContactId = null;
 }
 
 function editContact(id) {
   const list = loadContacts();
   const c = list.find(x => x.id === id);
   if (!c) return;
+  
+  editingContactId = id;
   document.getElementById('cfName').value = c.name;
   document.getElementById('cfRelation').value = c.relation;
   document.getElementById('cfPhone').value = c.phone;
-  document.getElementById('contactForm').style.display = 'block';
+  document.getElementById('contactForm').style.display = 'flex';
+  document.getElementById('cfName').focus();
 }
 
 function saveContactForm() {
   const name = document.getElementById('cfName').value.trim();
   const relation = document.getElementById('cfRelation').value.trim();
   const phone = document.getElementById('cfPhone').value.trim();
+  
   if (!name || !phone) {
-    showBanner('Please enter at least a name and phone.', 'green');
+    showToast('Please enter at least a name and phone number.');
     return;
   }
+  
   const list = loadContacts();
-  const existing = list.find(x => x.phone === phone && x.id !== 'new');
-  if (existing) {
-    existing.name = name;
-    existing.relation = relation;
+  
+  if (editingContactId) {
+    const c = list.find(x => x.id === editingContactId);
+    if (c) {
+      c.name = name;
+      c.relation = relation;
+      c.phone = phone;
+    }
   } else {
     list.push({ id: 'c' + Date.now(), name, relation, phone, icon: '👤' });
   }
+  
   saveContacts(list);
   hideContactForm();
   renderContacts();
+  showToast('Contact saved successfully');
 }
 
 function deleteContact(id) {
   const list = loadContacts().filter(x => x.id !== id);
   saveContacts(list);
   renderContacts();
-}
-
-function escapeHtml(str) {
-  const d = document.createElement('div');
-  d.textContent = str == null ? '' : str;
-  return d.innerHTML;
+  showToast('Contact deleted');
 }
 
 /* ============================================================
-   PATIENT MEDICAL HISTORY
+   Patient Medical History (localStorage)
    ============================================================ */
-const HISTORY_KEY = 'hersetu_history_v2';
+const HISTORY_KEY = 'hersetu_history';
 const defaultHistory = {
   'Sushila Devi': [
     { date: 'June 15, 2026', note: 'Headache reported, BP 140/90', flag: false },
@@ -1340,11 +3178,14 @@ const defaultHistory = {
   ]
 };
 
+let currentHistoryPatient = null;
+
 function loadHistory() {
   try {
     const raw = localStorage.getItem(HISTORY_KEY);
     if (raw) return JSON.parse(raw);
   } catch (e) {}
+  
   localStorage.setItem(HISTORY_KEY, JSON.stringify(defaultHistory));
   return JSON.parse(JSON.stringify(defaultHistory));
 }
@@ -1355,31 +3196,39 @@ function saveHistory(all) {
 
 function openPatientHistory(evt, name, meta) {
   if (evt) evt.stopPropagation();
-  state.currentHistoryPatient = name;
+  
+  currentHistoryPatient = name;
   document.getElementById('histPatientName').textContent = name;
   document.getElementById('histPatientMeta').textContent = meta || '';
   document.getElementById('historyForm').style.display = 'none';
-  navigate('screen-history');
+  
+  goTo('screen-history');
   renderHistory();
 }
 
 function renderHistory() {
   const all = loadHistory();
-  const entries = all[state.currentHistoryPatient] || [];
-  const wrap = document.getElementById('historyTimeline');
-  if (!wrap) return;
+  const entries = all[currentHistoryPatient] || [];
+  const wrap = DOM.historyTimeline;
   wrap.innerHTML = '';
+  
   if (entries.length === 0) {
-    wrap.innerHTML = '<p style="padding:10px;color:var(--ink-faint);font-size:0.9rem;">No history recorded yet.</p>';
+    wrap.innerHTML = `
+      <div style="padding:10px 4px;color:var(--text-muted);font-size:12.5px;">
+        No history recorded yet.
+      </div>
+    `;
     return;
   }
+  
   entries.forEach(e => {
     const item = document.createElement('div');
-    item.style.cssText = 'position:relative;padding:0 0 18px 24px;border-left:2px solid rgba(139,168,139,0.2);margin-left:6px;';
+    item.className = 'timeline-item' + (e.flag ? ' flag' : '');
     item.innerHTML = `
-      <div style="position:absolute;left:-7px;top:2px;width:12px;height:12px;border-radius:50%;background:${e.flag ? 'var(--danger)' : 'var(--sage)'};box-shadow:0 0 0 4px ${e.flag ? 'rgba(217,93,77,0.15)' : 'rgba(139,168,139,0.15)'};"></div>
-      <div style="font-size:0.7rem;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:0.05em;">${escapeHtml(e.date)}</div>
-      <div style="font-size:0.9rem;font-weight:500;margin-top:4px;background:var(--card);border:1px solid var(--card-border);border-radius:14px;padding:10px 12px;">${e.flag ? '⚠️ ' : ''}${escapeHtml(e.note)}</div>`;
+      <div class="timeline-dot" aria-hidden="true"></div>
+      <div class="timeline-date">${escapeHtml(e.date)}</div>
+      <div class="timeline-note">${e.flag ? '⚠️ ' : ''}${escapeHtml(e.note)}</div>
+    `;
     wrap.appendChild(item);
   });
 }
@@ -1388,7 +3237,7 @@ function showHistoryForm() {
   document.getElementById('hfDate').value = '';
   document.getElementById('hfNote').value = '';
   document.getElementById('hfFlag').checked = false;
-  document.getElementById('historyForm').style.display = 'block';
+  document.getElementById('historyForm').style.display = 'flex';
 }
 
 function hideHistoryForm() {
@@ -1399,58 +3248,30 @@ function saveHistoryEntry() {
   const date = document.getElementById('hfDate').value.trim();
   const note = document.getElementById('hfNote').value.trim();
   const flag = document.getElementById('hfFlag').checked;
+  
   if (!date || !note) {
-    showBanner('Please enter both date and note.', 'green');
+    showToast('Please enter both a date and a note.');
     return;
   }
+  
   const all = loadHistory();
-  if (!all[state.currentHistoryPatient]) all[state.currentHistoryPatient] = [];
-  all[state.currentHistoryPatient].push({ date, note, flag });
+  if (!all[currentHistoryPatient]) all[currentHistoryPatient] = [];
+  
+  all[currentHistoryPatient].push({ date, note, flag });
   saveHistory(all);
   hideHistoryForm();
   renderHistory();
+  showToast('Medical entry saved');
 }
 
 /* ============================================================
-   BANNER / TOAST
+   Initialization
    ============================================================ */
-function showBanner(msg, type) {
-  const b = document.getElementById('banner');
-  b.textContent = msg;
-  b.className = 'banner show ' + (type || '');
-  setTimeout(() => b.classList.remove('show'), 3400);
-}
+updateNav('screen-splash');
 
-/* ============================================================
-   CONFETTI
-   ============================================================ */
-function fireConfetti() {
-  const layer = document.getElementById('confettiLayer');
-  if (!layer) return;
-  const colors = ['#D4A76A', '#B87355', '#8BA888', '#F7F2EA', '#D95D4D'];
-  for (let i = 0; i < 45; i++) {
-    const p = document.createElement('div');
-    p.className = 'confetti-piece';
-    p.style.left = Math.random() * 100 + '%';
-    p.style.background = colors[i % colors.length];
-    p.style.animationDuration = (1.8 + Math.random() * 1.2) + 's';
-    p.style.animationDelay = (Math.random() * 0.4) + 's';
-    p.style.transform = `rotate(${Math.random() * 360}deg)`;
-    layer.appendChild(p);
-  }
-  setTimeout(() => { layer.innerHTML = ''; }, 3500);
-}
-
-/* ============================================================
-   INIT
-   ============================================================ */
-document.addEventListener('DOMContentLoaded', () => {
-  updateSyncUI();
-  initChat();
-  animatePregBar();
-  renderContacts();
-});
+// Set initial dark mode state (default is dark)
+document.body.style.background = 'var(--bg-primary)';
+document.querySelector('.phone').style.background = 'linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%)';
 </script>
-
 </body>
 </html>
